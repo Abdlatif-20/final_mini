@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 11:14:40 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:55:07 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ typedef struct t_var
 	t_list	*tmp;
 }				t_var;
 
+char		**create_env(t_info *info);
+void 		help(int status);
 // file my_echo.c
 // int			my_echo(t_cmd *cmd);
 int			my_echo(t_cmd *cmd, int fd);

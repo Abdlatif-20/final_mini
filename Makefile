@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
+#    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/07 19:31:00 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/01 10:43:51 by aben-nei         ###   ########.fr        #
+#    Updated: 2023/06/01 19:35:39 by ahaloui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,8 @@ OBJS = $(SRCS:.c=.o)
 
 LIB = libft/libft.a
 
-# RL_INC = -I $(shell brew --prefix readline)/include
-# RL_LIB = -L $(shell brew --prefix readline)/lib
+RL_INC = -I $(shell brew --prefix readline)/include
+RL_LIB = -L $(shell brew --prefix readline)/lib
 
 all: $(NAME)
 

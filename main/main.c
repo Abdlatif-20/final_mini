@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 14:48:10 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/01 19:36:15 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,14 @@ void	signal_handler(int sig)
 	}
 }
 
+
+
 int	main(int argc, char **argv, char **env)
 {
+	char *s;
+	s = malloc(10);
+	free(s);
+	free(s);
 	char	*input;
 	t_list	*args;
 	t_list	*cmd;
@@ -67,6 +73,18 @@ int	main(int argc, char **argv, char **env)
 	input = NULL;
 	info->head_ex = NULL;
 	info->head_en = NULL;
+	if (env == NULL || *env == NULL)
+	{
+		char **env1;
+		env1 = (char **)malloc(sizeof(char *) * 5);
+		env1[0] = ft_strdup("PWD=/Users/ahaloui");
+		env1[1] = ft_strdup("SHLVL=1");
+		env1[2] = ft_strdup("_=/usr/bin/env"); // env
+		env1[2] = ft_strdup("OLDPWD=/Users/ahaloui"); //export 
+		env1[3] = ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin");// export/env
+		env = env1; 
+	}
+
 	fill_export_list(env, &info->head_ex);
 	fill_env_list(env, &info->head_en);
 
@@ -74,6 +92,7 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	// *********************************************
+
 
 	printf("\033[2J\033[1;1H");
 	while (42)
@@ -101,7 +120,9 @@ int	main(int argc, char **argv, char **env)
 			// printf("token->cmd = %s\n", token->value);
 			command_table(args, &cmd);
 			if (cmd && cmd->data)
+			{
 				choose_command(cmd, info);
+			}
 			ft_lstclear(&args);
 			ft_lstclear(&cmd);
 			free (input);

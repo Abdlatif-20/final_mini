@@ -6,12 +6,38 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 15:00:46 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/01 19:07:55 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+char **create_env(t_info *info)
+{
+	t_env	*tmp;
+	char	**env;
+	int		i;
+
+	i = 0;
+	tmp = info->head_en;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	env = (char **)malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	tmp = info->head_en;
+	while (tmp)
+	{
+		env[i] = ft_strjoin(tmp->env_var, "=");
+		env[i] = ft_strjoin(env[i], tmp->env_value);
+		i++;
+		tmp = tmp->next;
+	}
+	env[i] = NULL;
+	return (env);
+}
 
 void if_herdoc1(t_cmd *commands)
 {
@@ -65,12 +91,41 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 	path = check_if_command_found(commands->main_cmd, &info->head_ex);
 	if (!path)
 		return ;
-	if (execve(path, commands->cmds, NULL) == -1)
+	if (execve(path, commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(commands->main_cmd);
 		exit(EXIT_FAILURE);
 	}
 }
+
+// char **create_env(t_info *info)
+// {
+// 	t_env	*tmp;
+// 	char	**env;
+// 	int		i;
+
+// 	i = 0;
+// 	tmp = info->head_en;
+// 	while (tmp)
+// 	{
+// 		i++;
+// 		tmp = tmp->next;
+// 	}
+// 	env = (char **)malloc(sizeof(char *) * (i + 1));
+// 	i = 0;
+// 	tmp = info->head_en;
+// 	while (tmp)
+// 	{
+// 		env[i] = ft_strjoin(tmp->env_var, "=");
+// 		env[i] = ft_strjoin(env[i], tmp->env_value);
+// 		i++;
+// 		tmp = tmp->next;
+// 	}
+// 	env[i] = NULL;
+// 	return (env);
+// }
+
+
 
 void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 {
@@ -84,6 +139,12 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 	}
 	if (commands->main_cmd)
 	{
+		// if (command[0] == '/' || command[0] == '.')
+		// {
+		// 	puts("here");
+		// 	if (access(command, F_OK | X_OK) == 0)
+		// 		return (command);
+		// }
 		if (check_if_command_found(commands->main_cmd, &info->head_ex))
 		{
 			pid = fork();
@@ -95,7 +156,10 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 			else if (pid == 0)
 				execute_child_process(commands, info);
 			else
+			{
 				waitpid(pid, &status, 0);
+				help(status);
+			}
 		}
 		else
 			print_error_cmd(commands->main_cmd);

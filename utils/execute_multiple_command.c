@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_multiple_command.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 13:26:41 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:35:11 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes)
 			}
 			if (info->commands->main_cmd)
 			{
-				if (execve(info->temp, info->commands->cmds, NULL) == -1)
+				if (execve(info->temp, info->commands->cmds, create_env(info)) == -1)
 				{
 					print_error_cmd(info->commands->main_cmd);
 					exit(EXIT_FAILURE);
