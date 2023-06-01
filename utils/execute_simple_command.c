@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 13:00:58 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:00:46 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,7 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 	if (is_builin(commands) == 1)
 	{
 		builtin_execution(shell, info, 1);
-		// if (g_exit_status != EXIT_FAILURE)
-		// {
-		// 	g_exit_status = EXIT_SUCCESS;
-		// 	// printf("exit status = %d\n", g_exit_status);
-		// }
+		return ;
 	}
 	if (commands->main_cmd)
 	{
@@ -100,11 +96,6 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 				execute_child_process(commands, info);
 			else
 				waitpid(pid, &status, 0);
-			// if (WIFEXITED(g_exit_status))
-			// {
-			// 	g_exit_status = WEXITSTATUS(g_exit_status);
-			// 	printf("exit status = %d\n", g_exit_status);
-			// }
 		}
 		else
 			print_error_cmd(commands->main_cmd);

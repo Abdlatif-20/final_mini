@@ -66,6 +66,7 @@ void	builtin_execution(t_list *shell, t_info *info, int flag)
 	{
 		builint_simple(commands, info);
 		builint_complex(commands, info);
+		// exit(EXIT_SUCCESS);
 	}
 }
 
