@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:07:13 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/05/26 01:59:13 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/01 22:24:44 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int  check_export(char **split)
 
 	i = 1;
 	valid = 1;
-	
-	
 	while (split[i])
 	{
 		if (split[i][0] == '\0')
@@ -74,6 +72,15 @@ void    concatenation_export(t_export **head_ex,char *export_variable, char *new
 			tmp->export_value = ft_strjoin(tmp->export_value, new_value);
 		tmp = tmp->next;
 	}
+}
+
+void handle_export_concatenation(t_export **head_ex, char *export_variable, char *export_value)
+{
+    export_variable[ft_strlen(export_variable) - 1] = '\0';
+    if (!check_if_export_var_exist(*head_ex, export_variable))
+        add_export_element(export_variable, export_value, head_ex);
+    else
+        concatenation_export(head_ex, export_variable, export_value);
 }
 
 void add_export(t_export **head_ex, char **split)

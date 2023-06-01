@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 18:35:11 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/01 21:39:02 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void create_pipe(int pipefd[2])
 	}
 }
 
-void close_pipe(int pipefd[][2], int nb_pipes)
+void close_pipe(int **pipefd, int nb_pipes)
 {
 	int i;
 
@@ -77,7 +77,7 @@ void if_herdoc_or_inputfile(t_cmd *commands)
 		if_input_file(commands);
 }
 
-void	dup_for_pipes(int pipefd[][2], int i, int nb_pipes)
+void	dup_for_pipes(int **pipefd, int i, int nb_pipes)
 {
 	if (i == 0)
 		dup2(pipefd[i][1], STDOUT_FILENO);
@@ -90,7 +90,7 @@ void	dup_for_pipes(int pipefd[][2], int i, int nb_pipes)
 	}
 }
 
-void merge_dup_pipe_herdoc(int pipefd[][2], int i, int nb_pipes, t_cmd *commands)
+void merge_dup_pipe_herdoc(int **pipefd, int i, int nb_pipes, t_cmd *commands)
 {
 	dup_for_pipes(pipefd, i, nb_pipes);
 	close_pipe(pipefd, nb_pipes);
@@ -114,11 +114,27 @@ void wait_for_child(int nb_pipes)
 	}
 }
 
+int **create_pipefd(int nb_pipes)
+{
+	int **pipefd;
+	int i;
+
+	i = 0;
+	pipefd = (int **)malloc(sizeof(int *) * nb_pipes);
+	while (i < nb_pipes)
+	{
+		pipefd[i] = (int *)malloc(sizeof(int) * 2);
+		i++;
+	}
+	return (pipefd);
+}
+
 
 void execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes)
 {
-	int	pipefd[nb_pipes][2];
-
+	int **pipefd;
+	
+	pipefd = create_pipefd(nb_pipes);
 	info->i = 0;
 	while (info->i < nb_pipes)
 	{

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 19:07:55 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/01 21:32:06 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,12 +139,6 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 	}
 	if (commands->main_cmd)
 	{
-		// if (command[0] == '/' || command[0] == '.')
-		// {
-		// 	puts("here");
-		// 	if (access(command, F_OK | X_OK) == 0)
-		// 		return (command);
-		// }
 		if (check_if_command_found(commands->main_cmd, &info->head_ex))
 		{
 			pid = fork();

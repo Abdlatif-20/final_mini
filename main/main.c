@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 19:36:15 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/01 22:34:42 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,7 @@ int	main(int argc, char **argv, char **env)
 			// printf("token->cmd = %s\n", token->value);
 			command_table(args, &cmd);
 			if (cmd && cmd->data)
-			{
 				choose_command(cmd, info);
-			}
 			ft_lstclear(&args);
 			ft_lstclear(&cmd);
 			free (input);

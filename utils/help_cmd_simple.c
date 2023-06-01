@@ -13,7 +13,9 @@ void help(int status)
 	{
 		int signal_number = WTERMSIG(status);
 		g_exit_status = 128 + signal_number;
-		if (signal_number == SIGKILL)
+		if (signal_number == SIGABRT)
+			printf("Child process terminated by abort signal (SIGABRT) %d\n", signal_number);
+		else if (signal_number == SIGKILL)
 			printf("Child process terminated by kill signal (SIGKILL)\n");
 		else if (signal_number == SIGSEGV)
 			printf("Child process terminated by segmentation fault (SIGSEGV)\n");	

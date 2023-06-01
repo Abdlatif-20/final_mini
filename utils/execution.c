@@ -95,9 +95,7 @@ void	choose_command(t_list *shell, t_info *info)
 	nb_cmd = ft_lstsize(shell);
 	nb_node = get_nbr_node(shell);
 	if (nb_node == 1)
-	{
 		execute_commande(commands, info, shell);
-	}
 	else if (nb_node > 1)
 		execute_commands_with_pipe(shell, info, --nb_cmd);
 	info->in = dup(STDIN_FILENO);

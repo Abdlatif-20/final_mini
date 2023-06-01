@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:45:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 12:42:21 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/01 21:09:44 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_expand(t_list **list, t_env *env)
 	t_env		*tmp_env;
 	t_token		*token;
 	t_var		var;
+	char		**temp;
 
 	tmp = *list;
 	tmp_env = env;
@@ -77,15 +78,11 @@ void	ft_expand(t_list **list, t_env *env)
 						get_variable_name(token->value)))
 				{
 					token->value = ft_strdup(env->env_value);
-					/*
+					
 					temp = ft_split(token->value, ' ');
 						token->value = ft_strdup(temp[0]);
-						tmp = tmp->next;
-					fill_token(&tmp, VAR, ft_strdup(temp[1]));
-						token = tmp->next->data;
-					printf("token->value = %s\n", token->value);
-					free_array(temp);
-					*/
+					fill_token(list, W_SPACE, ft_strdup(" "));
+					fill_token(list, FLAG, ft_strdup(temp[1]));
 					break ;
 				}
 				env = env->next;

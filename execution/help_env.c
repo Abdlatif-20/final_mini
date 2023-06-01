@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:25:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/05/03 19:33:02 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/01 22:15:22 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void concatenation_env(t_env **head_en, char *env_var, char *new_value)
     while (tmp)
     {
         if (!ft_strcmp(tmp->env_var, env_var))
-        {
             tmp->env_value = ft_strjoin(tmp->env_value, new_value);
-        }
         tmp = tmp->next;
     }
 }
