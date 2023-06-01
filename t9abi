@@ -1,0 +1,71 @@
+>h|>ls --->fixed
+<< --->fixed
+> ii > oo >N<f --->fixed
+ls -la | wc -l | >> file | << file1 --> fixed
+> file | > file ---> fixed
+echo '"'$USER'"' ---> fixed
+> l    |      |      > l ---> fixed
+$var"H" fgdfg fdg $var fgdfg "$PWD dsf" $df "ss"$var"ss" | ===> fixed
+ls              |>>     ld ---> fixed
+gjm | > dfg === > fixed
+ls > "" | ls | "" ---> fixed
+echo '"$USER"'   =========> fixed
+ls -la|l        =========> fixed
+ls "-la" ''
+ls -la | wc -la >> file    ====> fixed
+la -l | "grep Makefile"  | wc -l    ==> fixed
+
+| -> | error    --> fixed
+> -> | error    ---> fixed
+> !-> WORD ERROR ---> fixed
+| 1 -> error    -->fixed
+<< $PWD ---> fixed
+$"PWD" ---> fixed
+"$PWD $" ---> fixed
+"$PWD $PATH $" ---> fixed
+"|$USER$PWD$PWD$PWD$PWD|" ----> fixed
+"$PWD $PATH" --> fixed
+"$dsgadg" --> fixed
+l"s"  -"l"a ---> fixed
+'l's "-"l'a''' ---> fixed
+"ls ""-la" ---> fixed
+$PWD$PWD$ | dsf""|''ls  ---> fixed
+"'''" $$$$$PWD "'''"  ---> fixed
+$ first --> _ or alphabetic
+
+
+should be handle in tomorrow 😀
+------------
+| ctrl + c |
+| ctrl + d |
+| ctrl + \ |
+------------
+
+ls -la > out libft ../
+ls > out1 > out2 > out3 -la
+cat < minlllishell.h
+< Makefile > outfile0 ls >> outfile1 < outfile0 -a >> Makefile -l << here -ghj > outfile2
+ls>out -a>out -l>>out
+
+
+
+
+cd '/////' >/dev/null
+cd "$PWD/directory"
+cd $PWD/directory
+cd $OLDPWD/directory
+cd ?
+echo "-n -n -n"-n nenie_iri
+
+
+expander
+joiner
+
+parser
+execution etape
+
+
+cd '/////' >/dev/null
+cd $OLDPWD/directory
+
+// handel segfault whene run ls |>
