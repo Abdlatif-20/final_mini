@@ -96,6 +96,12 @@ void add_export(t_export **head_ex, char **split)
 		export_variable = get_export_variable(split[i]);
 		if (export_variable[ft_strlen(export_variable) - 1] == '+')
 		{
+			if (export_variable[ft_strlen(export_variable) - 2] == '+')
+			{
+				printf("minishell: export: `%s': not a valid identifier\n", split[i]);
+				i++;
+				continue;
+			}
 			concatenate = 1;
 			export_variable[ft_strlen(export_variable) - 1] = '\0';
 		}

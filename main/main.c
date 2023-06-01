@@ -33,6 +33,22 @@
 // 	}
 // }
 
+void	signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (sig == SIGQUIT)
+	{
+		printf("\nCtrl+D (EOF) received. Exiting...\n");
+		exit(0);
+	}
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
@@ -53,6 +69,12 @@ int	main(int argc, char **argv, char **env)
 	info->head_en = NULL;
 	fill_export_list(env, &info->head_ex);
 	fill_env_list(env, &info->head_en);
+
+	// *********************************************
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	// *********************************************
+
 	printf("\033[2J\033[1;1H");
 	while (42)
 	{
