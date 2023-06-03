@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:45:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 21:09:44 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 20:47:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,24 @@ void	ft_expand(t_list **list, t_env *env)
 	while (tmp)
 	{
 		token = tmp->data;
-		if (tmp && token->key == VAR)
+		// printf("is_heredoc = %d\n", token->is_herdoc);
+		if (tmp && token->key == VAR && token->is_herdoc == 0)
 		{
+			if (ft_strcmp(token->value, "$?") == 0)
+			{
+				token->value = ft_itoa(g_shell.exit_status);
+				return ;
+			}
 			while (env)
 			{
 				if (tmp && !ft_strcmp(env->env_var,
 						get_variable_name(token->value)))
 				{
 					token->value = ft_strdup(env->env_value);
-					
 					temp = ft_split(token->value, ' ');
 						token->value = ft_strdup(temp[0]);
-					fill_token(list, W_SPACE, ft_strdup(" "));
-					fill_token(list, FLAG, ft_strdup(temp[1]));
+					fill_token(list, W_SPACE, ft_strdup(" "), 0);
+					fill_token(list, FLAG, ft_strdup(temp[1]), 0);
 					break ;
 				}
 				env = env->next;
@@ -95,7 +100,7 @@ void	ft_expand(t_list **list, t_env *env)
 				token->value = ft_strdup("");
 			env = tmp_env;
 		}
-		else if (tmp && token->key == DQUATES)
+		else if (tmp && token->key == DQUATES && token->is_herdoc == 0)
 		{
 			var.i = 0;
 			var.string = NULL;

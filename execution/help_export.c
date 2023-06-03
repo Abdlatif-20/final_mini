@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:07:13 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 22:24:44 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 20:38:19 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int  check_export(char **split)
 			continue;
 		}
 		if (check_if_valid_args(split[i]) == false)
+		{
 			printf("minishell: export: `%s': not a valid identifier\n", split[i]);
+			g_shell.exit_status = EXIT_FAILURE;
+		}
 		i++;
 	}
 	return (valid);
@@ -138,6 +141,7 @@ void process_export_argument(t_export **head_ex, char *arg)
         if (export_variable[ft_strlen(export_variable) - 2] == '+')
         {
             printf("minishell: export: `%s': not a valid identifier\n", arg);
+			g_shell.exit_status = EXIT_FAILURE;
             return;
         }
         concatenate = 1;

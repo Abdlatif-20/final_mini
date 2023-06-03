@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 18:26:44 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 20:35:55 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 				display_status_code(status);
 			}
 		}
-		else
+		else if (commands->main_cmd && commands->main_cmd[0])
 		{
 			print_error_cmd(commands->main_cmd);
 		}

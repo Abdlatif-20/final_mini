@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/05/31 18:57:44 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/03 18:55:12 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ void	rederection_app(t_list *args, int *fd_out)
 			if (args)
 				token = args->data;
 		}
+		else
+		{
+			*fd_out = 404;
+			printf("minishell: %s: ambiguous redirect\n", token->value);
+			return ;
+		}
 	}
 }
 
@@ -77,6 +83,12 @@ void	rederection_in(t_list *args, int *fd_in, char **file_name)
 			if (args)
 				token = args->data;
 		}
+		else
+		{
+			*fd_in = 404;
+			printf("minishell: %s: ambiguous redirect\n", token->value);
+			return ;
+		}
 	}
 }
 
@@ -98,10 +110,17 @@ void	rederection_out(t_list *args, int *fd_out)
 		}
 		if (token && token->key == RED_FILE)
 		{
-			*fd_out = open(token->value, O_CREAT | O_RDWR | O_TRUNC, 0777);
+			if (token->value[0])
+				*fd_out = open(token->value, O_CREAT | O_RDWR | O_TRUNC, 0777);
 			args = args->next;
 			if (args)
 				token = args->data;
+		}
+		else
+		{
+			*fd_out = 404;
+			printf("minishell: %s: ambiguous redirect\n", token->value);
+			return ;
 		}
 	}
 }
