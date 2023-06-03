@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 20:35:55 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/03 21:59:41 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,17 +150,20 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 				exit(EXIT_FAILURE);
 			} 
 			else if (pid == 0)
-				execute_child_process(commands, info);
+			{
+				if (commands->fd_in != 404 && commands->fd_out != 404)
+				{
+					execute_child_process(commands, info);
+				}
+			}
 			else
 			{
 				waitpid(pid, &status, 0);
 				display_status_code(status);
 			}
 		}
-		else if (commands->main_cmd && commands->main_cmd[0])
-		{
+		else
 			print_error_cmd(commands->main_cmd);
-		}
 	}
 }
 

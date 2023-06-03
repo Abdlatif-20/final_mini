@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 11:19:32 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/03 21:57:49 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	commands_helper(t_list **args, t_token *token, t_var *var)
 			|| token->key == SQUATES || token->key == DQUATES
 			|| token->key == VAR))
 	{
-		if (!var->flag)
+		if (!var->flag && token->value[0])
 			var->cmd[var->i++] = ft_strdup(token->value);
 		(*args) = (*args)->next;
 		if (*args)

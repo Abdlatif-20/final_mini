@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/03 20:24:14 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/03 22:13:58 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ int	main(int argc, char **argv, char **env)
 	info->head_en = NULL;
 	if (env == NULL || *env == NULL)
 	{
+		uid_t uid = getuid();
+		struct passwd *pw = getpwuid(uid);
 		env1 = (char **)malloc(sizeof(char *) * 5);
-		env1[0] = ft_strdup("PWD=/Users/ahaloui");
+		env1[0] = ft_strjoin(ft_strdup("PWD=/Users/ahaloui"), "pw->pw_name");
 		env1[1] = ft_strdup("SHLVL=1");
 		env1[2] = ft_strdup("_=/usr/bin/env"); // env
-		env1[2] = ft_strdup("OLDPWD=/Users/ahaloui"); //export 
+		env1[2] = ft_strjoin(ft_strdup("OLDPWD=/Users/ahaloui"), "pw->pw_name"); //export 
 		env1[3] = ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin");// export/env
 		env = env1;
 	}
@@ -94,10 +96,6 @@ int	main(int argc, char **argv, char **env)
 				ft_lstclear(&args);
 				continue ;
 			}
-			// t_token *token = args->data;
-			// printf("token->cmd = %s\n", token->value);
-			// token = args->next->next->data;
-			// printf("token->cmd = %s\n", token->value);
 			ft_trim_quotes(&args);
 			ft_expand(&args, info->head_en);
 			ft_join_args(&args);
