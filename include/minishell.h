@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/03 19:04:46 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/03 22:02:26 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
+#include <pwd.h>
 // # include <glob.h>
 
 # define ERR_UNX_TNKN "minishell: syntax error near unexpected token `|'\n"

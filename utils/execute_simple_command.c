@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/03 21:00:46 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 21:02:23 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/03 23:16:01 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 
 #include "../include/minishell.h"
@@ -153,20 +152,26 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 				exit(EXIT_FAILURE);
 			} 
 			else if (pid == 0)
-				execute_child_process(commands, info);
+			{
+				if (commands->fd_in != 404 && commands->fd_out != 404)
+				{
+					execute_child_process(commands, info);
+				}
+			}
 			else
 			{
 				waitpid(pid, &g_shell.exit_status, 0);
 				display_status_code(g_shell.exit_status);
 			}
 		}
-		else if (commands->main_cmd && commands->main_cmd[0])
-		{
+		else
 			print_error_cmd(commands->main_cmd);
+
 			// display_status_code(g_shell.exit_status);
-		}
 	}
-	// printf("the exit status is %d\n", g_shell.exit_status);
 }
+	// printf("the exit status is %d\n", g_shell.exit_status);
+	
+
 
 
