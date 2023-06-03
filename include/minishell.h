@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 18:55:07 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 17:18:04 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,14 @@ typedef struct s_token
 	char		*value;
 	int			flag_quote;
 }					t_token;
+
+typedef struct g_shell
+{
+	int		exit_status;
+	int		signel_hedoc;
+}				t_shell;
+
+extern t_shell g_shell;
 
 typedef struct s_cmd
 {

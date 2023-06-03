@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 21:32:06 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 17:48:45 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 		builtin_execution(shell, info, 1);
 		return ;
 	}
-	if (commands->main_cmd)
+	else if (commands->main_cmd)
 	{
 		if (check_if_command_found(commands->main_cmd, &info->head_ex))
 		{

@@ -69,3 +69,13 @@ cd '/////' >/dev/null
 cd $OLDPWD/directory
 
 // handel segfault whene run ls |>
+
+-> minishell$ ls | asf | adsf | asrah | nawer | iaiei | echo file
+file
+mmiinniisshheellll::  aisariaehi::  ccoommmmaanndd  nnoott  ffoouunndd
+
+minishell: adsf: command not found
+minishell: asf: command not found
+minishell: nawer: command not found
+
+<build_in_command> > output_file

@@ -6,7 +6,7 @@
 #    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/07 19:31:00 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/01 19:35:39 by ahaloui          ###   ########.fr        #
+#    Updated: 2023/06/03 16:44:47 by ahaloui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C libft
-	$(CC) $(CFLAGS) $(RFLAGS) $(OBJS) $(LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(RFLAGS) $(RL_LIB) $(OBJS) $(LIB) -o $(NAME)
 	@echo -e "\033[32m[OK] \033[0mCompilation done"
 	@clear
 	@printf "$(BOLDMAGENTA)"
@@ -64,7 +64,7 @@ $(NAME): $(OBJS)
 	@echo
 
 %.o: %.c include/minishell.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
 	@clear	
 	@printf "$(BOLDMAGENTA)"
 	@printf " __  __ _____ _   _ _____  _____ _    _ ______ _      _      \n"

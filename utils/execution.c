@@ -66,7 +66,6 @@ void	builtin_execution(t_list *shell, t_info *info, int flag)
 	{
 		builint_simple(commands, info);
 		builint_complex(commands, info);
-		// exit(EXIT_SUCCESS);
 	}
 }
 
@@ -89,6 +88,8 @@ void	choose_command(t_list *shell, t_info *info)
 	int		nb_cmd;
 	int		nb_node;
 
+	info->in = dup(STDIN_FILENO);
+	info->out = dup(STDOUT_FILENO);
 	if (!shell || !shell->data || !info)
 		return ;
 	commands = shell->data;
@@ -98,8 +99,6 @@ void	choose_command(t_list *shell, t_info *info)
 		execute_commande(commands, info, shell);
 	else if (nb_node > 1)
 		execute_commands_with_pipe(shell, info, --nb_cmd);
-	info->in = dup(STDIN_FILENO);
-	info->out = dup(STDOUT_FILENO);
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);
 	close(info->in);

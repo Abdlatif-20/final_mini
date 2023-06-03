@@ -1,5 +1,6 @@
 #include "../include/minishell.h"
-int g_exit_status = 0;
+
+t_shell g_shell;
 
 
 void	signal_handler(int sig)
@@ -8,7 +9,7 @@ void	signal_handler(int sig)
 	{
 		printf("\n");
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGQUIT)
@@ -55,8 +56,8 @@ void handle_specific_signal(int signal_number)
         printf("Child process terminated by kill signal (SIGKILL)\n");
     else if (signal_number == SIGSEGV)
         printf("Child process terminated by segmentation fault (SIGSEGV)\n");
-    else if (signal_number == SIGINT)
-        printf("Child process terminated by Ctrl+C\n");
+    // else if (signal_number == SIGINT)
+    //     printf("Child process terminated by Ctrl+C\n");
     else if (signal_number == SIGTERM)
         printf("Child process terminated by SIGTERM\n");
     else if (signal_number == SIGQUIT)
@@ -78,9 +79,9 @@ void handle_signal_status(int status)
     if (WIFSIGNALED(status))
     {
         signal_number = WTERMSIG(status);
-        g_exit_status = 128 + signal_number;
+        g_shell.exit_status = 128 + signal_number;
         handle_specific_signal(signal_number);
-        printf("g_exit_status = %d\n", g_exit_status);
+        printf("g_exit_status = %d\n", g_shell.exit_status);
     }
 }
 
@@ -88,8 +89,8 @@ void handle_exit_status(int status)
 {
     if (WIFEXITED(status))
     {
-        g_exit_status = WEXITSTATUS(status);
-        printf("g_exit_status = %d\n", g_exit_status);
+        g_shell.exit_status = WEXITSTATUS(status);
+        printf("g_exit_status = %d\n", g_shell.exit_status);
     }
 }
 
