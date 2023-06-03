@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/03 17:18:04 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 18:27:23 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-// int g_exit_status = 0;
 
 typedef struct s_token
 {

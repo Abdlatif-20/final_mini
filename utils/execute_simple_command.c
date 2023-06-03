@@ -6,11 +6,13 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 17:48:45 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 18:26:44 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+t_shell g_shell;
+
 
 char **create_env(t_info *info)
 {
@@ -156,7 +158,9 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 			}
 		}
 		else
+		{
 			print_error_cmd(commands->main_cmd);
+		}
 	}
 }
 
