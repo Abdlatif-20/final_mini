@@ -152,7 +152,7 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 			else
 			{
 				waitpid(pid, &status, 0);
-				help(status);
+				display_status_code(status);
 			}
 		}
 		else

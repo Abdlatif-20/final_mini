@@ -30,7 +30,7 @@ SOURCE_BUILT_IN = execution/built_in_functions/my_export.c execution/built_in_fu
 				execution/built_in_functions/my_pwd.c execution/built_in_functions/my_cd.c execution/built_in_functions/my_echo.c execution/built_in_functions/my_exit.c
 
 # source files
-SRC_DYALI = utils/execution.c utils/utils5.c utils/utils1.c utils/utils_error.c utils/help_cmd_simple.c utils/execute_simple_command.c utils/execute_multiple_command.c execution/help_export.c execution/help_env.c $(SOURCE_BUILT_IN)
+SRC_DYALI = utils/execution.c utils/signals_and_status_code.c utils/utils5.c utils/utils1.c utils/utils_error.c utils/help_cmd_simple.c utils/execute_simple_command.c utils/execute_multiple_command.c execution/help_export.c execution/help_env.c $(SOURCE_BUILT_IN)
 
 
 SRCS = main/main.c parsing/ft_trim_quotes.c parsing/join_args.c utils/help_command_table.c parsing/ft_expand.c parsing/token.c utils/utils.c parsing/ft_token.c parsing/syntex_error.c\

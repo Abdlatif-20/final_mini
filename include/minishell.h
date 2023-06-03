@@ -263,7 +263,16 @@ char		**get_command1(t_list *args);
 // utils
 // int		count_words_me(char *str, char c);
 void		choose_command(t_list *shell, t_info *info);
-
 void		builtin_execution(t_list *shell, t_info *info, int flag);
+
+// signals_and_status_code.c
+void handle_specific_signal_1(int signal_number);
+void handle_specific_signal(int signal_number);
+void handle_signal_status(int status);
+void handle_exit_status(int status);
+void display_status_code(int status);
+void signal_handler(int sig);
+
+
 
 #endif

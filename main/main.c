@@ -33,30 +33,15 @@
 // 	}
 // }
 
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		// rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	else if (sig == SIGQUIT)
-	{
-		printf("\nCtrl+D (EOF) received. Exiting...\n");
-		exit(0);
-	}
-}
 
 
 
 int	main(int argc, char **argv, char **env)
 {
-	char *s;
-	s = malloc(10);
-	free(s);
-	free(s);
+	// char *s;
+	// s = malloc(10);
+	// free(s);
+	// free(s);
 	char	*input;
 	t_list	*args;
 	t_list	*cmd;
