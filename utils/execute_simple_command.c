@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 20:43:00 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/03 21:00:46 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/03 21:02:23 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../include/minishell.h"
 t_shell g_shell;
@@ -158,13 +160,13 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 				display_status_code(g_shell.exit_status);
 			}
 		}
-		else
+		else if (commands->main_cmd && commands->main_cmd[0])
 		{
 			print_error_cmd(commands->main_cmd);
 			// display_status_code(g_shell.exit_status);
 		}
 	}
-	printf("the exit status is %d\n", g_shell.exit_status);
+	// printf("the exit status is %d\n", g_shell.exit_status);
 }
 
 

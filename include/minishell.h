@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/03 18:27:23 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 19:04:46 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define ERR_UNX_TNKN "minishell: syntax error near unexpected token `|'\n"
 # define ERR_TNKN "minishell: syntax error near unexpected token `%s'\n"
 # define ERR_NL "minishell: syntax error near unexpected token `newline'\n"
-# define CHECK_SYMBOL "$\"'+-./:;<=>?@[\\]^_`{|}~%#&()*,;=[]"
+# define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^_`{|}~%#&()*,;=[]"
 
 // int g_exit_status;
 
@@ -72,6 +72,7 @@ typedef struct s_token
 	int			key;
 	char		*value;
 	int			flag_quote;
+	int			is_herdoc;
 }					t_token;
 
 typedef struct g_shell
@@ -261,7 +262,7 @@ int			get_number_of_commands(t_list *args);
 void		rederection_out(t_list *args, int *fd_out);
 void		rederection_in(t_list *args, int *fd_in, char **file_name);
 void		rederection_app(t_list *args, int *fd_out);
-void		fill_token(t_list **args, int token, char *word);
+void		fill_token(t_list **args, int token, char *word, int is_heredoce);
 void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
 void		command_table(t_list *args, t_list **cmd);
 int			allocate_commande(t_list *args);

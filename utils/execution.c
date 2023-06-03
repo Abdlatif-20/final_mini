@@ -1,5 +1,4 @@
 
-
 #include "../include/minishell.h"
 
 void	dup_for_builin(t_cmd *commands)
@@ -49,6 +48,7 @@ void	builint_complex(t_cmd *commands, t_info *info)
 		{
 			add_export(&info->head_ex, commands->cmds);
 			add_env(&info->head_en, commands->cmds);
+			g_shell.exit_status = 0;
 		}
 	}
 }

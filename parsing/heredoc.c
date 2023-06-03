@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 16:17:08 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/03 20:52:21 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/03 21:00:31 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../include/minishell.h"
 
@@ -27,7 +29,7 @@ void	print_list(t_list *list)
 
 char	*generate_name(void)
 {
-	static int	i = 0;
+	static int	i;
 	char		*name;
 	char		*num;
 
@@ -36,7 +38,7 @@ char	*generate_name(void)
 	name = ft_strjoin(name, num);
 	name = ft_strjoin(name, ".txt");
 	i++;
-	return (name);
+	return (free(num), name);
 }
 
 void	heredoc_helper(t_list **args, char *name, int **fd)
@@ -46,7 +48,7 @@ void	heredoc_helper(t_list **args, char *name, int **fd)
 	while (1)
 	{
 		input = readline("> ");
-		if (ft_strcmp(input, ((t_token *)(*args)->data)->value) == 0)
+		if (input && !ft_strcmp(input, ((t_token *)(*args)->data)->value))
 		{
 			((t_token *)(*args)->data)->value = ft_strdup(name);
 			((t_token *)(*args)->data)->key = FILE_INP;
@@ -87,6 +89,6 @@ void	ft_heredoc(t_list *args, int *fd, char **file)
 			heredoc_helper(&args, name, &fd);
 			free(name);
 		}
-			args = args->next;
+		args = args->next;
 	}
 }

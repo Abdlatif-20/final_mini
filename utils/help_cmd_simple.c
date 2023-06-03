@@ -85,17 +85,16 @@ char  *check_if_command_found(char *command, t_export **head_ex)
 
 	if (head_ex && *head_ex && command)
 	{
-
-			split_paths = join_path_command(command, head_ex);
-			if (!split_paths)
-				return (NULL);
-			i = 0;
-			while (split_paths[i])
-			{
-				if (access(split_paths[i], F_OK | X_OK) == 0)
-					return (split_paths[i]);
-				i++;
-			}
+		split_paths = join_path_command(command, head_ex);
+		if (!split_paths)
+			return (NULL);
+		i = 0;
+		while (split_paths[i])
+		{
+			if (access(split_paths[i], F_OK | X_OK) == 0)
+				return (split_paths[i]);
+			i++;
+		}
 	}
 	return (NULL);
 }
