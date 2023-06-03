@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 18:26:44 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 20:43:00 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,9 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 {
 	pid_t pid;
-	int status;
+	// int status;
 
+	// status = 0;
 	if (is_builin(commands) == 1)
 	{
 		builtin_execution(shell, info, 1);
@@ -153,15 +154,17 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 				execute_child_process(commands, info);
 			else
 			{
-				waitpid(pid, &status, 0);
-				display_status_code(status);
+				waitpid(pid, &g_shell.exit_status, 0);
+				display_status_code(g_shell.exit_status);
 			}
 		}
 		else
 		{
 			print_error_cmd(commands->main_cmd);
+			// display_status_code(g_shell.exit_status);
 		}
 	}
+	printf("the exit status is %d\n", g_shell.exit_status);
 }
 
 

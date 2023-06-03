@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 23:04:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/05/28 02:58:12 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 20:56:26 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ int my_cd(t_cmd *commands, t_info *info)
 				return (1);
 			}
 			path = ft_strjoin(get_value(&info->head_ex, "PWD"), "/");
-			// path = ft_strjoin(path, "/");
 			path = ft_strjoin(get_value(&info->head_ex, "PWD"), commands->cmds[i]);
 			path = ft_strjoin(path, "/");
 			set_value(&info->head_ex, "PWD", path);
@@ -170,4 +169,10 @@ int my_cd(t_cmd *commands, t_info *info)
 	}
 	set_value(&info->head_ex, "OLDPWD", get_path(&info->head_ex));
 	return (0);
+}
+
+
+int my_cd(t_cmd *commands, t_info *info)
+{
+	return 0;
 }

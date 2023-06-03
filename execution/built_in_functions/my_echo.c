@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:40:39 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/05/28 02:11:42 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/03 20:53:50 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	my_echo(t_cmd *cmd, int fd)
 	i = 1;
 	find_option = 0;
 	not_option = 0;
-
-	
 	(void)fd;
 	if (!check_option(cmd->cmds[i]))
 		not_option = 1;
@@ -73,9 +71,12 @@ int	my_echo(t_cmd *cmd, int fd)
 		if (!cmd->cmds[i])
 			return (0);
 		printf("%s", cmd->cmds[i]);
-		// ft_putstr_fd(cmd->cmds[i], fd);
+		g_shell.exit_status = 0;
 		if (ft_strcmp(cmd->cmds[i], get_last_split(cmd)))
+		{
 			printf(" ");
+			g_shell.exit_status = 0;
+		}
 		i++;
 	}
 	if (find_option == 0)

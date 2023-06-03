@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:17:08 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 09:47:22 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/03 20:52:21 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	heredoc_helper(t_list **args, char *name, int **fd)
 		{
 			((t_token *)(*args)->data)->value = ft_strdup(name);
 			((t_token *)(*args)->data)->key = FILE_INP;
+			free(input);
+			break ;
+		}
+		if (!input)
+		{
 			free(input);
 			break ;
 		}
