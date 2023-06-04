@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 07:46:55 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:31:01 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	handel_rederections(t_list **args, t_var *var, t_token **token)
 	else if (*token && (*token)->key == HEREDOC)
 	{
 		var->heredoc = 1;
-		ft_heredoc((*args), &var->fd_in, &var->file_name);
+		if (g_shell.signel_hedoc == 0)
+			ft_heredoc((*args), &var->fd_in, &var->file_name);
 		increment_args(&args, token);
 	}
 }

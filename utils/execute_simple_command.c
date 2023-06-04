@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 23:16:01 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 13:13:01 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,7 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 			else if (pid == 0)
 			{
 				if (commands->fd_in != 404 && commands->fd_out != 404)
-				{
 					execute_child_process(commands, info);
-				}
 			}
 			else
 			{

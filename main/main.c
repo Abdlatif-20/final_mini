@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 23:15:45 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 13:42:58 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	main(int argc, char **argv, char **env)
 	// printf("\033[2J\033[1;1H");
 	while (42)
 	{
+		rl_catch_signals = 0;
 		input = readline("-> minishell$ ");
 		if (input)
 		{

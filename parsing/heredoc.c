@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 21:00:31 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 14:33:32 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,24 @@ char	*generate_name(void)
 	return (free(num), name);
 }
 
+int	get_0()
+{
+	return (0);
+}
+void	handel(int SIG)
+{
+	(void)SIG;
+	rl_done = 1;
+	g_shell.signel_hedoc = 1;
+}
 void	heredoc_helper(t_list **args, char *name, int **fd)
 {
 	char	*input;
 
 	while (1)
 	{
+		rl_event_hook = get_0;
+		signal(SIGINT, handel);
 		input = readline("> ");
 		if (input && !ft_strcmp(input, ((t_token *)(*args)->data)->value))
 		{
@@ -60,6 +72,11 @@ void	heredoc_helper(t_list **args, char *name, int **fd)
 			free(input);
 			break ;
 		}
+		if (!input[0] && g_shell.signel_hedoc == 1)
+		{
+			rl_done = 0;
+			break ;
+		}
 		write((**fd), input, ft_strlen(input));
 		write((**fd), "\n", 1);
 		free(input);
@@ -70,9 +87,10 @@ void	ft_heredoc(t_list *args, int *fd, char **file)
 {
 	char	*name;
 
+	g_shell.signel_hedoc = 0;
 	while (args)
 	{
-		if (((t_token *)args->data)->key == HEREDOC)
+		if (((t_token *)args->data)->key == HEREDOC && g_shell.signel_hedoc == 0)
 		{
 			name = generate_name();
 			(*fd) = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);

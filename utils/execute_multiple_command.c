@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 21:39:02 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 14:12:11 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void if_herdoc_or_inputfile(t_cmd *commands)
 void	dup_for_pipes(int **pipefd, int i, int nb_pipes)
 {
 	if (i == 0)
-		dup2(pipefd[i][1], STDOUT_FILENO);
+	dup2(pipefd[i][1], STDOUT_FILENO);
 	else if (i == nb_pipes)
 		dup2(pipefd[i - 1][0], STDIN_FILENO);
 	else
@@ -153,6 +153,10 @@ void execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes)
 		}
 		else if (info->pid == 0)
 		{
+			// if (g_shell.signel_hedoc == 0)
+			// {
+				
+			// }
 			merge_dup_pipe_herdoc(pipefd, info->i, nb_pipes, info->commands);
 			info->temp = check_if_command_found (info->commands->main_cmd,
 					&info->head_ex);

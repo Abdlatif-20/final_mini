@@ -97,7 +97,7 @@ void	choose_command(t_list *shell, t_info *info)
 	nb_node = get_nbr_node(shell);
 	if (nb_node == 1)
 		execute_commande(commands, info, shell);
-	else if (nb_node > 1)
+	else if (nb_node > 1 && g_shell.signel_hedoc == 0)
 		execute_commands_with_pipe(shell, info, --nb_cmd);
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);

@@ -5,18 +5,17 @@ t_shell g_shell;
 
 void	signal_handler(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT )
 	{
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (sig == SIGQUIT)
-	{
-		printf("\nCtrl+D (EOF) received. Exiting...\n");
-		exit(0);
-	}
+    // else if (sig == SIGQUIT)
+    // {
+    //   return ;
+    // }
 }
 
 void handle_specific_signal_1(int signal_number)
