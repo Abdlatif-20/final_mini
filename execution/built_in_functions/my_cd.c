@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 23:04:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 23:41:48 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 23:48:38 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int my_cd(t_cmd *commands, t_info *info)
 		free(str);
 		free(temp);
 	}
-	set_value(&info->head_ex, "OLDPWD", get_path(&info->head_ex));
+	// set_value(&info->head_ex, "OLDPWD", get_path(&info->head_ex));
 	set_value(&info->head_ex, "PWD", getcwd(NULL, 0));
 	return (0);
 }
