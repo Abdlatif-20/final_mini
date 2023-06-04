@@ -3,39 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 16:20:59 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 21:41:14 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
+/*
+while true; do
+  leaks minishell
+  sleep 1
+done
+*/
+
 #include "../include/minishell.h"
 // #include "../libft/libft.h"
 
-// void	print_list1(t_list *cmd)
-// {
-// 	int i = 0;
-// 	if (!cmd)
-// 		return ;
-// 	t_list *tmp = cmd;
-// 	t_cmd *token = cmd->data;
-// 	while (tmp)
-// 	{
-// 		token = tmp->data;
-// 		i = 0;
-// 		while (tmp && token->cmds[i])
-// 		{
-// 			printf("tmp[%d] = %s\n", i, token->cmds[i]);
-// 			i++;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
-
-
-
+void	print_list1(t_list *cmd)
+{
+	if (!cmd)
+		return ;
+	t_list *tmp = cmd;
+	t_token *token = cmd->data;
+	while (tmp)
+	{
+		token = tmp->data;
+		printf("key = [%d] | value = [%s]\n", token->key, token->value);
+		tmp = tmp->next;
+	}
+}
+void	print_list11(t_list *cmd)
+{
+	if (!cmd)
+		return ;
+	t_list *tmp = cmd;
+	t_cmd *token = cmd->data;
+	while (tmp)
+	{
+		int	i = 0;
+		token = tmp->data;
+		while (token->cmds[i])
+		{
+			printf("cmd = [%s]\n",token->cmds[i]);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -69,8 +85,8 @@ int	main(int argc, char **argv, char **env)
 		env = env1;
 	}
 
-	fill_export_list(env, &info->head_ex);
-	fill_env_list(env, &info->head_en);
+	// fill_export_list(env, &info->head_ex);
+	// fill_env_list(env, &info->head_en);
 
 	// *********************************************
 	signal(SIGINT, signal_handler);
@@ -99,12 +115,13 @@ int	main(int argc, char **argv, char **env)
 				ft_lstclear(&args);
 				continue ;
 			}
-			ft_trim_quotes(&args);
-			ft_expand(&args, info->head_en);
-			ft_join_args(&args);
-			command_table(args, &cmd, info->head_en);
-			if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
-				choose_command(cmd, info);
+			// ft_trim_quotes(&args);
+			// ft_expand(&args, info->head_en);
+			// ft_join_args(&args);
+			// command_table(args, &cmd, info->head_en);
+			// print_list11(cmd);
+			// if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
+			// 	choose_command(cmd, info);
 			ft_lstclear(&args);
 			ft_lstclear(&cmd);
 			free (input);
