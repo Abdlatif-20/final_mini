@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 17:35:21 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 21:41:00 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 21:44:39 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 
-long	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
-	long		res;
-	int		sign;
+	long long		res;
+	long long		sign;
 
+	if (!str)
+		return (0);
 	res = 0;
 	sign = 1;
 	while ((*str >= 9 && *str <= 13) || *str == 32)
