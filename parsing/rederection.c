@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rederection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/03 18:55:12 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/04 16:28:26 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	rederection_app(t_list *args, int *fd_out)
 {
 	t_token	*token;
 
+	if (g_shell.signel_hedoc)
+		return ;
 	token = args->data;
 	if (token && token->key == RED_APP)
 	{
@@ -63,6 +65,8 @@ void	rederection_in(t_list *args, int *fd_in, char **file_name)
 {
 	t_token	*token;
 
+	if (g_shell.signel_hedoc)
+		return ;
 	token = args->data;
 	if (token && token->key == RED_INP)
 	{
@@ -82,8 +86,10 @@ void	rederection_in(t_list *args, int *fd_in, char **file_name)
 			args = args->next;
 			if (args)
 				token = args->data;
+			printf("[%s]\n", token->value);
+
 		}
-		else
+		else if (token->value[0] == '\0')
 		{
 			*fd_in = 404;
 			printf("minishell: %s: ambiguous redirect\n", token->value);
@@ -96,6 +102,8 @@ void	rederection_out(t_list *args, int *fd_out)
 {
 	t_token	*token;
 
+	if (g_shell.signel_hedoc)
+		return ;
 	token = args->data;
 	if (token && token->key == RED_OUT)
 	{

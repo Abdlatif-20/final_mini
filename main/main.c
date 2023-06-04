@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 13:42:58 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 16:20:59 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,11 @@ int	main(int argc, char **argv, char **env)
 	// *********************************************
 
 
-	// printf("\033[2J\033[1;1H");
+	printf("\033[2J\033[1;1H");
 	while (42)
 	{
 		rl_catch_signals = 0;
+		g_shell.signel_hedoc = 0;
 		input = readline("-> minishell$ ");
 		if (input)
 		{
@@ -101,8 +102,8 @@ int	main(int argc, char **argv, char **env)
 			ft_trim_quotes(&args);
 			ft_expand(&args, info->head_en);
 			ft_join_args(&args);
-			command_table(args, &cmd);
-			if (cmd && cmd->data)
+			command_table(args, &cmd, info->head_en);
+			if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
 				choose_command(cmd, info);
 			ft_lstclear(&args);
 			ft_lstclear(&cmd);

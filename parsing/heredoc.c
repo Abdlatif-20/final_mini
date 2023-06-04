@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 14:33:32 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 16:18:46 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ void	handel(int SIG)
 	rl_done = 1;
 	g_shell.signel_hedoc = 1;
 }
-void	heredoc_helper(t_list **args, char *name, int **fd)
+void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 {
+	(void)env;
 	char	*input;
 
 	while (1)
@@ -60,19 +61,23 @@ void	heredoc_helper(t_list **args, char *name, int **fd)
 		rl_event_hook = get_0;
 		signal(SIGINT, handel);
 		input = readline("> ");
-		if (input && !ft_strcmp(input, ((t_token *)(*args)->data)->value))
+		// if (((t_token *)(*args)->data)->key != DQUATES)
+		// {
+		// 	ft_expand(args, env);
+		// }
+		if (!input)
+		{
+			free(input);
+			break ;
+		}
+		else if (input && !ft_strcmp(input, ((t_token *)(*args)->data)->value))
 		{
 			((t_token *)(*args)->data)->value = ft_strdup(name);
 			((t_token *)(*args)->data)->key = FILE_INP;
 			free(input);
 			break ;
 		}
-		if (!input)
-		{
-			free(input);
-			break ;
-		}
-		if (!input[0] && g_shell.signel_hedoc == 1)
+		else if (!input[0] && g_shell.signel_hedoc == 1)
 		{
 			rl_done = 0;
 			break ;
@@ -83,14 +88,15 @@ void	heredoc_helper(t_list **args, char *name, int **fd)
 	}
 }
 
-void	ft_heredoc(t_list *args, int *fd, char **file)
+void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 {
 	char	*name;
 
-	g_shell.signel_hedoc = 0;
 	while (args)
 	{
-		if (((t_token *)args->data)->key == HEREDOC && g_shell.signel_hedoc == 0)
+		if (g_shell.signel_hedoc)
+			break ;
+		if (((t_token *)args->data)->key == HEREDOC)//check
 		{
 			name = generate_name();
 			(*fd) = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -104,7 +110,7 @@ void	ft_heredoc(t_list *args, int *fd, char **file)
 				break ;
 			if (((t_token *)args->data)->key == W_SPACE)
 					args = args->next;
-			heredoc_helper(&args, name, &fd);
+			heredoc_helper(&args, name, &fd, env);
 			free(name);
 		}
 		args = args->next;

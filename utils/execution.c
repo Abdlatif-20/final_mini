@@ -88,6 +88,8 @@ void	choose_command(t_list *shell, t_info *info)
 	int		nb_cmd;
 	int		nb_node;
 
+	// if (g_shell.signel_hedoc)
+	// 	return ;
 	info->in = dup(STDIN_FILENO);
 	info->out = dup(STDOUT_FILENO);
 	if (!shell || !shell->data || !info)
@@ -97,7 +99,7 @@ void	choose_command(t_list *shell, t_info *info)
 	nb_node = get_nbr_node(shell);
 	if (nb_node == 1)
 		execute_commande(commands, info, shell);
-	else if (nb_node > 1 && g_shell.signel_hedoc == 0)
+	else if (nb_node > 1 && g_shell.signel_hedoc == 0)//check
 		execute_commands_with_pipe(shell, info, --nb_cmd);
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);

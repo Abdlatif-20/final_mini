@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 13:19:31 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 16:07:29 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ t_list		*ft_lstlast(t_list *lst);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 void		ft_lstclear(t_list **lst);
 /*-----------------------------------------------*/
-void		ft_heredoc(t_list *args, int *fd, char **file);
+void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env);
 /*---------------------- token --------------------*/
 void		get_token(char *input, t_list **token);
 void		get_flags(char *input, t_list **token, t_var *var);
@@ -265,7 +265,7 @@ void		rederection_in(t_list *args, int *fd_in, char **file_name);
 void		rederection_app(t_list *args, int *fd_out);
 void		fill_token(t_list **args, int token, char *word, int is_heredoce);
 void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
-void		command_table(t_list *args, t_list **cmd);
+void		command_table(t_list *args, t_list **cmd, t_env *env);
 int			allocate_commande(t_list *args);
 char		**get_command1(t_list *args);
 

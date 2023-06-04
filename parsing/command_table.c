@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 14:31:01 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 16:07:16 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	increment_args(t_list ***args, t_token **token)
 		*token = (**args)->data;
 }
 
-void	handel_rederections(t_list **args, t_var *var, t_token **token)
+void	handel_rederections(t_list **args, t_var *var, t_token **token, t_env *env)
 {
 	if (*token && (*token)->key == RED_OUT)
 	{
@@ -39,8 +39,7 @@ void	handel_rederections(t_list **args, t_var *var, t_token **token)
 	else if (*token && (*token)->key == HEREDOC)
 	{
 		var->heredoc = 1;
-		if (g_shell.signel_hedoc == 0)
-			ft_heredoc((*args), &var->fd_in, &var->file_name);
+		ft_heredoc((*args), &var->fd_in, &var->file_name, env);
 		increment_args(&args, token);
 	}
 }
@@ -62,7 +61,7 @@ void	init_var(t_var *var)
 	var->fd_out = 1;
 }
 
-void	command_table(t_list *args, t_list **cmd)
+void	command_table(t_list *args, t_list **cmd, t_env *env)
 {
 	t_token	*token;
 	t_var	var;
@@ -76,7 +75,7 @@ void	command_table(t_list *args, t_list **cmd)
 		{
 			if (args && (token->key == RED_OUT || token->key == RED_INP
 					|| token->key == RED_APP || token->key == HEREDOC))
-				handel_rederections(&args, &var, &token);
+				handel_rederections(&args, &var, &token, env);
 			else
 			{
 				args = args->next;
