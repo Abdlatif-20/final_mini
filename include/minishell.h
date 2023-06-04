@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 16:07:29 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 21:37:03 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 #include <pwd.h>
+#include <limits.h>
 // # include <glob.h>
 
 # define ERR_UNX_TNKN "minishell: syntax error near unexpected token `|'\n"
@@ -197,7 +198,8 @@ void		fill_env_list(char **environ, t_env **head_env);
 void		my_unset(t_cmd *commands, t_info *info);
 
 // file my_exit.c
-int			my_exit(void);
+// int			my_exit(void);
+int my_exit(t_cmd *commands);
 
 // file utils1.c
 int			ft_strcmp(char *s1, char *s2);

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 23:04:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 23:05:40 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 21:34:27 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,15 @@ int my_cd(t_cmd *commands, t_info *info)
 	char *path = commands->cmds[i];
 	char *old_path;
 	
-	if (getcwd(NULL, 0))
-		set_value(&info->head_ex, "PWD", getcwd(NULL, 0));
+	if (getcwd(NULL, 0) == NULL)
+	{
+		printf("minishell$: cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		path = get_path_home(&info->head_ex);
+		if(!path)
+			return (0);
+		// p	
+		return (1);
+	}
 	if (commands->main_cmd && !ft_strcmp(commands->main_cmd, "cd") 
 		&& !commands->cmds[1])
 	{
@@ -137,8 +144,11 @@ int my_cd(t_cmd *commands, t_info *info)
 	}
 	else if (commands->cmds[i])
 	{
-		char *str = ft_substr(path, 0, get_pos(path, '/'));
-		char *temp = ft_substr(path, get_pos(path, '/') + 1, ft_strlen(path) - 1); 
+		char *str;
+		char *temp;
+
+		str = ft_substr(path, 0, get_pos(path, '/'));
+		temp = ft_substr(path, get_pos(path, '/') + 1, ft_strlen(path) - 1);
 		if (!ft_strcmp(str, "~"))
 		{
 			path = get_path_home(&info->head_ex);
@@ -160,13 +170,11 @@ int my_cd(t_cmd *commands, t_info *info)
 				printf("minishell$: cd: %s: No such file or directory\n", path);	
 				return (1);
 			}
-			path = ft_strjoin(get_value(&info->head_ex, "PWD"), "/");
-			// path = ft_strjoin(path, "/");
-			path = ft_strjoin(get_value(&info->head_ex, "PWD"), commands->cmds[i]);
-			path = ft_strjoin(path, "/");
 			set_value(&info->head_ex, "PWD", path);
 			flag = 0;
 		}
+		free(str);
+		free(temp);
 	}
 	set_value(&info->head_ex, "OLDPWD", get_path(&info->head_ex));
 	return (0);

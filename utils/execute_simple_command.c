@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 13:13:01 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 17:11:30 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,32 +101,6 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 	}
 }
 
-// char **create_env(t_info *info)
-// {
-// 	t_env	*tmp;
-// 	char	**env;
-// 	int		i;
-
-// 	i = 0;
-// 	tmp = info->head_en;
-// 	while (tmp)
-// 	{
-// 		i++;
-// 		tmp = tmp->next;
-// 	}
-// 	env = (char **)malloc(sizeof(char *) * (i + 1));
-// 	i = 0;
-// 	tmp = info->head_en;
-// 	while (tmp)
-// 	{
-// 		env[i] = ft_strjoin(tmp->env_var, "=");
-// 		env[i] = ft_strjoin(env[i], tmp->env_value);
-// 		i++;
-// 		tmp = tmp->next;
-// 	}
-// 	env[i] = NULL;
-// 	return (env);
-// }
 
 
 
