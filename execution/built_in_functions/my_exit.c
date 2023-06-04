@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:40:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 21:39:46 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 22:06:54 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int my_exit(t_cmd *commands)
     {
         if (check_is_numeric(commands->cmds[i]))
         {
-            status_code = ft_atoi(commands->cmds[i]);
+            // status_code = ft_atoi(commands->cmds[i]);
             if (status_code > INT_MAX || status_code < INT_MIN)
             {
                 printf("exit1111111\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 22:39:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/05/12 23:26:47 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/04 22:07:10 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_strnstr(const char *src, char *to_find, size_t len);
 int		ft_strncmp(char *str1, char *str2);
 void	*ft_memchr(const void *str, int c, size_t n);
 int		ft_memcmp(const void *str1, const void *str2, size_t n);
-int		ft_atoi(const char *str);
+long    long ft_atoi(const char *str);
 void	*ft_calloc(size_t n, size_t size);
 char	*ft_strdup(const char *s);
 
