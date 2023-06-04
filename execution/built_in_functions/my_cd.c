@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 23:04:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 22:37:36 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 23:41:48 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int my_cd(t_cmd *commands, t_info *info)
 	static int flag = 1;
 	char *path = commands->cmds[i];
 	char *old_path = get_path(&info->head_ex);
+	
 	
 	if (getcwd(NULL, 0) == NULL)
 	{

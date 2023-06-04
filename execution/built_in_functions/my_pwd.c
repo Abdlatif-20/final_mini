@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:40:01 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 22:30:53 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 23:29:25 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int my_pwd(t_info *info)
     {
         path = get_export_value("PWD");
         ft_putstr_fd(get_value(&info->head_ex,"PWD"), 1);
+        ft_putstr_fd("\n", 1);
     }
     else
     {
