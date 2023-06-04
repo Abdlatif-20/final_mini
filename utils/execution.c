@@ -24,7 +24,7 @@ void	builint_simple(t_cmd *commands, t_info *info)
 	else if (!ft_strcmp(commands->main_cmd, "pwd"))
 		my_pwd(info);
 	else if (!ft_strcmp(commands->main_cmd, "exit"))
-		my_exit();
+		my_exit(commands);
 	else if (info->head_en && info->head_ex
 		&& !ft_strcmp(commands->main_cmd, "unset"))
 		my_unset(commands, info);
