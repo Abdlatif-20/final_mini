@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 23:04:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 21:34:27 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/04 23:48:40 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ int my_cd(t_cmd *commands, t_info *info)
 	int i = 1;
 	static int flag = 1;
 	char *path = commands->cmds[i];
-	char *old_path;
+	char *old_path = get_path(&info->head_ex);
+	
 	
 	if (getcwd(NULL, 0) == NULL)
 	{
@@ -104,7 +105,9 @@ int my_cd(t_cmd *commands, t_info *info)
 		path = get_path_home(&info->head_ex);
 		if(!path)
 			return (0);
-		// p	
+		path = ft_strjoin(old_path, "/");
+		path = ft_strjoin(path, commands->cmds[i]);
+		set_value(&info->head_ex, "PWD", path);
 		return (1);
 	}
 	if (commands->main_cmd && !ft_strcmp(commands->main_cmd, "cd") 
@@ -112,7 +115,10 @@ int my_cd(t_cmd *commands, t_info *info)
 	{
 		path = get_path_home(&info->head_ex);
 		if(!path)
+		{
+			printf("minishell$: cd: HOME not set\n");
 			return (0);
+		}
 		if (chdir(path))
 			return(1);
 			flag = 0;
@@ -128,9 +134,7 @@ int my_cd(t_cmd *commands, t_info *info)
 	else if (commands->cmds[i] && !ft_strcmp(commands->cmds[i], "-"))
 	{
 		if (flag)
-		{
 			printf("minishell$: cd: OLDPWD not set\n");
-		}
 		else
 		{
 			old_path = get_old_path(&info->head_ex);
@@ -176,6 +180,7 @@ int my_cd(t_cmd *commands, t_info *info)
 		free(str);
 		free(temp);
 	}
-	set_value(&info->head_ex, "OLDPWD", get_path(&info->head_ex));
+	// set_value(&info->head_ex, "OLDPWD", get_path(&info->head_ex));
+	set_value(&info->head_ex, "PWD", getcwd(NULL, 0));
 	return (0);
 }

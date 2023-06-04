@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 22:39:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 21:45:23 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/04 23:48:48 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/04 23:49:18 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef LIBFT_H
 
@@ -58,7 +59,6 @@ int		    ft_memcmp(const void *str1, const void *str2, size_t n);
 long long	ft_atoi(const char *str);
 void	    *ft_calloc(size_t n, size_t size);
 char	    *ft_strdup(const char *s);
-
 // --------------------- Part 2 ---------------------------------
 
 char	    *ft_substr(char const *s, unsigned int start, size_t len);

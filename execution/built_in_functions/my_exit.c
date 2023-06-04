@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 21:40:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 22:02:00 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/04 23:48:01 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/04 23:48:03 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int my_exit(t_cmd *commands)
 	status_code = 0;
 	if (commands->cmds[i])
 	{
-
 		if (check_is_numeric(commands->cmds[i]))
 		{
 			status_code = ft_atoi(commands->cmds[i]);
