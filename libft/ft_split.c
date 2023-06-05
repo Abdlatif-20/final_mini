@@ -6,11 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 19:10:02 by aben-nei          #+#    #+#             */
-/*   Updated: 2022/10/30 19:17:51 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:54:50 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../include/minishell.h"
 
 static int	num_word(char const *s, char c)
 {

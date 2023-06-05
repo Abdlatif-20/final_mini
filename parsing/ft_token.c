@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:29:42 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/03 19:36:07 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 20:56:15 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,9 @@ void	check_red_heredoc(char *input, t_list **token, int *i)
 void	get_token(char *input, t_list **token)
 {
 	t_var	var;
-	t_token	*word;
 
 	var.i = 0;
 	var.flag = 1;
-	word = (t_token *)malloc(sizeof(t_token));
-	if (!word)
-		return ;
 	input = skip_whitespace(input);
 	while (input && input[var.i])
 	{

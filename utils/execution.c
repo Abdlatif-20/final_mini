@@ -32,9 +32,10 @@ void	builint_simple(t_cmd *commands, t_info *info)
 
 void	builint_complex(t_cmd *commands, t_info *info)
 {
-	if ((!ft_strcmp(commands->main_cmd, "export")
-			&& !commands->cmds[1]) || (commands->cmds[1]
-			&& commands->cmds[1][0] == '\0' && !commands->cmds[2]))
+			puts("export-----------");
+	
+	if ((!ft_strcmp(commands->main_cmd, "export") && !commands->cmds[1]) || (commands->cmds[1]
+			&& !commands->cmds[2]))
 		print_list_export(info);
 	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env")
 		&& !(commands->cmds[1]))
@@ -42,14 +43,18 @@ void	builint_complex(t_cmd *commands, t_info *info)
 	else if (!ft_strcmp(commands->main_cmd, "export")
 		&& commands->cmds[1])
 	{
-		if (info->head_en && check_export(commands->cmds) == 0)
-			return ;
-		if (info->head_en && commands->cmds)
+		if (commands->cmds[1][0] != '\0')
 		{
+			if (info->head_en && check_export(commands->cmds) == 0)
+			return ;
+			if (info->head_en && commands->cmds)
+			{
 			add_export(&info->head_ex, commands->cmds);
 			add_env(&info->head_en, commands->cmds);
 			g_shell.exit_status = 0;
+			}
 		}
+		
 	}
 }
 

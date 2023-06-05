@@ -85,3 +85,11 @@ minishell: asf: command not found
 minishell: nawer: command not found
 
 <build_in_command> > output_file
+
+
+exit 9223372036854775807 handle max long long int not max int
+
+while true; do
+  leaks minishell
+  sleep 1
+done

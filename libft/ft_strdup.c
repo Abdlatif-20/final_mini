@@ -6,11 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 17:05:23 by aben-nei          #+#    #+#             */
-/*   Updated: 2022/11/01 10:25:39 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:54:35 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../include/minishell.h"
 
 char	*ft_strdup(const char *s)
 {

@@ -6,11 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:20:19 by aben-nei          #+#    #+#             */
-/*   Updated: 2022/10/28 16:26:36 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:54:01 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../include/minishell.h"
 
 char	*ft_strchr(const char *s, int c)
 {

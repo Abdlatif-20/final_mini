@@ -6,11 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:18:35 by aben-nei          #+#    #+#             */
-/*   Updated: 2022/10/30 03:25:39 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:56:07 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../include/minishell.h"
 
 void	*ft_memset(void *str, int c, size_t n)
 {

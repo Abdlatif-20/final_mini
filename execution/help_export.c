@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:07:13 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/03 20:38:19 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:42:19 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,93 +86,93 @@ void handle_export_concatenation(t_export **head_ex, char *export_variable, char
         concatenation_export(head_ex, export_variable, export_value);
 }
 
-// void add_export(t_export **head_ex, char **split)
-// {
-// 	int i;
-// 	char *export_variable;
-// 	char *export_value;
-// 	int concatenate;
- 
-// 	i = 1;
-// 	while (split[i])
-// 	{
-// 		concatenate = 0;
-// 		if (split[i][0] == '\0' || (check_if_valid_args(split[i]) == false))
-// 		{
-// 			i++;
-// 			continue;        
-// 		}
-// 		export_value = get_export_value(split[i]);
-// 		export_variable = get_export_variable(split[i]);
-// 		if (export_variable[ft_strlen(export_variable) - 1] == '+')
-// 		{
-// 			if (export_variable[ft_strlen(export_variable) - 2] == '+')
-// 			{
-// 				printf("minishell: export: `%s': not a valid identifier\n", split[i]);
-// 				i++;
-// 				continue;
-// 			}
-// 			concatenate = 1;
-// 			export_variable[ft_strlen(export_variable) - 1] = '\0';
-// 		}
-// 		if (check_if_export_var_exist(*head_ex, export_variable))
-// 		{
-// 			if (concatenate == 1)
-// 			{
-// 				concatenation_export(head_ex, export_variable, export_value);
-// 				i++;
-// 				continue;
-// 			}
-// 			else
-// 				remove_export_element(head_ex, export_variable);
-// 		}
-// 		add_export_element(export_variable, export_value, head_ex);
-// 		i++;
-// 	}
-// }
-
-void process_export_argument(t_export **head_ex, char *arg)
-{
-    char *export_variable = get_export_variable(arg);
-    char *export_value = get_export_value(arg);
-    int concatenate = 0;
-    if (export_variable[ft_strlen(export_variable) - 1] == '+')
-    {
-        if (export_variable[ft_strlen(export_variable) - 2] == '+')
-        {
-            printf("minishell: export: `%s': not a valid identifier\n", arg);
-			g_shell.exit_status = EXIT_FAILURE;
-            return;
-        }
-        concatenate = 1;
-        export_variable[ft_strlen(export_variable) - 1] = '\0';
-    }
-    
-    if (check_if_export_var_exist(*head_ex, export_variable))
-    {
-        if (concatenate == 1)
-        {
-            concatenation_export(head_ex, export_variable, export_value);
-            return;
-        }
-        else
-            remove_export_element(head_ex, export_variable);
-    }
-    add_export_element(export_variable, export_value, head_ex);
-}
 void add_export(t_export **head_ex, char **split)
 {
-    int i = 1;
-    
-    while (split[i])
-    {
-        if (split[i][0] == '\0' || !check_if_valid_args(split[i]))
-        {
-            i++;
-            continue;
-        }
-        process_export_argument(head_ex, split[i]);
-        i++;
-    }
+	int i;
+	char *export_variable;
+	char *export_value;
+	int concatenate;
+ 
+	i = 1;
+	while (split[i])
+	{
+		concatenate = 0;
+		if (split[i][0] == '\0' || (check_if_valid_args(split[i]) == false))
+		{
+			i++;
+			continue;        
+		}
+		export_value = get_export_value(split[i]);
+		export_variable = get_export_variable(split[i]);
+		if (export_variable[ft_strlen(export_variable) - 1] == '+')
+		{
+			if (export_variable[ft_strlen(export_variable) - 2] == '+')
+			{
+				printf("minishell: export: `%s': not a valid identifier\n", split[i]);
+				i++;
+				continue;
+			}
+			concatenate = 1;
+			export_variable[ft_strlen(export_variable) - 1] = '\0';
+		}
+		if (check_if_export_var_exist(*head_ex, export_variable))
+		{
+			if (concatenate == 1)
+			{
+				concatenation_export(head_ex, export_variable, export_value);
+				i++;
+				continue;
+			}
+			else
+				remove_export_element(head_ex, export_variable);
+		}
+		add_export_element(export_variable, export_value, head_ex);
+		i++;
+	}
 }
+
+// void process_export_argument(t_export **head_ex, char *arg)
+// {
+//     char *export_variable = get_export_variable(arg);
+//     char *export_value = get_export_value(arg);
+//     int concatenate = 0;
+//     if (export_variable[ft_strlen(export_variable) - 1] == '+')
+//     {
+//         if (export_variable[ft_strlen(export_variable) - 2] == '+')
+//         {
+//             printf("minishell: export: `%s': not a valid identifier\n", arg);
+// 			g_shell.exit_status = EXIT_FAILURE;
+//             return;
+//         }
+//         concatenate = 1;
+//         export_variable[ft_strlen(export_variable) - 1] = '\0';
+//     }
+    
+//     if (check_if_export_var_exist(*head_ex, export_variable))
+//     {
+//         if (concatenate == 1)
+//         {
+//             concatenation_export(head_ex, export_variable, export_value);
+//             return;
+//         }
+//         else
+//             remove_export_element(head_ex, export_variable);
+//     }
+//     add_export_element(export_variable, export_value, head_ex);
+// }
+// void add_export(t_export **head_ex, char **split)
+// {
+//     int i = 1;
+    
+//     while (split[i])
+//     {
+//         if (split[i][0] == '\0' || !check_if_valid_args(split[i]))
+//         {
+//             i++;
+//             continue;
+//         }
+//         process_export_argument(head_ex, split[i]);
+//         i++;
+//     }
+// }
 

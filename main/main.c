@@ -6,52 +6,43 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/05 16:58:21 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:37:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-/*
-while true; do
-  leaks minishell
-  sleep 1
-done
-*/
-
 #include "../include/minishell.h"
-// #include "../libft/libft.h"
 
-void	print_list1(t_list *cmd)
-{
-	if (!cmd)
-		return ;
-	t_list *tmp = cmd;
-	t_token *token = cmd->data;
-	while (tmp)
-	{
-		token = tmp->data;
-		printf("key = [%d] | value = [%s]\n", token->key, token->value);
-		tmp = tmp->next;
-	}
-}
-void	print_list11(t_list *cmd)
-{
-	if (!cmd)
-		return ;
-	t_list *tmp = cmd;
-	t_cmd *token = cmd->data;
-	while (tmp)
-	{
-		int	i = 0;
-		token = tmp->data;
-		while (token->cmds[i])
-		{
-			printf("cmd = [%s]\n",token->cmds[i]);
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
+// void	print_list1(t_list *cmd)
+// {
+// 	if (!cmd)
+// 		return ;
+// 	t_list *tmp = cmd;
+// 	t_token *token = cmd->data;
+// 	while (tmp)
+// 	{
+// 		token = tmp->data;
+// 		printf("key = [%d] | value = [%s]\n", token->key, token->value);
+// 		tmp = tmp->next;
+// 	}
+// }
+// void	print_list11(t_list *cmd)
+// {
+// 	if (!cmd)
+// 		return ;
+// 	t_list *tmp = cmd;
+// 	t_cmd *token = cmd->data;
+// 	while (tmp)
+// 	{
+// 		int	i = 0;
+// 		token = tmp->data;
+// 		while (token->cmds[i])
+// 		{
+// 			printf("cmd = [%s]\n",token->cmds[i]);
+// 			i++;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
 
 int	main(int argc, char **argv, char **env)
 {
@@ -97,6 +88,7 @@ int	main(int argc, char **argv, char **env)
 	printf("\033[2J\033[1;1H");
 	while (42)
 	{
+		
 		rl_catch_signals = 0;
 		g_shell.signel_hedoc = 0;
 		input = readline("-> minishell$ ");
@@ -124,6 +116,8 @@ int	main(int argc, char **argv, char **env)
 				choose_command(cmd, info);
 			ft_lstclear(&args);
 			ft_lstclear(&cmd);
+			// free(info->head_en);
+			// free(info->head_ex);
 			free (input);
 		}
 		else

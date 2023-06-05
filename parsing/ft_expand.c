@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:45:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 17:05:15 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:59:47 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*get_variable_name(char *name)
 {
 	t_var	var;
 
+	if (!name)
+		return (NULL);
 	init_variable(&var, name);
 	if (!var.str)
 		return (NULL);
@@ -85,9 +87,10 @@ void	ft_expand(t_list **list, t_env *env)
 				{
 					token->value = ft_strdup(env->env_value);
 					temp = ft_split(token->value, ' ');
-						token->value = ft_strdup(temp[0]);
+					token->value = ft_strdup(temp[0]);
 					fill_token(list, W_SPACE, ft_strdup(" "), 0);
 					fill_token(list, FLAG, ft_strdup(temp[1]), 0);
+					free_array(temp);
 					break ;
 				}
 				env = env->next;
@@ -152,7 +155,7 @@ void	ft_expand(t_list **list, t_env *env)
 									ft_substr(token->value, var.i, var.len));
 						var.i += var.len;
 					}
-				var.len = 0;
+					var.len = 0;
 					while (token->value[var.i + var.len]
 						&& token->value[var.i + var.len] != '$'
 						&& token->value[var.i + var.len] != ' '

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 13:58:41 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/05 22:21:15 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,20 @@
 # include <stdio.h>
 # include <string.h>
 # include <ctype.h>
-# include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
-#include <pwd.h>
-#include <limits.h>
-// # include <glob.h>
+# include <limits.h>
 
 # define ERR_UNX_TNKN "minishell: syntax error near unexpected token `|'\n"
 # define ERR_TNKN "minishell: syntax error near unexpected token `%s'\n"
 # define ERR_NL "minishell: syntax error near unexpected token `newline'\n"
 # define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^_`{|}~%#&()*,;=[]"
 
-// int g_exit_status;
+extern t_shell g_shell;
 
 enum e_type
 {
@@ -68,7 +65,6 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-
 typedef struct s_token
 {
 	int			key;
@@ -83,8 +79,6 @@ typedef struct g_shell
 	int		signel_hedoc;
 	int		signel_cat;
 }				t_shell;
-
-extern t_shell g_shell;
 
 typedef struct s_cmd
 {
@@ -150,7 +144,7 @@ typedef struct t_var
 }				t_var;
 
 char		**create_env(t_info *info);
-void 		help(int status);
+void		help(int status);
 // file my_echo.c
 // int			my_echo(t_cmd *cmd);
 int			my_echo(t_cmd *cmd, int fd);
@@ -200,7 +194,7 @@ void		my_unset(t_cmd *commands, t_info *info);
 
 // file my_exit.c
 // int			my_exit(void);
-int my_exit(t_cmd *commands);
+int			my_exit(t_cmd *commands);
 
 // file utils1.c
 int			ft_strcmp(char *s1, char *s2);
@@ -233,6 +227,23 @@ int			is_builin(t_cmd *commands);
 void		print_error_cmd(char *command);
 void		print_error_file(char *command);
 
+
+/*--------------- libft ------------------------*/
+int			ft_isalpha(int c);
+int			ft_isdigit(int c );
+int			ft_isalnum(int c);
+size_t		ft_strlen(const char *str);
+char		*ft_strchr(const char *s, int c);
+long long	ft_atoi(const char *str);
+char		*ft_strdup(const char *s);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_strjoin(char *s1, char *s2);
+char		**ft_split(char const *s, char c);
+char		*ft_itoa(int n);
+void		ft_putstr_fd(char *s, int fd);
+size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+void		*ft_memset(void *str, int c, size_t n);
+void		ft_bzero(void *s, size_t n);
 /*--------------- list ------------------------*/
 t_list		*ft_lstnew(void	*content);
 void		ft_lstadd_front(t_list **lst, t_list *new);
@@ -241,7 +252,7 @@ t_list		*ft_lstlast(t_list *lst);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 void		ft_lstclear(t_list **lst);
 /*-----------------------------------------------*/
-void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env);
+void		ft_heredoc(t_list *args, int *fd, char **file, t_env *env);
 /*---------------------- token --------------------*/
 void		get_token(char *input, t_list **token);
 void		get_flags(char *input, t_list **token, t_var *var);
@@ -261,8 +272,6 @@ void		ft_expand(t_list **list, t_env *env);
 void		ft_remove_node(t_list **head, t_list *node);
 char		*skip_whitespace(char *input);
 int			ft_whitespace(char c);
-int			get_number_of_commands(t_list *args);
-int			get_number_of_commands(t_list *args);
 void		rederection_out(t_list *args, int *fd_out);
 void		rederection_in(t_list *args, int *fd_in, char **file_name);
 void		rederection_app(t_list *args, int *fd_out);
@@ -271,19 +280,19 @@ void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
 void		command_table(t_list *args, t_list **cmd, t_env *env);
 int			allocate_commande(t_list *args);
 char		**get_command1(t_list *args);
-
+int			check_dquotes(char *str);
 // utils
 // int		count_words_me(char *str, char c);
 void		choose_command(t_list *shell, t_info *info);
 void		builtin_execution(t_list *shell, t_info *info, int flag);
 
 // signals_and_status_code.c
-void handle_specific_signal_1(int signal_number);
-void handle_specific_signal(int signal_number);
-void handle_signal_status(int status);
-void handle_exit_status(int status);
-void display_status_code(int status);
-void signal_handler(int sig);
+void		handle_specific_signal_1(int signal_number);
+void		handle_specific_signal(int signal_number);
+void		handle_signal_status(int status);
+void		handle_exit_status(int status);
+void		display_status_code(int status);
+void		signal_handler(int sig);
 
 
 #endif

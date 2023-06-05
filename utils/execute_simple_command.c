@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/05 14:18:52 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/05 17:16:26 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 	else
 		if_input_output_file(commands);
 	path = check_if_command_found(commands->main_cmd, &info->head_ex);
-	if (!path)
-		return ;
+	// if (!path)
+	// 	return ;
 	if (execve(path, commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(commands->main_cmd);
@@ -115,10 +115,10 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 	}
 	else if (commands->main_cmd)
 	{
-		if (check_if_command_found(commands->main_cmd, &info->head_ex))
-		{
+		// if (check_if_command_found(commands->main_cmd, &info->head_ex))
+		// {
 			pid = fork();
-			if (pid == -1) 
+			if (pid == -1)
 			{
 				perror("fork");
 				exit(EXIT_FAILURE);
@@ -133,9 +133,9 @@ void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 				waitpid(pid, &g_shell.exit_status, 0);
 				display_status_code(g_shell.exit_status);
 			}
-		}
-		else
-			print_error_cmd(commands->main_cmd);
+		// }
+		// else
+		// 	print_error_cmd(commands->main_cmd);
 
 			// display_status_code(g_shell.exit_status);
 	}

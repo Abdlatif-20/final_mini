@@ -6,11 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 10:10:23 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 17:15:29 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:55:37 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
@@ -18,7 +18,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 
 	if (lst && new)
 	{
-		if (!*lst || !lst)
+		if (!*lst)
 			*lst = new;
 		else
 		{

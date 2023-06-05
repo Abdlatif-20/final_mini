@@ -6,11 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 10:21:08 by aben-nei          #+#    #+#             */
-/*   Updated: 2022/10/28 16:24:52 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:54:55 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../include/minishell.h"
 
 static int	num_len(long n)
 {

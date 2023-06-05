@@ -6,11 +6,27 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:56:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 17:15:10 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:20:32 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../include/minishell.h"
+
+int	check_dquotes(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	ft_whitespace(char c)
 {
@@ -20,9 +36,23 @@ int	ft_whitespace(char c)
 	return (0);
 }
 
+void	free_list(t_list *list)
+{
+	t_list	*tmp;
+
+	while (list)
+	{
+		tmp = list->next;
+		free(list->data);
+		free(list);
+		list = tmp;
+	}
+}
+
 void	fill_token(t_list **args, int token, char *word, int is_heredoc)
 {
 	t_token	*tokens;
+	// t_list	*tmp = NULL;
 
 	if (word)
 	{
@@ -30,7 +60,7 @@ void	fill_token(t_list **args, int token, char *word, int is_heredoc)
 		if (!tokens)
 			return ;
 		tokens->value = word;
-		if (token == DQUATES)
+		if (token == DQUATES || check_dquotes(word))
 		{
 			tokens->key = token;
 			tokens->flag_quote = 1;
@@ -43,6 +73,8 @@ void	fill_token(t_list **args, int token, char *word, int is_heredoc)
 		tokens->is_herdoc = is_heredoc;
 		ft_lstadd_back(args, ft_lstnew(tokens));
 	}
+	// tokens = tmp->data;
+	// free_list(tmp);
 }
 
 char	*skip_whitespace(char *input)

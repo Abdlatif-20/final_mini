@@ -35,8 +35,13 @@ char  **join_path_command(char *command, t_export **head_ex)
 	int i;
 	int j;
 	
-	if (command[0] == '/' || command[0] == '.')
+	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
 	{
+		if (access(command, F_OK | X_OK) != 0)
+		{
+			printf("minishell: %s: No such file or directory\n", command);
+			exit(0);
+		}
 		split_paths = malloc(sizeof(char *) * 2);
 		split_paths[0] = ft_strdup(command);
 		return (split_paths);
@@ -83,6 +88,7 @@ char  *check_if_command_found(char *command, t_export **head_ex)
 	char **split_paths;
 	int i;
 
+	
 	if (head_ex && *head_ex && command)
 	{
 		split_paths = join_path_command(command, head_ex);
