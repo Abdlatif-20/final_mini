@@ -5,17 +5,15 @@ t_shell g_shell;
 
 void	signal_handler(int sig)
 {
-	if (sig == SIGINT )
+	if (sig == SIGINT && g_shell.signel_cat == 0)
 	{
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-    // else if (sig == SIGQUIT)
-    // {
-    //   return ;
-    // }
+    else
+        g_shell.signel_cat = 0;
 }
 
 void handle_specific_signal_1(int signal_number)
@@ -44,8 +42,8 @@ void handle_specific_signal_1(int signal_number)
         printf("Child process terminated by user-defined signal 2 (SIGUSR2)\n");
     else if (signal_number == SIGIO)
         printf("Child process terminated by I/O now possible (SIGIO)\n");
-    else
-        printf("Child process terminated by signal: %d\n", signal_number);
+    // else
+    //     printf("Child process terminated by signal: %d\n", signal_number);
 }
 void handle_specific_signal(int signal_number)
 {
@@ -53,10 +51,10 @@ void handle_specific_signal(int signal_number)
         printf("Child process terminated by abort signal (SIGABRT) %d\n", signal_number);
     else if (signal_number == SIGKILL)
         printf("Child process terminated by kill signal (SIGKILL)\n");
-    else if (signal_number == SIGSEGV)
-        printf("Child process terminated by segmentation fault (SIGSEGV)\n");
+    // else if (signal_number == SIGSEGV)
+    //     printf("Child process terminated by segmentation fault (SIGSEGV)\n");
     else if (signal_number == SIGINT)
-        printf("Child process terminated by Ctrl+C\n");
+        printf("\n");
     else if (signal_number == SIGTERM)
         printf("Child process terminated by SIGTERM\n");
     else if (signal_number == SIGQUIT)

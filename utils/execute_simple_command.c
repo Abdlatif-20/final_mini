@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 17:11:30 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/05 14:18:52 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,7 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 {
 	pid_t pid;
-	// int status;
-
-	// status = 0;
+	g_shell.signel_cat = 1;
 	if (is_builin(commands) == 1)
 	{
 		builtin_execution(shell, info, 1);

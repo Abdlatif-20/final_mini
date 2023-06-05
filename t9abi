@@ -57,6 +57,12 @@ cd $OLDPWD/directory
 cd ?
 echo "-n -n -n"-n nenie_iri
 
+|----------------------- fixed -------------------------------------|
+|echo "nenie_iri"   "$USER"    "$USER"                              |
+|echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' |
+|echo ' \' ' \'                                                     | 
+|echo $USER '' $USER $USER '' $USER '' $USER -n $USER               |
+|-------------------------------------------------------------------|
 
 expander
 joiner

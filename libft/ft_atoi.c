@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 17:35:21 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 22:07:41 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/04 23:47:52 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/04 23:47:55 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 long long	ft_atoi(const char *str)
 {
-	long		res;
-	int		sign;
+	long long		res;
+	long long		sign;
 
+	if (!str)
+		return (0);
 	res = 0;
 	sign = 1;
 	while ((*str >= 9 && *str <= 13) || *str == 32)

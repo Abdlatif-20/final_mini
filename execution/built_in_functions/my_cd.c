@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 23:04:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 23:48:38 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/04 23:51:03 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/05 13:25:30 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../include/minishell.h"
 
@@ -97,6 +98,9 @@ int my_cd(t_cmd *commands, t_info *info)
 	static int flag = 1;
 	char *path = commands->cmds[i];
 	char *old_path = get_path(&info->head_ex);
+
+	char *str;
+	char *temp;
 	
 	
 	if (getcwd(NULL, 0) == NULL)
@@ -121,7 +125,6 @@ int my_cd(t_cmd *commands, t_info *info)
 		}
 		if (chdir(path))
 			return(1);
-			flag = 0;
 	}
 	if (commands->cmds[i] && !ft_strcmp(commands->cmds[i], "~"))
 	{
@@ -143,13 +146,11 @@ int my_cd(t_cmd *commands, t_info *info)
 			if (chdir(old_path))
 				return (1);
 			printf("%s\n", old_path);
-		flag = 0;
 		}
 	}
 	else if (commands->cmds[i])
 	{
-		char *str;
-		char *temp;
+		
 
 		str = ft_substr(path, 0, get_pos(path, '/'));
 		temp = ft_substr(path, get_pos(path, '/') + 1, ft_strlen(path) - 1);
@@ -163,7 +164,6 @@ int my_cd(t_cmd *commands, t_info *info)
 				printf("minishell$: cd: %s/%s: No such file or directory\n", path, temp);	
 				return (1);
 			}
-			flag = 0;
 		}
 		else if (commands->cmds[i])
 		{ 
@@ -175,7 +175,6 @@ int my_cd(t_cmd *commands, t_info *info)
 				return (1);
 			}
 			set_value(&info->head_ex, "PWD", path);
-			flag = 0;
 		}
 		free(str);
 		free(temp);

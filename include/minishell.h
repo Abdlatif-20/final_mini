@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 21:37:03 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/05 13:58:41 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct g_shell
 {
 	int		exit_status;
 	int		signel_hedoc;
+	int		signel_cat;
 }				t_shell;
 
 extern t_shell g_shell;
