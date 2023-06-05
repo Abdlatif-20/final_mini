@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/04 17:21:18 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:32:09 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,36 @@ void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 {
 	(void)env;
 	char	*input;
+	t_list	*tmp;
 	// char 	*buffer;
 
+	tmp = NULL;
 	while (1)
 	{
 		rl_event_hook = get_0;
 		signal(SIGINT, handel);
 		input = readline("> ");
-		// if (((t_token *)(*args)->data)->key != DQUATES)
-		// {
-		// 	ft_expand(args, env);
-		// }
 		if (!input)
 		{
 			free(input);
 			break ;
 		}
-		else if (input && !ft_strcmp(input, ((t_token *)(*args)->data)->value))
+		if (input && !ft_strcmp(input, ((t_token *)(*args)->data)->value))
 		{
 			((t_token *)(*args)->data)->value = ft_strdup(name);
 			((t_token *)(*args)->data)->key = FILE_INP;
 			free(input);
 			break ;
+		}
+		else if (args && ((t_token *)(*args)->data)->key != DQUATES)
+		{
+			if (input && input[0] == '$')
+			{
+				fill_token(&tmp, VAR, input, 0);
+				ft_expand(&tmp, env);
+				input = ft_strdup(((t_token *)tmp->data)->value);
+				free(tmp->data);
+			}
 		}
 		else if (!input[0] && g_shell.signel_hedoc == 1)
 		{

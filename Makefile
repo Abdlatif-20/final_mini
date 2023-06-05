@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
+#    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/07 19:31:00 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/03 16:44:47 by ahaloui          ###   ########.fr        #
+#    Updated: 2023/06/05 17:03:32 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -Wno-misleading-indentation #-fsanitize=address
 #  -Wno-misleading-indentation
-# flag sanitiz 
-# -fsanitize=address -g3 -fno-omit-frame-pointer
+# -fsanitize=address
 RFLAGS = -lreadline
 
 SOURCE_BUILT_IN = execution/built_in_functions/my_export.c execution/built_in_functions/my_env.c execution/built_in_functions/my_unset.c \
