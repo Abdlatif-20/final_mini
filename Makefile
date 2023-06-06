@@ -6,7 +6,7 @@
 #    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 17:36:22 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/05 22:17:28 by aben-nei         ###   ########.fr        #
+#    Updated: 2023/06/06 20:56:20 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 #  -Wno-misleading-indentation
 # -fsanitize=address
 RFLAGS = -lreadline

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 22:21:15 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/06 22:16:57 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 # define ERR_NL "minishell: syntax error near unexpected token `newline'\n"
 # define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^_`{|}~%#&()*,;=[]"
 
-extern t_shell g_shell;
 
 enum e_type
 {
@@ -79,6 +78,8 @@ typedef struct g_shell
 	int		signel_hedoc;
 	int		signel_cat;
 }				t_shell;
+
+extern t_shell g_shell;
 
 typedef struct s_cmd
 {
@@ -281,6 +282,8 @@ void		command_table(t_list *args, t_list **cmd, t_env *env);
 int			allocate_commande(t_list *args);
 char		**get_command1(t_list *args);
 int			check_dquotes(char *str);
+void		free_token_list(t_list **list);
+void		free_list_cmd(t_list **list);
 // utils
 // int		count_words_me(char *str, char c);
 void		choose_command(t_list *shell, t_info *info);

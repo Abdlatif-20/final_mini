@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:45:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 18:59:47 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/06 22:17:24 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	ft_expand(t_list **list, t_env *env)
 	while (tmp)
 	{
 		token = tmp->data;
-		// printf("is_heredoc = %d\n", token->is_herdoc);
 		if (tmp && token->key == VAR && token->is_herdoc == 0)
 		{
 			if (ft_strcmp(token->value, "$?") == 0)

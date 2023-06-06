@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:56:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 21:20:32 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/06 22:16:48 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,48 @@ int	ft_whitespace(char c)
 	return (0);
 }
 
-void	free_list(t_list *list)
+void	free_token_list(t_list **list)
 {
 	t_list	*tmp;
+	t_token	*token;
 
-	while (list)
+	while ((*list))
 	{
-		tmp = list->next;
-		free(list->data);
-		free(list);
-		list = tmp;
+		token = (*list)->data;
+		tmp = (*list)->next;
+		if (token->value)
+			free(token->value);
+		free((*list)->data);
+		free((*list));
+		(*list) = tmp;
+	}
+}
+void	free_list_cmd(t_list **list)
+{
+	t_list	*tmp;
+	t_cmd	*token;
+
+	while ((*list))
+	{
+		token = (*list)->data;
+		tmp = (*list)->next;
+		if (token->cmds)
+		{
+			free(token->main_cmd);
+			free(token->cmds);
+			token->cmds = NULL;
+		}
+		free((*list)->data);
+		free((*list));
+		(*list) = tmp;
 	}
 }
 
 void	fill_token(t_list **args, int token, char *word, int is_heredoc)
 {
 	t_token	*tokens;
-	// t_list	*tmp = NULL;
 
+	tokens = NULL;
 	if (word)
 	{
 		tokens = (t_token *)malloc(sizeof(t_token));
@@ -73,8 +97,6 @@ void	fill_token(t_list **args, int token, char *word, int is_heredoc)
 		tokens->is_herdoc = is_heredoc;
 		ft_lstadd_back(args, ft_lstnew(tokens));
 	}
-	// tokens = tmp->data;
-	// free_list(tmp);
 }
 
 char	*skip_whitespace(char *input)

@@ -32,7 +32,6 @@ void	builint_simple(t_cmd *commands, t_info *info)
 
 void	builint_complex(t_cmd *commands, t_info *info)
 {
-			puts("export-----------");
 	
 	if ((!ft_strcmp(commands->main_cmd, "export") && !commands->cmds[1]) || (commands->cmds[1]
 			&& !commands->cmds[2]))

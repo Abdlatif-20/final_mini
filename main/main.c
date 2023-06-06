@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/05 21:37:42 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/06 22:17:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,9 @@ int	main(int argc, char **argv, char **env)
 			// print_list11(cmd);
 			if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
 				choose_command(cmd, info);
-			ft_lstclear(&args);
-			ft_lstclear(&cmd);
-			// free(info->head_en);
-			// free(info->head_ex);
+			// ft_lstclear(&args);
+			free_token_list(&args);
+			free_list_cmd(&cmd);
 			free (input);
 		}
 		else
