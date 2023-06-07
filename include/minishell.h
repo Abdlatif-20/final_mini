@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/07 22:01:45 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/07 23:00:49 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,8 @@ void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
 void		command_table(t_list *args, t_list **cmd, t_env *env);
 int			allocate_commande(t_list *args);
 char		**get_command1(t_list *args);
+void		free_token_list(t_list **list);
+void		free_list_cmd(t_list **list);
 
 // utils
 // int		count_words_me(char *str, char c);

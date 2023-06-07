@@ -85,3 +85,4 @@ minishell: asf: command not found
 minishell: nawer: command not found
 
 <build_in_command> > output_file
+

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/07 22:02:59 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/07 23:20:12 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,17 @@ int	main(int argc, char **argv, char **env)
 				ft_lstclear(&args);
 				continue ;
 			}
-			ft_trim_quotes(&args);
-			ft_expand(&args, info->head_en);
-			ft_join_args(&args);
-			command_table(args, &cmd, info->head_en);
+			// ft_trim_quotes(&args);
+			// ft_expand(&args, info->head_en);
+			// ft_join_args(&args);
+			// command_table(args, &cmd, info->head_en);
 			// print_list11(cmd);
-			
-			if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
-				choose_command(cmd, info);
-			ft_lstclear(&args);
-			ft_lstclear(&cmd);
+			// if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
+			// 	choose_command(cmd, info);
+			// ft_lstclear(&args);
+			// ft_lstclear(&cmd);
+			free_token_list(&args);
+			// free_list_cmd(&cmd);
 			free (input);
 		}
 		else
