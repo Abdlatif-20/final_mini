@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:42:13 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/05/30 01:58:26 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/07 13:36:10 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_env	*ft_lst_new_env(char *env_var, char *env_value)
 
 void	ft_lst_add_back_env(t_env **head_en, t_env *new)
 {
+    
 	t_env	*tmp;
 
 	if (head_en)
@@ -144,10 +145,11 @@ void remove_env_element(t_env **head_en, char *env_var)
 
 void fill_env_list(char **environ, t_env **head_env)
 {
-    int i = 0;
+    int i;
     char *env_variable;
     char *env_value;
 
+    i = 0;
     while (environ[i])
     {
         env_variable = get_env_variable(environ[i]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:40:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/05/30 23:38:48 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/06 23:25:52 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char *get_export_variable(char *variable)
 	char *env_variable;
 
 	i = 0;
+	if (!variable)
+		return (NULL);
 	while (variable[i] && variable[i] != '=')
 		i++;
 	env_variable = ft_substr(variable, 0, i);

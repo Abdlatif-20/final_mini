@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:29:42 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/06 22:09:42 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:36:07 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,18 +119,17 @@ void	check_red_heredoc(char *input, t_list **token, int *i)
 void	get_token(char *input, t_list **token)
 {
 	t_var	var;
+	t_token	*word;
 
 	var.i = 0;
 	var.flag = 1;
+	word = (t_token *)malloc(sizeof(t_token));
+	if (!word)
+		return ;
 	input = skip_whitespace(input);
 	while (input && input[var.i])
 	{
 		check_word(input, token, &var, 0);
-		if (input){
-			free(input);
-			input = NULL;
-		}
-		/*
 		get_flags(input, token, &var);
 		check_pipe(input, token, &var.i, &var.flag);
 		check_quote(input, token, &var.i, 0);
@@ -139,8 +138,6 @@ void	get_token(char *input, t_list **token)
 		check_red_app(input, token, &var.i);
 		check_red_heredoc(input, token, &var.i);
 		check_variable(input, token, &var.i);
-		*/
-		// ft_lstclear(token);
 	}
 	free(input);
 }

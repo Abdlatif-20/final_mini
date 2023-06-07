@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/06 19:56:53 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/07 22:28:33 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,12 @@ void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 			free(input);
 			break ;
 		}
-		if (args && input && ((t_token *)(*args)->data)->flag_quote == 0 && input[0] == '$')
+		if (args && input && ((t_token *)(*args)->data)->flag_quote == 0)
 		{
-			fill_token(&tmp, VAR, input, 0);
+			if (input[0] == '$')
+				fill_token(&tmp, VAR, input, 0);
+			else
+				fill_token(&tmp, DQUATES, input, 0);
 			ft_expand(&tmp, env);
 			input = ft_strdup(((t_token *)tmp->data)->value);
 			tmp = NULL;

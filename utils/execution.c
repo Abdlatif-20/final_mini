@@ -29,31 +29,32 @@ void	builint_simple(t_cmd *commands, t_info *info)
 		&& !ft_strcmp(commands->main_cmd, "unset"))
 		my_unset(commands, info);
 }
+int count_words(char **split)
+{
+	int i;
+
+	i = 0;
+	while (split[i])
+		i++;
+	return (i);
+}
 
 void	builint_complex(t_cmd *commands, t_info *info)
 {
-	
-	if ((!ft_strcmp(commands->main_cmd, "export") && !commands->cmds[1]) || (commands->cmds[1]
-			&& !commands->cmds[2]))
+	if ((!ft_strcmp(commands->main_cmd, "export")) && !commands->cmds[1])
 		print_list_export(info);
-	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env")
-		&& !(commands->cmds[1]))
+	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env") && !commands->cmds[1])
 		print_list_env(info);
-	else if (!ft_strcmp(commands->main_cmd, "export")
-		&& commands->cmds[1])
+	else if (!ft_strcmp(commands->main_cmd, "export") && commands->cmds[1])
 	{
-		if (commands->cmds[1][0] != '\0')
+		if (info->head_en && check_export(commands->cmds) == 0)
+			return;
+		if (info->head_en && commands->cmds)
 		{
-			if (info->head_en && check_export(commands->cmds) == 0)
-			return ;
-			if (info->head_en && commands->cmds)
-			{
 			add_export(&info->head_ex, commands->cmds);
 			add_env(&info->head_en, commands->cmds);
 			g_shell.exit_status = 0;
-			}
 		}
-		
 	}
 }
 

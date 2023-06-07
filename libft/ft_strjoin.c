@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 22:53:02 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 21:54:45 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/07 20:34:20 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	len_s2;
 	int		i;
 
+	if (!s2)
+		return (NULL);
 	if (!s1)
 		s1 = ft_strdup("");
 	len_s1 = ft_strlen(s1);

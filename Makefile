@@ -6,7 +6,7 @@
 #    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 17:36:22 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/06 20:56:20 by aben-nei         ###   ########.fr        #
+#    Updated: 2023/06/07 22:30:31 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	@clear
-	@echo -e "\033[32m[OK] \033[0mCleaning done"
+	@echo "\033[32m[OK] \033[0mCleaning done"
 
 re: fclean all
 
