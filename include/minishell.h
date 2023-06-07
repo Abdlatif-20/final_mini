@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/07 22:01:45 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/07 23:29:10 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,6 +303,12 @@ void handle_exit_status(int status);
 void display_status_code(int status);
 void signal_handler(int sig);
 
-
 long long	ft_atoi1(char *str, int *flag);
+
+// help_cd_functions.c
+void	set_value1(t_info *info, char *env_var, char *new_value);
+char	*get_value2(t_info *info, char *env_var);
+int		if_there_is_tilda(char *cmd);
+int		case_of_tilda_in_path(t_info *info, char *path_tmp1);
+int		case_of_remove_directory(t_cmd *commands, t_info *info, char **tmp, int i);
 #endif

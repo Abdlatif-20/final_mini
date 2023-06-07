@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
+#    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 17:36:22 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/07 22:30:31 by aben-nei         ###   ########.fr        #
+#    Updated: 2023/06/07 23:32:21 by ahaloui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SOURCE_BUILT_IN = execution/built_in_functions/my_export.c execution/built_in_fu
 # source files
 SRC_EXEC = utils/execution.c utils/signals_and_status_code.c utils/utils5.c utils/utils1.c utils/utils_error.c \
 			utils/help_cmd_simple.c utils/execute_simple_command.c utils/execute_multiple_command.c \
-			execution/help_export.c execution/help_env.c $(SOURCE_BUILT_IN)
+			execution/help_export.c execution/help_env.c execution/help_cd.c $(SOURCE_BUILT_IN)
 # libft
 LIB = libft/ft_isalpha.c libft/ft_isdigit.c libft/ft_isalnum.c libft/ft_strlen.c \
 	libft/ft_strchr.c libft/ft_atoi.c libft/ft_strdup.c libft/ft_substr.c libft/ft_strjoin.c libft/ft_split.c\
