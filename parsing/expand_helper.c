@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 03:35:09 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 04:52:13 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/08 18:49:49 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/08 18:56:20 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,6 @@ int	handel_var(t_list ***list, t_token **token, t_var *var, t_env *env)
 	return (0);
 }
 
-int	ft_expender_help2(t_token **token, t_var *var)
-{
-	if ((*token)->value[var->i + 1] == '\0'
-		|| !ft_isalnum((*token)->value[var->i + 1]))
-	{
-		var->len = 1;
-		while ((*token)->value[var->i + var->len]
-			&& !ft_isalnum((*token)->value[var->i + var->len]))
-			var->len++;
-		if (var->len > 0)
-			var->string = ft_strjoin(var->string,
-					ft_substr((*token)->value,
-						var->i, var->len));
-		var->i += var->len;
-	}
-	else if ((*token)->value[var->i] == '$')
-	{
-		var->i++;
-		if (ft_isdigit((*token)->value[var->i]))
-		{
-			var->i++;
-			return (2);
-		}
-	}
-	return (0);
-}
-
 int	ft_expender_help(t_list ****list, t_token ***token, t_env *env, t_var **var)
 {
 	char	**temp;
@@ -74,7 +47,7 @@ int	ft_expender_help(t_list ****list, t_token ***token, t_env *env, t_var **var)
 	while (env)
 	{
 		(*var)->temp = get_variable_name((**token)->value);
-		if ((**list) && !ft_strcmp(env->env_var, (*var)->temp))
+		if (env && !ft_strcmp(env->env_var, (*var)->temp))
 		{
 			(**token)->value = ft_strdup(env->env_value);
 			temp = ft_split((**token)->value, ' ');
@@ -82,7 +55,8 @@ int	ft_expender_help(t_list ****list, t_token ***token, t_env *env, t_var **var)
 			fill_token((**list), W_SPACE, ft_strdup(" "), 0);
 			fill_token((**list), FLAG, ft_strdup(temp[1]), 0);
 			free_array(temp);
-			break ;
+			env = (*var)->tmp_env;
+			return (0);
 		}
 		env = env->next;
 	}

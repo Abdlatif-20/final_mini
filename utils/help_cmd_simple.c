@@ -34,7 +34,7 @@ char  **join_path_command(char *command, t_export **head_ex)
 	char **split_paths;
 	int i;
 	int j;
-	
+
 	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
 	{
 		if (access(command, F_OK | X_OK) != 0)

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:45:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 05:16:54 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:56:50 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,84 @@ void	ft_expand(t_list **list, t_env *env)
 		{
 			if (handel_var(&list, &token, &var, env) == 2)
 				continue ;
-			env = var.tmp_env;
 		}
 		else if (tmp && token->key == DQUATES && token->is_herdoc == 0)
 		{
-			if (expand_dquotes(&tmp, &token, &var, env) == 2)
-				continue ;
+			var.i = 0;
+			var.string = NULL;
+			while (token->value[var.i])
+			{
+				var.len = 0;
+				while (token->value[var.i + var.len]
+					&& token->value[var.i + var.len] != '$')
+					var.len++;
+				if (var.len > 0)
+					var.string = ft_strjoin(var.string,
+							ft_substr(token->value, var.i, var.len));
+				var.i += var.len;
+				if (token->value[var.i] == '$')
+				{
+					if (token->value[var.i + 1] == '\0'
+						|| !ft_isalnum(token->value[var.i + 1]))
+					{
+						var.len = 1;
+						while (token->value[var.i + var.len]
+							&& !ft_isalnum(token->value[var.i + var.len]))
+							var.len++;
+						if (var.len > 0)
+							var.string = ft_strjoin(var.string,
+									ft_substr(token->value,
+										var.i, var.len));
+						var.i += var.len;
+					}
+					else if (token->value[var.i] == '$')
+					{
+						var.i++;
+						if (ft_isdigit(token->value[var.i]))
+						{
+							var.i++;
+							continue ;
+						}
+					}
+					else if (token->value[var.i + 1]
+						&& !ft_isalpha(token->value[var.i + 1])
+						&& token->value[var.i + 1] != '_')
+					{
+						var.len = 0;
+						while (token->value[var.i + var.len]
+							&& !ft_isalpha(token->value[var.i + var.len])
+							&& token->value[var.i + var.len] != '_')
+								var.len++;
+						if (var.len > 0)
+							var.string = ft_strjoin(var.string,
+									ft_substr(token->value, var.i, var.len));
+						var.i += var.len;
+					}
+				var.len = 0;
+					while (token->value[var.i + var.len]
+						&& token->value[var.i + var.len] != '$'
+						&& token->value[var.i + var.len] != ' '
+						&& (ft_isalpha(token->value[var.i + var.len])
+							|| token->value[var.i + var.len] == '_'))
+							var.len++;
+					var.str = ft_substr(token->value, var.i, var.len);
+					var.i += var.len;
+					while (env)
+					{
+						if (tmp && !ft_strcmp(env->env_var, var.str))
+						{
+							if (var.len > 0)
+								var.string = ft_strjoin(var.string,
+										env->env_value);
+							break ;
+						}
+						env = env->next;
+					}
+					env = tmp_env;
+				}
+			}
+			if (var.string)
+				((t_token *)tmp->data)->value = var.string;
 		}
 		tmp = tmp->next;
 	}

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 05:19:51 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 05:29:32 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/08 18:11:54 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/08 19:02:41 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,27 @@ void	fill_white_space(char *input, t_list **token, t_var **var)
 	(*var)->i += len;
 }
 
-void	var_init(t_var *var)
+void	var_init(t_var *var, char *input)
 {
 	var->i = 0;
 	var->start = 0;
 	var->end = 0;
 	var->string = NULL;
+    var->len = ft_strlen(input) - 1;
 }
 
 char	*skip_whitespace(char *input)
 {
 	t_var	var;
 
-	var_init(&var);
+	if (!input)
+		return (NULL);
+	var_init(&var, input);
 	while (input[var.i] && ft_whitespace(input[var.i]))
 		var.i++;
 	var.start = var.i;
 	if (!input[var.i])
 		return (NULL);
-	var.len = ft_strlen(input) - 1;
 	while (input[var.len] && ft_whitespace(input[var.len]))
 		var.len--;
 	if (var.len >= 0)

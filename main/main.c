@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 04:31:38 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 19:26:54 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ int	main(int argc, char **argv, char **env)
 	t_info	*info;
 	char	**env1;
 
+	(void)argc;
+	(void)argv;
 	info = NULL;
 	info = (t_info *)malloc(sizeof(t_info));
-	if (!info)
+	if (info == NULL)
 		return (0);
 	args = NULL;
 	cmd = NULL;
@@ -66,10 +68,10 @@ int	main(int argc, char **argv, char **env)
 		// uid_t uid = getuid();
 		// struct passwd *pw = getpwuid(uid);
 		env1 = (char **)malloc(sizeof(char *) * 5);
-		env1[0] = ft_strjoin(ft_strdup("PWD=/Users/ahaloui"), "pw->pw_name");
+		env1[0] = ft_strdup("PWD=/Users/ahaloui"); 
 		env1[1] = ft_strdup("SHLVL=1");
-		env1[2] = ft_strdup("_=/usr/bin/env"); // env
-		env1[2] = ft_strjoin(ft_strdup("OLDPWD=/Users/ahaloui"), "pw->pw_name"); //export 
+		env1[2] = ft_strdup("_=/usr/bin/env"); // /Users/aben-nei/Desktop/final_m/./minishell"
+		env1[2] = ft_strdup("OLDPWD=/Users/ahaloui"); //export 
 		env1[3] = ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin");// export/env
 		env = env1;
 	}
@@ -83,48 +85,46 @@ int	main(int argc, char **argv, char **env)
 	// *********************************************
 
 
-	if (argc == 1)
+	printf("\033[2J\033[1;1H");
+	while (42)
 	{
-		printf("\033[2J\033[1;1H");
-		while (42)
+		rl_catch_signals = 0;
+		g_shell.signel_hedoc = 0;
+		input = readline("-> minishell$ ");
+		if (input)
 		{
-			rl_catch_signals = 0;
-			g_shell.signel_hedoc = 0;
-			input = readline("-> minishell$ ");
-			if (input)
-			{
-				add_history(input);
-				if (check_quotes(input))
-				{
-					free(input);
-					printf("minishell: quotes not closed\n");
-					continue ;
-				}
-				get_token(input, &args);
-				if (args && syntex_error(args))
-				{
-					ft_lstclear(&args);
-					continue ;
-				}
-				ft_trim_quotes(&args);
-				ft_expand(&args, info->head_en);
-				ft_join_args(&args);
-				command_table(args, &cmd, info->head_en);
-				if (cmd && cmd->data && g_shell.signel_hedoc == 0)
-					choose_command(cmd, info);
-				free_token_list(&args);
-				free_list_cmd(&cmd);
-				free (input);
-			}
-			else
+			add_history(input);
+			if (check_quotes(input))
 			{
 				free(input);
-				printf(" exit\n");
-				break ;
+				printf("minishell: quotes not closed\n");
+				continue ;
 			}
+			get_token(input, &args);
+			if (args && syntex_error(args))
+			{
+				ft_lstclear(&args);
+				continue ;
+			}
+			ft_trim_quotes(&args);
+			ft_expand(&args, info->head_en);
+			ft_join_args(&args);
+			command_table(args, &cmd, info->head_en);
+			// print_list11(cmd);
+			if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
+				choose_command(cmd, info);
+			ft_lstclear(&args);
+			ft_lstclear(&cmd);
+			// free_token_list(&args);
+			// free_list_cmd(&cmd);
+			free (input);
+		}
+		else
+		{
+			free(input);
+			printf(" exit\n");
+			break ;
 		}
 	}
-	else
-		return (printf(ERR_ARG, argv[1]), 1);
 	return (0);
 }

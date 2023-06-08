@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 23:44:05 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 05:36:08 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/08 18:53:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,20 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
-# include <pwd.h>
-# include <limits.h>
+#include <pwd.h>
+#include <limits.h>
+// # include <glob.h>
 
 # define ERR_UNX_TNKN "minishell: syntax error near unexpected token `|'\n"
-# define ERR_TNKN "minishell: syntax error near unexpected token `%s'\n"
+# define ERR_TK "minishell: syntax error near unexpected token `%s'\n"
 # define ERR_NL "minishell: syntax error near unexpected token `newline'\n"
-# define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^`{|}~%#&()*,;=[]"
+# define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^_`{|}~%#&()*,;=[]"
 # define ERR_ARG "minishell: can't open input file: %s\n"
 # define ERR_AMBG "minishell: %s: ambiguous redirect\n"
 # define MAX_LL 9223372036854775807
 # define MIN_LL -9223372036854775808
 
 // int g_exit_status;
-
-// # define malloc(x) NULL
 
 enum e_type
 {
@@ -72,6 +71,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+
 typedef struct s_token
 {
 	int			key;
@@ -87,7 +87,7 @@ typedef struct g_shell
 	int		signel_cat;
 }				t_shell;
 
-extern t_shell	g_shell;
+extern t_shell g_shell;
 
 typedef struct s_cmd
 {
@@ -155,7 +155,7 @@ typedef struct t_var
 }				t_var;
 
 char		**create_env(t_info *info);
-void		help(int status);
+void 		help(int status);
 // file my_echo.c
 // int			my_echo(t_cmd *cmd);
 int			my_echo(t_cmd *cmd, int fd);
@@ -205,7 +205,7 @@ void		my_unset(t_cmd *commands, t_info *info);
 
 // file my_exit.c
 // int			my_exit(void);
-int			my_exit(t_cmd *commands);
+int my_exit(t_cmd *commands);
 
 // file utils1.c
 int			ft_strcmp(char *s1, char *s2);
@@ -264,10 +264,10 @@ void		ft_lstadd_back(t_list **lst, t_list *new);
 void		ft_lstclear(t_list **lst);
 /*-----------------------------------------------*/
 void		ft_heredoc(t_list *args, int *fd, char **file, t_env *env);
-int			heredoc_help(char **input, t_list ***args, t_env *env, char *name);
 void		heredoc_helper(t_list **args, char *name, int **fd, t_env *env);
-void		handel(int SIG);
+int			heredoc_help(char **input, t_list ***args, t_env *env, char *name);
 int			get_0(void);
+void		handel(int SIG);
 /*---------------------- token --------------------*/
 void		get_token(char *input, t_list **token);
 void		fill_white_space(char *input, t_list **token, t_var **var);
@@ -284,22 +284,14 @@ void		fill_env_list(char **environ, t_env **head_env);
 int			ft_strcmp(char *s1, char *s2);
 void		ft_trim_quotes(t_list **args);
 void		ft_join_args(t_list **args);
-/*------------------------------- expander ---------------------------------*/
+/*--------------------------------------------------------*/
 void		ft_expand(t_list **list, t_env *env);
+int			handel_var(t_list ***list, t_token **token, t_var *var, t_env *env);
 int			ft_expender_help(t_list ****list, t_token ***token,
 				t_env *env, t_var **var);
-void		ft_expender_help1(t_token ***token, t_var **var);
-int			ft_expender_help2(t_token **token, t_var *var);
-int			handel_var(t_list ***list, t_token **token, t_var *var, t_env *env);
-int			expand_dquotes_help(t_token ***token, t_var **var);
-void		expand_dquotes_help1(t_token ***token, t_var **var);
-void		get_value_of_var(t_var **var, t_env *env);
-int			expand_dquotes(t_list **tmp, t_token **token,
-				t_var *var, t_env *env);
-/*---------------------------------------------------------------------------*/
-
 char		*get_variable_name(char *name);
 void		free_array(char **array);
+/*--------------------------------------------------------*/
 void		ft_remove_node(t_list **head, t_list *node);
 char		*skip_whitespace(char *input);
 int			ft_whitespace(char c);
@@ -320,20 +312,13 @@ void		choose_command(t_list *shell, t_info *info);
 void		builtin_execution(t_list *shell, t_info *info, int flag);
 
 // signals_and_status_code.c
-void		handle_specific_signal_1(int signal_number);
-void		handle_specific_signal(int signal_number);
-void		handle_signal_status(int status);
-void		handle_exit_status(int status);
-void		display_status_code(int status);
-void		signal_handler(int sig);
+void handle_specific_signal_1(int signal_number);
+void handle_specific_signal(int signal_number);
+void handle_signal_status(int status);
+void handle_exit_status(int status);
+void display_status_code(int status);
+void signal_handler(int sig);
+
 
 long long	ft_atoi1(char *str, int *flag);
-
-// help_cd_functions.c
-void		set_value1(t_info *info, char *env_var, char *new_value);
-char		*get_value2(t_info *info, char *env_var);
-int			if_there_is_tilda(char *cmd);
-int			case_of_tilda_in_path(t_info *info, char *path_tmp1);
-int			case_of_remove_directory(t_cmd *commands,
-				t_info *info, char **tmp, int i);
 #endif
