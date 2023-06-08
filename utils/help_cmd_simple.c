@@ -34,7 +34,7 @@ char  **join_path_command(char *command, t_export **head_ex)
 	char **split_paths;
 	int i;
 	int j;
-	
+
 	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
 	{
 		if (access(command, F_OK | X_OK) != 0)
@@ -61,6 +61,7 @@ char  **join_path_command(char *command, t_export **head_ex)
 			split_paths[i] = ft_strjoin(split_paths[i], get_commande(command));
 		else
 			split_paths[i] = ft_strjoin(split_paths[i], command);
+		// printf("split_paths[%d] = %s\n", i, split_paths[i]);
 		i++;
 	}
 	return (split_paths);

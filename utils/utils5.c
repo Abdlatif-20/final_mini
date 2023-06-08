@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:56:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 05:34:30 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 19:02:51 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	free_token_list(t_list **list)
 		if (token->value)
 		{
 			free(token->value);
+			// free(token);
 		}
 		free((*list)->data);
 		free((*list));

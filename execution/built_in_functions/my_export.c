@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:40:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/06 23:25:52 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/08 21:10:46 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char *get_export_value(char *value)
 	char *env_value;
 
 	i = 0;
+	env_value = NULL;
 	while (value[i] && value[i] != '=')
 		i++;
 	if (!ft_strchr(value, '='))

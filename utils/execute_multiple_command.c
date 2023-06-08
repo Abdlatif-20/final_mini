@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_multiple_command.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 01:01:29 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:12:11 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,9 @@ int **create_pipefd(int nb_pipes)
 
 	i = 0;
 	pipefd = (int **)malloc(sizeof(int *) * nb_pipes);
-	if (!pipefd)
-		return (NULL);
 	while (i < nb_pipes)
 	{
 		pipefd[i] = (int *)malloc(sizeof(int) * 2);
-		if (!pipefd[i])
-			return (NULL);
 		i++;
 	}
 	return (pipefd);

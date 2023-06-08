@@ -58,7 +58,7 @@ void handle_specific_signal(int signal_number)
     else if (signal_number == SIGTERM)
         printf("Child process terminated by SIGTERM\n");
     else if (signal_number == SIGQUIT)
-        printf("Child process terminated by SIGQUIT\n");
+        printf("Quit: %d\n", signal_number);
     else if (signal_number == SIGTSTP)
         printf("Child process terminated by Ctrl+Z (SIGTSTP)\n");
     else if (signal_number == SIGPIPE)

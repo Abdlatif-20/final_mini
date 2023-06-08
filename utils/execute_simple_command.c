@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 01:01:36 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 21:00:42 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 {
 	pid_t pid;
+	
 	g_shell.signel_cat = 1;
 	if (is_builin(commands) == 1)
 	{

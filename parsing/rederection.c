@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 02:25:21 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:47:44 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,11 @@ void	fill_cmd(t_list **cmd, t_var var, char **args, int heredoc)
 
 void	skip_white_spaces(t_list **args, t_token **token)
 {
-	(*args) = (*args)->next;
-	if ((*args))
-		(*token) = (*args)->data;
-	while ((*args) && (*token)->key == W_SPACE)
+	while (*token && (*token)->key == W_SPACE)
 	{
-		(*args) = (*args)->next;
-		if ((*args))
-			(*token) = (*args)->data;
+		*args = (*args)->next;
+		if (*args)
+			*token = (*args)->data;
 	}
 }
 
@@ -47,7 +44,7 @@ int	rederection_app(t_list *args, int *fd_out)
 	t_token	*token;
 
 	if (g_shell.signel_hedoc)
-		return (1);
+		return (0);
 	token = args->data;
 	if (token && token->key == RED_APP)
 	{
@@ -72,7 +69,7 @@ int	rederection_in(t_list *args, int *fd_in, char **file_name)
 	t_token	*token;
 
 	if (g_shell.signel_hedoc)
-		return (1);
+		return (0);
 	token = args->data;
 	if (token && token->key == RED_INP)
 	{
@@ -99,7 +96,7 @@ int	rederection_out(t_list *args, int *fd_out)
 	t_token	*token;
 
 	if (g_shell.signel_hedoc)
-		return (1);
+		return (0);
 	token = args->data;
 	if (token && token->key == RED_OUT)
 	{

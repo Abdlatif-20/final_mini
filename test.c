@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 10:59:43 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/05 21:50:37 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/03 22:01:29 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/08 23:11:33 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <unistd.h>
 
-size_t	ft_strlen(const char *str)
+int main()
 {
-	size_t	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
+	
+	printf("%s\n", getcwd(NULL, 0));
+	chdir("~");
+	printf("%s\n", getcwd(NULL, 0));
 }

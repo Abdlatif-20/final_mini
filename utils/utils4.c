@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 05:19:51 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 16:39:08 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/08 20:19:45 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/08 20:20:24 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/minishell.h"
 
@@ -24,12 +25,13 @@ void	fill_white_space(char *input, t_list **token, t_var **var)
 	(*var)->i += len;
 }
 
-void	var_init(t_var *var)
+void	var_init(t_var *var, char *input)
 {
 	var->i = 0;
 	var->start = 0;
 	var->end = 0;
 	var->string = NULL;
+    var->len = ft_strlen(input) - 1;
 }
 
 char	*skip_whitespace(char *input)
@@ -37,13 +39,13 @@ char	*skip_whitespace(char *input)
 	if (!input)
 		return (NULL);
 	t_var	var;
-	var_init(&var);
+
+	var_init(&var, input);
 	while (input[var.i] && ft_whitespace(input[var.i]))
 		var.i++;
 	var.start = var.i;
 	if (!input[var.i])
 		return (NULL);
-	var.len = ft_strlen(input) - 1;
 	while (input[var.len] && ft_whitespace(input[var.len]))
 		var.len--;
 	if (var.len >= 0)

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 23:30:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/07 23:38:06 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/08 22:44:31 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/08 23:31:58 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	case_of_remove_directory(t_cmd *commands, t_info *info, char **tmp, int i)
 {
 	if (!getcwd(NULL, 0))
 	{
-		ft_putstr_fd("error retrieving current ", 2);
+		ft_putstr_fd("minishell: cd: error retrieving current ", 2);
 		ft_putstr_fd("directory: getcwd: cannot access ", 2);
 		ft_putstr_fd("parent directories: No such file or directory\n", 2);
 		*tmp = ft_strjoin(get_value2(info, "PWD"), "/");
