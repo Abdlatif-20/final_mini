@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 04:31:38 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 13:53:32 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,23 @@ void	print_list11(t_list *cmd)
 		tmp = tmp->next;
 	}
 }
+
+// char **new_env(char **env)
+// {
+// 	char **new_env;
+// 	int i = 0;
+// 	while (env[i])
+// 		i++;
+// 	new_env = (char **)malloc(sizeof(char *) * (i + 1));
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		new_env[i] = ft_strdup(env[i]);
+// 		i++;
+// 	}
+// 	new_env[i] = NULL;
+// 	return (new_env);
+// }
 
 int	main(int argc, char **argv, char **env)
 {

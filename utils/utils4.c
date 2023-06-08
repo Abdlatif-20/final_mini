@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 05:19:51 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 05:29:32 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 16:39:08 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void	var_init(t_var *var)
 
 char	*skip_whitespace(char *input)
 {
+	if (!input)
+		return (NULL);
 	t_var	var;
-
 	var_init(&var);
 	while (input[var.i] && ft_whitespace(input[var.i]))
 		var.i++;

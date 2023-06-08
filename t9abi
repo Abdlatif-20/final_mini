@@ -86,3 +86,5 @@ minishell: nawer: command not found
 
 <build_in_command> > output_file
 
+
+exit 42 world

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:48:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/07 19:37:00 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/08 16:38:50 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int check_white_spaces(char *split)
 	int i;
 
 	i = 0;
+	if (!split)
+		return (0);
 	while (split[i])
 	{
 		if (!ft_whitespace(split[i]))
@@ -43,6 +45,8 @@ int check_white_spaces(char *split)
 	}
 	return (1);
 }
+
+// void 
 
 int my_exit(t_cmd *commands)
 {
@@ -107,7 +111,7 @@ int my_exit(t_cmd *commands)
 	else
 	{
 		printf("exit\n");
-		g_shell.exit_status = 0;
+		g_shell.exit_status = 127;
 		exit(g_shell.exit_status);
 	}
 	return (0);
