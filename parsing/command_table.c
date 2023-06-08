@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 16:07:16 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/08 02:27:29 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	increment_args(t_list ***args, t_token **token)
 		*token = (**args)->data;
 }
 
-void	handel_rederections(t_list **args, t_var *var, t_token **token, t_env *env)
+void	handel_redere(t_list **args, t_var *var, t_token **token, t_env *env)
 {
 	if (*token && (*token)->key == RED_OUT)
 	{
@@ -75,7 +75,7 @@ void	command_table(t_list *args, t_list **cmd, t_env *env)
 		{
 			if (args && (token->key == RED_OUT || token->key == RED_INP
 					|| token->key == RED_APP || token->key == HEREDOC))
-				handel_rederections(&args, &var, &token, env);
+				handel_redere(&args, &var, &token, env);
 			else
 			{
 				args = args->next;

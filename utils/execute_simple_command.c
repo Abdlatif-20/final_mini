@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/05 17:16:26 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/08 01:01:36 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char **create_env(t_info *info)
 		tmp = tmp->next;
 	}
 	env = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!env)
+		return (NULL);
 	i = 0;
 	tmp = info->head_en;
 	while (tmp)

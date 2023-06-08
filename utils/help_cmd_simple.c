@@ -43,6 +43,8 @@ char  **join_path_command(char *command, t_export **head_ex)
 			exit(0);
 		}
 		split_paths = malloc(sizeof(char *) * 2);
+		if (!split_paths)
+			return (NULL);
 		split_paths[0] = ft_strdup(command);
 		return (split_paths);
 	}

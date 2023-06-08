@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:30:35 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 09:29:26 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 02:26:54 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_trim_quotes(t_list **args)
 		var.j = 0;
 		var.string = ((t_token *)(current->data))->value;
 		tmp = malloc(ft_strlen(var.string) + 1);
+		if (!tmp)
+			return ;
 		while (var.string[var.i])
 		{
 			trim_quotes_helper(tmp, &var);

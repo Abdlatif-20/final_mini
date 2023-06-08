@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:55:34 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/07 23:25:26 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 05:29:56 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,34 +85,27 @@ void	get_flags(char *input, t_list **token, t_var *var)
 	}
 }
 
-void	check_quote(char *input, t_list **token, int *i, int len)
+void	check_quote(char *input, t_list **token, t_var *var, int len)
 {
-	if (input[(*i)] && ft_whitespace(input[(*i)]))
-	{
-		len = 0;
-		while (input[(*i) + len] && ft_whitespace(input[(*i) + len]))
-			len++;
-		if (len > 0)
-			fill_token(token, W_SPACE, ft_substr(input, (*i), len), 0);
-		(*i) += len;
-	}
-	else if (input[(*i)] && input[(*i)] == '\"')
+	if (input[var->i] && ft_whitespace(input[var->i]))
+		fill_white_space(input, token, &var);
+	else if (input[var->i] && input[var->i] == '\"')
 	{
 		len = 1;
-		while (input[(*i) + len] && input[(*i) + len] != '\"')
+		while (input[var->i + len] && input[var->i + len] != '\"')
 			len++;
 		if (len > 0)
-			fill_token(token, DQUATES, ft_substr(input, (*i), len + 1), 0);
-		(*i) += len + 1;
+			fill_token(token, DQUATES, ft_substr(input, var->i, len + 1), 0);
+		var->i += len + 1;
 	}
-	else if (input[(*i)] && input[(*i)] == '\'')
+	else if (input[var->i] && input[var->i] == '\'')
 	{
 		len = 1;
-		while (input[(*i) + len] && input[(*i) + len] != '\'')
+		while (input[var->i + len] && input[var->i + len] != '\'')
 			len++;
 		if (len > 0)
-			fill_token(token, SQUATES, ft_substr(input, (*i), len + 1), 0);
-		(*i) += len + 1;
+			fill_token(token, SQUATES, ft_substr(input, var->i, len + 1), 0);
+		var->i += len + 1;
 	}
 }
 

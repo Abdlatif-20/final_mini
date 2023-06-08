@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:42 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/07 23:20:12 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 04:31:38 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,9 @@ int	main(int argc, char **argv, char **env)
 	t_info	*info;
 	char	**env1;
 
-	(void)argc;
-	(void)argv;
 	info = NULL;
 	info = (t_info *)malloc(sizeof(t_info));
-	if (info == NULL)
+	if (!info)
 		return (0);
 	args = NULL;
 	cmd = NULL;
@@ -85,46 +83,48 @@ int	main(int argc, char **argv, char **env)
 	// *********************************************
 
 
-	printf("\033[2J\033[1;1H");
-	while (42)
+	if (argc == 1)
 	{
-		rl_catch_signals = 0;
-		g_shell.signel_hedoc = 0;
-		input = readline("-> minishell$ ");
-		if (input)
+		printf("\033[2J\033[1;1H");
+		while (42)
 		{
-			add_history(input);
-			if (check_quotes(input))
+			rl_catch_signals = 0;
+			g_shell.signel_hedoc = 0;
+			input = readline("-> minishell$ ");
+			if (input)
+			{
+				add_history(input);
+				if (check_quotes(input))
+				{
+					free(input);
+					printf("minishell: quotes not closed\n");
+					continue ;
+				}
+				get_token(input, &args);
+				if (args && syntex_error(args))
+				{
+					ft_lstclear(&args);
+					continue ;
+				}
+				ft_trim_quotes(&args);
+				ft_expand(&args, info->head_en);
+				ft_join_args(&args);
+				command_table(args, &cmd, info->head_en);
+				if (cmd && cmd->data && g_shell.signel_hedoc == 0)
+					choose_command(cmd, info);
+				free_token_list(&args);
+				free_list_cmd(&cmd);
+				free (input);
+			}
+			else
 			{
 				free(input);
-				printf("minishell: quotes not closed\n");
-				continue ;
+				printf(" exit\n");
+				break ;
 			}
-			get_token(input, &args);
-			if (args && syntex_error(args))
-			{
-				ft_lstclear(&args);
-				continue ;
-			}
-			// ft_trim_quotes(&args);
-			// ft_expand(&args, info->head_en);
-			// ft_join_args(&args);
-			// command_table(args, &cmd, info->head_en);
-			// print_list11(cmd);
-			// if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
-			// 	choose_command(cmd, info);
-			// ft_lstclear(&args);
-			// ft_lstclear(&cmd);
-			free_token_list(&args);
-			// free_list_cmd(&cmd);
-			free (input);
-		}
-		else
-		{
-			free(input);
-			printf(" exit\n");
-			break ;
 		}
 	}
+	else
+		return (printf(ERR_ARG, argv[1]), 1);
 	return (0);
 }

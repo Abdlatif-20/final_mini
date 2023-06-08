@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:47:32 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/03 20:49:01 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 01:56:31 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	check_rederection(t_list **list, t_token *token, int *flag)
 			&& token->key != FILE_INP && token->key != RED_FILE
 			&& token->key != SQUATES && token->key != DQUATES
 			&& token->key != VAR)
-			return (g_shell.exit_status = 258, printf(ERR_TNKN, token->value), 1);
+			return (g_shell.exit_status = 258,
+				printf(ERR_TNKN, token->value), 1);
 			*flag = 1;
 	}
 	return (0);

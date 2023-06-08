@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rederection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/04 16:28:26 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/08 02:25:21 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,31 @@ void	fill_cmd(t_list **cmd, t_var var, char **args, int heredoc)
 	ft_lstadd_back(cmd, ft_lstnew(cmds));
 }
 
-void	rederection_app(t_list *args, int *fd_out)
+void	skip_white_spaces(t_list **args, t_token **token)
+{
+	(*args) = (*args)->next;
+	if ((*args))
+		(*token) = (*args)->data;
+	while ((*args) && (*token)->key == W_SPACE)
+	{
+		(*args) = (*args)->next;
+		if ((*args))
+			(*token) = (*args)->data;
+	}
+}
+
+int	rederection_app(t_list *args, int *fd_out)
 {
 	t_token	*token;
 
 	if (g_shell.signel_hedoc)
-		return ;
+		return (1);
 	token = args->data;
 	if (token && token->key == RED_APP)
 	{
 		args = args->next;
 		token = args->data;
-		if (token && token->key == W_SPACE)
-		{
-			args = args->next;
-			token = args->data;
-		}
+		skip_white_spaces(&args, &token);
 		if (token && token->key == RED_APP_FILE)
 		{
 			*fd_out = open(token->value, O_CREAT | O_RDWR | O_APPEND, 0777);
@@ -53,32 +62,24 @@ void	rederection_app(t_list *args, int *fd_out)
 				token = args->data;
 		}
 		else
-		{
-			*fd_out = 404;
-			printf("minishell: %s: ambiguous redirect\n", token->value);
-			return ;
-		}
+			return (*fd_out = 404, printf(ERR_AMBG, token->value), 1);
 	}
+	return (0);
 }
 
-void	rederection_in(t_list *args, int *fd_in, char **file_name)
+int	rederection_in(t_list *args, int *fd_in, char **file_name)
 {
 	t_token	*token;
 
 	if (g_shell.signel_hedoc)
-		return ;
+		return (1);
 	token = args->data;
 	if (token && token->key == RED_INP)
 	{
 		args = args->next;
 		if (args)
 			token = args->data;
-		if (token && token->key == W_SPACE)
-		{
-			args = args->next;
-			if (args)
-				token = args->data;
-		}
+		skip_white_spaces(&args, &token);
 		if (token && token->key == FILE_INP)
 		{
 			*fd_in = open(token->value, O_RDONLY);
@@ -86,36 +87,26 @@ void	rederection_in(t_list *args, int *fd_in, char **file_name)
 			args = args->next;
 			if (args)
 				token = args->data;
-			printf("[%s]\n", token->value);
-
 		}
 		else if (token->value[0] == '\0')
-		{
-			*fd_in = 404;
-			printf("minishell: %s: ambiguous redirect\n", token->value);
-			return ;
-		}
+			return (*fd_in = 404, printf(ERR_AMBG, token->value), 1);
 	}
+	return (0);
 }
 
-void	rederection_out(t_list *args, int *fd_out)
+int	rederection_out(t_list *args, int *fd_out)
 {
 	t_token	*token;
 
 	if (g_shell.signel_hedoc)
-		return ;
+		return (1);
 	token = args->data;
 	if (token && token->key == RED_OUT)
 	{
 		args = args->next;
 		if (args)
 			token = args->data;
-		if (token && token->key == W_SPACE)
-		{
-			args = args->next;
-			if (args)
-				token = args->data;
-		}
+		skip_white_spaces(&args, &token);
 		if (token && token->key == RED_FILE)
 		{
 			if (token->value[0])
@@ -125,10 +116,7 @@ void	rederection_out(t_list *args, int *fd_out)
 				token = args->data;
 		}
 		else
-		{
-			*fd_out = 404;
-			printf("minishell: %s: ambiguous redirect\n", token->value);
-			return ;
-		}
+			return (*fd_out = 404, printf(ERR_AMBG, token->value), 1);
 	}
+	return (0);
 }

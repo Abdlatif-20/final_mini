@@ -6,26 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/07 22:28:33 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 04:33:47 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../include/minishell.h"
-
-// function to print the list
-void	print_list(t_list *list)
-{
-	t_token	*token;
-
-	while (list)
-	{
-		token = list->data;
-		printf("key: %d, value: %s\n", token->key, token->value);
-		list = list->next;
-	}
-}
 
 char	*generate_name(void)
 {
@@ -41,60 +26,16 @@ char	*generate_name(void)
 	return (free(num), name);
 }
 
-int	get_0()
+int	get_0(void)
 {
 	return (0);
 }
+
 void	handel(int SIG)
 {
 	(void)SIG;
 	rl_done = 1;
 	g_shell.signel_hedoc = 1;
-}
-void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
-{
-	(void)env;
-	char	*input;
-	t_list	*tmp;
-	// char 	*buffer;
-
-	tmp = NULL;
-	while (1)
-	{
-		rl_event_hook = get_0;
-		signal(SIGINT, handel);
-		input = readline("> ");
-		if (!input)
-		{
-			free(input);
-			break ;
-		}
-		if (input && !ft_strcmp(input, ((t_token *)(*args)->data)->value))
-		{
-			((t_token *)(*args)->data)->value = ft_strdup(name);
-			((t_token *)(*args)->data)->key = FILE_INP;
-			free(input);
-			break ;
-		}
-		if (args && input && ((t_token *)(*args)->data)->flag_quote == 0)
-		{
-			if (input[0] == '$')
-				fill_token(&tmp, VAR, input, 0);
-			else
-				fill_token(&tmp, DQUATES, input, 0);
-			ft_expand(&tmp, env);
-			input = ft_strdup(((t_token *)tmp->data)->value);
-			tmp = NULL;
-		}
-		else if (!input[0] && g_shell.signel_hedoc == 1)
-		{
-			rl_done = 0;
-			break ;
-		}
-		write((**fd), input, ft_strlen(input));
-		write((**fd), "\n", 1);
-		free(input);
-	}
 }
 
 void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
@@ -105,7 +46,7 @@ void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 	{
 		if (g_shell.signel_hedoc)
 			break ;
-		if (((t_token *)args->data)->key == HEREDOC)//check
+		if (((t_token *)args->data)->key == HEREDOC)
 		{
 			name = generate_name();
 			(*fd) = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
