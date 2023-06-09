@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 21:00:42 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:59:38 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 		if_herdoc1(commands);
 	else
 		if_input_output_file(commands);
-	path = check_if_command_found(commands->main_cmd, &info->head_ex);
+	if (!ft_strcmp(commands->main_cmd, "minishell"))
+		path = ft_strdup("minishell");
+	else		
+		path = check_if_command_found(commands->main_cmd, &info->head_ex);
 	// if (!path)
 	// 	return ;
 	if (execve(path, commands->cmds, create_env(info)) == -1)
@@ -102,8 +105,6 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 		exit(EXIT_FAILURE);
 	}
 }
-
-
 
 
 void execute_commande(t_cmd *commands, t_info *info, t_list *shell)

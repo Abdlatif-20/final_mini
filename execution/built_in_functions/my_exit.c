@@ -6,13 +6,11 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:48:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 16:38:50 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:38:02 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-
 
 int check_is_numeric(char *split)
 {
@@ -100,11 +98,21 @@ int my_exit(t_cmd *commands)
 			g_shell.exit_status = 1;
 			return (g_shell.exit_status);
 		}
-		else if ((!check_is_numeric(commands->cmds[i]) || (status_code == -1 && flag)))
+		else if (check_is_numeric(commands->cmds[i]) && !check_is_numeric(commands->cmds[i + 1]))
+		{
+			printf("exit\n");
+			printf("minishell: exit: too many arguments\n");
+			g_shell.exit_status = 1;
+			return (g_shell.exit_status);
+		}
+		else if ((!check_is_numeric(commands->cmds[i])  || (status_code == -1 && flag)))
 		{
 			printf("exit\n");
 			printf("minishell: exit: %s: numeric argument required\n", commands->cmds[i]);
-			g_shell.exit_status = 255;
+			if (!ft_strcmp(commands->cmds[i], "--") && commands->cmds[i + 1])
+				g_shell.exit_status = ft_atoi1(commands->cmds[i+1], &flag);
+			else
+				g_shell.exit_status = 255;
 			exit (g_shell.exit_status);
 		}
 	}

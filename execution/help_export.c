@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:07:13 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 22:02:37 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/09 16:58:20 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,23 @@
 // 	return (1);
 // }
 
+int check_is_contain(char *split)
+{
+	int i;
+
+	i = 0;
+	if (split[i] && split[i] == '\0')
+		return (0);
+	if (split[i] && !ft_isalpha(split[i]) && split[i] != '_')
+		return (0);
+	return (1);	
+}
+
 int check_if_valid_args(char *split)
 {
-	int i = 0;
+	int i;
 
-
+	i = 0;
 	if (split[i] && split[i] == '\0')
 		return (0);
 	if (split[i] && !ft_isalpha(split[i]) && split[i] != '_')
@@ -57,7 +69,7 @@ int check_if_valid_args(char *split)
 		}
 		else if (split[i] == '+')
 		{
-			if (split[i + 1] == '\0')
+			if (split[i + 1] == '\0' || split[i + 1] == '=')
 				return (1);
 			else
 				return (0);
@@ -67,6 +79,16 @@ int check_if_valid_args(char *split)
 		i++;
 	}
 	return (1);
+}
+
+char *get_arg(char *arg)
+{
+	int i;
+
+	i = 0;
+	while (arg && arg[i] && arg[i] != '=')
+		i++;
+	return (ft_substr(arg, 0, i + 1));
 }
 
 int  check_export(char **split)
@@ -83,12 +105,14 @@ int  check_export(char **split)
 			i++;
 			continue;
 		}
-		if (check_if_valid_args(get_export_variable(split[i])) == 0)
+		if (check_if_valid_args(get_arg(split[i])) == 0)
 			printf("minishell: export: `%s': not a valid identifier\n", split[i]);
 		i++;
 	}
 	return (valid);
+	return (1);
 }
+
 
 
 
@@ -105,15 +129,29 @@ void    concatenation_export(t_export **head_ex,char *export_variable, char *new
 	}
 }
 
-
+// void help_export1(t_export **head_ex, char *export_variable, char *export_value, int concatenate)
+// {
+// 	if (check_if_export_var_exist(*head_ex, export_variable))
+//     {
+//         if (concatenate == 1)
+//         {
+//             concatenation_export(head_ex, export_variable, export_value);
+//             return;
+//         }
+//         else
+//             remove_export_element(head_ex, export_variable);
+//     }
+// }
 
 void process_export_argument(t_export **head_ex, char *arg)
 {
-    char *export_variable = get_export_variable(arg);
-	
-    char *export_value = get_export_value(arg);
-    int concatenate = 0;
+    char *export_variable;
+    char *export_value;
+    int concatenate;
 
+	export_variable = get_export_variable(arg);
+	export_value = get_export_value(arg);
+	concatenate = 0;
     if (export_variable[ft_strlen(export_variable) - 1] == '+')
     {
         if (export_variable[ft_strlen(export_variable) - 2] == '+')
@@ -125,8 +163,8 @@ void process_export_argument(t_export **head_ex, char *arg)
         concatenate = 1;
         export_variable[ft_strlen(export_variable) - 1] = '\0';
     }
-    
-    if (check_if_export_var_exist(*head_ex, export_variable))
+	// help_export1(head_ex, export_variable, export_value, concatenate);
+	if (check_if_export_var_exist(*head_ex, export_variable))
     {
         if (concatenate == 1)
         {
@@ -141,11 +179,12 @@ void process_export_argument(t_export **head_ex, char *arg)
 
 void add_export(t_export **head_ex, char **split)
 {
-    int i = 1;
+    int i;
 	
+	i = 1;
     while (split[i])
     {
-        if (split[i][0] == '\0' || !check_if_valid_args(get_export_variable(split[i])))
+        if (split[i][0] == '\0')
         {
             i++;
             continue;

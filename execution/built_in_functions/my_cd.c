@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:51:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 23:43:30 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:52:37 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,11 @@ int	help_cd(t_info *info, char *path_home, t_cmd *commands, int i)
 		printf("minishell$: cd: HOME not set\n");
 		return (0);
 	}
-	if (!ft_strcmp(commands->main_cmd, "cd") && !commands->cmds[i])
-	{
+	if (!ft_strcmp(commands->main_cmd, "cd") && !commands->cmds[i])   
 		return (case_of_just_cd(info, path_home));
-	}
 	else if (!ft_strcmp(commands->main_cmd, "cd")
 		&& !ft_strcmp(commands->cmds[i], "~"))
-	{
 		return (case_of_cd_tilda(info, path_home));
-	}
 	return (1);
 }
 

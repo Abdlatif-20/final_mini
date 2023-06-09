@@ -88,3 +88,5 @@ minishell: nawer: command not found
 
 
 exit 42 world
+
+exit -- -- 42
