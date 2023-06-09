@@ -6,7 +6,7 @@
 #    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 20:19:14 by ahaloui           #+#    #+#              #
-#    Updated: 2023/06/08 22:45:28 by ahaloui          ###   ########.fr        #
+#    Updated: 2023/06/09 23:32:37 by ahaloui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,9 @@ NAME = minishell
 
 CC = cc
 
-
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address 
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
+# CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 #  -Wno-misleading-indentation
 # -fsanitize=address
 
@@ -39,9 +38,9 @@ SOURCE_BUILT_IN = execution/built_in_functions/my_export.c execution/built_in_fu
 				execution/built_in_functions/my_pwd.c execution/built_in_functions/my_cd.c execution/built_in_functions/my_echo.c execution/built_in_functions/my_exit.c
 
 # source files
-SRC_EXEC = utils/execution.c utils/signals_and_status_code.c utils/utils5.c utils/utils1.c utils/utils_error.c \
+SRC_EXEC = utils/execution.c utils/signals_and_status_code.c utils/utils5.c utils/utils1.c utils/utils_error.c utils/utils6.c utils/utils7.c \
 			utils/help_cmd_simple.c utils/execute_simple_command.c utils/execute_multiple_command.c \
-			execution/help_export.c execution/help_env.c execution/help_cd.c  $(SOURCE_BUILT_IN)
+			execution/help_export.c execution/help_env.c execution/help_cd.c execution/check_args.c execution/help_env_1.c execution/help_export_1.c $(SOURCE_BUILT_IN)
 # libft
 LIB = libft/ft_isalpha.c libft/ft_isdigit.c libft/ft_isalnum.c libft/ft_strlen.c \
 	libft/ft_strchr.c libft/ft_atoi.c libft/ft_strdup.c libft/ft_substr.c libft/ft_strjoin.c libft/ft_split.c\

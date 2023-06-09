@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/09 22:41:51 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/09 23:13:06 by ahaloui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
 
@@ -18,7 +29,7 @@ void	dup_for_builin(t_cmd *commands)
 void	builint_simple(t_cmd *commands, t_info *info)
 {
 	if (!ft_strcmp(commands->main_cmd, "echo"))
-		my_echo(commands, commands->fd_out);
+		my_echo(commands);
 	else if (!ft_strcmp(commands->main_cmd, "cd"))
 		my_cd(commands, info);
 	else if (!ft_strcmp(commands->main_cmd, "pwd"))
@@ -29,26 +40,18 @@ void	builint_simple(t_cmd *commands, t_info *info)
 		&& !ft_strcmp(commands->main_cmd, "unset"))
 		my_unset(commands, info);
 }
-int count_words(char **split)
-{
-	int i;
-
-	i = 0;
-	while (split[i])
-		i++;
-	return (i);
-}
 
 void	builint_complex(t_cmd *commands, t_info *info)
 {
 	if ((!ft_strcmp(commands->main_cmd, "export")) && !commands->cmds[1])
 		print_list_export(info);
-	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env") && !commands->cmds[1])
+	if (info->head_en && !ft_strcmp(commands->main_cmd, "env")
+		&& !commands->cmds[1])
 		print_list_env(info);
-	else if (!ft_strcmp(commands->main_cmd, "export") && commands->cmds[1])
+	else if ((!ft_strcmp(commands->main_cmd, "export") && commands->cmds[1]))
 	{
 		if (info->head_en && check_export(commands->cmds) == 0)
-			return;
+			return ;
 		if (info->head_en && commands->cmds)
 		{
 			add_export(&info->head_ex, commands->cmds);
@@ -72,19 +75,6 @@ void	builtin_execution(t_list *shell, t_info *info, int flag)
 		builint_simple(commands, info);
 		builint_complex(commands, info);
 	}
-}
-
-int get_nbr_node(t_list *shell)
-{
-	int i;
-
-	i = 0;
-	while (shell)
-	{
-		i++;
-		shell = shell->next;
-	}
-	return (i);
 }
 
 void	choose_command(t_list *shell, t_info *info)

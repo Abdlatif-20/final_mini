@@ -6,12 +6,17 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 20:19:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 16:58:38 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/09 23:44:57 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/minishell.h"
+
+void reserve_list(t_info *info)
+{
+	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("PWD"), ft_strdup(getcwd(NULL, 0))));
+	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("HOME"), ft_strdup("/Users/ahaloui")));
+}
 
 void	print_list1(t_list *cmd)
 {

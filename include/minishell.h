@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 23:25:19 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/09 23:45:46 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ char		**create_env(t_info *info);
 void 		help(int status);
 // file my_echo.c
 // int			my_echo(t_cmd *cmd);
-int			my_echo(t_cmd *cmd, int fd);
+int			my_echo(t_cmd *cmd);
 int			check_option(char *cmd);
 char		*get_last_split(t_cmd *cmd);
 
@@ -189,17 +189,6 @@ int			check_if_export_var_exist(t_export *head_ex, char *export_var);
 void		remove_export_element(t_export **head_ex, char *export_var);
 void		fill_export_list(char **environ, t_export **head_ex);
 
-// file my_env.c
-t_env		*ft_lst_new_env(char *env_var, char *env_value);
-void		ft_lst_add_back_env(t_env **head_en, t_env *new);
-char		*get_env_variable(char *variable);
-char		*get_env_value(char *value);
-void		add_env_element(char *env_var, char *env_value, t_env **head_en);
-void		print_list_env(t_info *info);
-int			check_is_empty_string_env(char *str);
-int			check_if_env_var_exist(t_env *head_en, char *env_var);
-void		remove_env_element(t_env **head_en, char *env_var);
-void		fill_env_list(char **environ, t_env **head_env);
 
 // file my_unset.c
 void		my_unset(t_cmd *commands, t_info *info);
@@ -209,7 +198,6 @@ void		my_unset(t_cmd *commands, t_info *info);
 int my_exit(t_cmd *commands);
 
 // file utils1.c
-int			ft_strcmp(char *s1, char *s2);
 char		*get_value(t_export **head_ex, char *var);
 
 void		execute_commande(t_cmd *commands, t_info *info, t_list *shell);
@@ -238,6 +226,7 @@ int			is_builin(t_cmd *commands);
 // utils_error.c
 void		print_error_cmd(char *command);
 void		print_error_file(char *command);
+void		print_error_fork(void);
 
 /*--------------- libft ------------------------*/
 int			ft_isalpha(int c);
@@ -329,5 +318,52 @@ char	*get_value2(t_info *info, char *env_var);
 int		if_there_is_tilda(char *cmd);
 int		case_of_tilda_in_path(t_info *info, char *path_tmp1);
 int		case_of_remove_directory(t_cmd *commands, t_info *info, char **tmp, int i);
+
+// check_args.c
+int check_is_contain(char *split);
+int check_if_valid_args(char *split);
+char *get_arg(char *arg);
+int  check_export(char **split);
+
+
+// file my_env.c
+char		*get_env_variable(char *variable);
+char		*get_env_value(char *value);
+void		add_env_element(char *env_var, char *env_value, t_env **head_en);
+
+int			check_is_empty_string_env(char *str);
+int			check_if_env_var_exist(t_env *head_en, char *env_var);
+void		remove_env_element(t_env **head_en, char *env_var);
+void		fill_env_list(char **environ, t_env **head_env);
+
+
+// help_env_1.c
+t_env	*ft_lst_new_env(char *env_var, char *env_value);
+void	ft_lst_add_back_env(t_env **head_en, t_env *new);
+void 	remove_env_element(t_env **head_en, char *env_var);
+void	add_env_element(char *env_var, char *env_value, t_env **head_en);
+void	print_list_env(t_info *info);
+
+
+//utils6.c
+char	**create_env(t_info *info);
+void	execute1(t_list *cmd, t_info *info);
+void	execute2(t_info *info);
+void	execute3(t_info *info, t_list *cmd, int **pipefd, int nb_pipes);
+void	if_herdoc(t_cmd *commands);
+
+
+//utils7.c
+int		**create_pipefd(int nb_pipes);
+void	create_pipe(int pipefd[2]);
+void	close_pipe(int **pipefd, int nb_pipes);
+void	wait_for_child(int nb_pipes);
+int		get_nbr_node(t_list *shell);
+
+// execute_multi_command.c
+void	merge_dup_pipe_herdoc(int **pipefd, int i, int nb_pipes, t_cmd *commands);
+
+void	reserve_list(t_info *info);
+
 
 #endif

@@ -6,13 +6,11 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:51:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 12:52:37 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/09 23:48:11 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../include/minishell.h"
-
 
 char	*get_path_home(t_export **head_x)
 {
@@ -46,7 +44,7 @@ int	case_of_just_cd(t_info *info, char *path_home)
 int	case_of_cd_tilda(t_info *info, char *path_home)
 {
 	set_value1(info, "OLDPWD", getcwd(NULL, 0));
-	if (!chdir(g_shell.path))
+	if (!chdir(path_home))
 	{
 		set_value1(info, "PWD", getcwd(NULL, 0));
 		return (1);
@@ -60,13 +58,16 @@ int	case_of_cd_tilda(t_info *info, char *path_home)
 
 int	help_cd(t_info *info, char *path_home, t_cmd *commands, int i)
 {
-	if (!path_home)
+	if (!ft_strcmp(commands->main_cmd, "cd") && !commands->cmds[i])
 	{
-		printf("minishell$: cd: HOME not set\n");
-		return (0);
-	}
-	if (!ft_strcmp(commands->main_cmd, "cd") && !commands->cmds[i])   
+		if (!path_home)
+		{
+			printf("minishell$: cd: HOME not set\n");
+			// reserve_list(info);
+			return (0);
+		}
 		return (case_of_just_cd(info, path_home));
+	}
 	else if (!ft_strcmp(commands->main_cmd, "cd")
 		&& !ft_strcmp(commands->cmds[i], "~"))
 		return (case_of_cd_tilda(info, path_home));
@@ -81,7 +82,6 @@ int	my_cd(t_cmd *commands, t_info *info)
 
 	i = 1;
 	path_home = get_path_home(&info->head_ex);
-	g_shell.path = path_home;
 	if (!help_cd(info, path_home, commands, i))
 		return (0);
 	else if (!ft_strcmp(commands->main_cmd, "cd") && commands->cmds[i])

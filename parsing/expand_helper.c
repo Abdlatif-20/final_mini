@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:49:49 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 21:36:31 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/09 23:42:35 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	handel_var(t_list ***list, t_token **token, t_var *var, t_env *env)
 
 int	ft_expender_help(t_list ****list, t_token ***token, t_env *env, t_var **var)
 {
-	// char	**temp;
 	(void)list;
 	if (ft_strcmp((**token)->value, "$?") == 0)
 		return ((**token)->value = ft_itoa(g_shell.exit_status), 0);
