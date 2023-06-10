@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:43:47 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 23:04:44 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/10 17:35:46 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	if_herdoc(t_cmd *commands)
 	}
 	if (dup2(commands->fd_in, STDIN_FILENO) == -1)
 	{
-		perror("dup");
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(commands->file_name, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		g_shell.exit_status = 1;
 		exit(g_shell.exit_status);
 	}
@@ -78,6 +80,7 @@ void	execute2(t_info *info)
 
 void	execute3(t_info *info, t_list *cmd, int **pipefd, int nb_pipes)
 {
+	
 	merge_dup_pipe_herdoc(pipefd, info->i, nb_pipes, info->commands);
 	info->temp = check_if_command_found (info->commands->main_cmd,
 			&info->head_ex);

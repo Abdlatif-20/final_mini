@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 20:35:01 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/10 18:23:47 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	commands_helper(t_list **args, t_token *token, t_var *var)
 			token = (*args)->data;
 		var->flag = 0;
 	}
+	var->cmd[var->i] = NULL;
 }
 
 char	**get_command1(t_list *args)

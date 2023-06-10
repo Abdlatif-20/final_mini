@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdedoc_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:25:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 18:26:35 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/10 17:55:37 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 			rl_done = 0;
 			break ;
 		}
+		if (**fd == -1)
+			return ;
 		write((**fd), input, ft_strlen(input));
 		write((**fd), "\n", 1);
 		free(input);

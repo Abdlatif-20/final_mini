@@ -137,3 +137,91 @@ exit 9223372036854775808
 exit -9223372036854775807
 exit -9223372036854775808
 exit -9223372036854775809
+
+///////////////////////////////////////////////////////////
+cat <<HEREDOC
+oi
+HEREDOC
+
+cat <<HERE <<DOC
+oi
+HERE
+time
+DOC
+
+cat <<HERE | ls // OK
+oi
+HERE
+
+cat <<HERE // OK
+$USER
+oi
+HERE
+
+cat <minishell.h <<HERE <missing | ls // OK
+HERE
+
+cat <minishell.h <<HERE | cat // OK
+HERE
+
+cat <minishell.h <<HERE <missing <<DOC | echo oi
+HERE
+DOC
+
+cat << $
+oi
+$
+
+<< echo oi
+echo
+//////////////////////////////////////////////////////////////////////
+
+echo - "" "  " hello // segv
+//////////////////////////////////////////////////////////////////////
+
+CTRL+C
+CTRL+D
+CTRL+\
+CTRL+C, CTRL+C, CTRL+C, exit
+CTRL+C, CTRL+C, CTRL+C, Ctrl+D
+
+cat | ls # testar dando depois:
+#- Enter
+#- Ctrl+D
+#- Ctrl+\
+#- Ctrl+C
+
+grep oi | ls # testar dando depois:
+#- Enter + Ctrl+D
+#- Ctrl+D
+#- "oi" + Enter + Ctrl+D
+#- Ctrl+\
+#- Ctrl+C
+#- "oi" + Enter + Ctrl+\
+
+./test_files/loop.out # finalizar com:
+#- Ctrl+C
+#- Ctrl+\  -> workspaces: ^\Quit\n
+#- Ctrl+D  -> não faz nada
+
+./test_files/loop.out | ls
+# finalizar com:
+#- Ctrl+C
+#- Ctrl+\
+#- Ctrl+D
+
+ls | ./test_files/loop.out
+# finalizar com:
+#- Ctrl+C
+#- Ctrl+\
+#- Ctrl+D
+
+hello + Ctrl+C
+# Check that the new line is empty
+
+
+ // if (cmd->cmds[i][0] == '\0')
+                // {
+                //      i++;
+                //      continue ;
+                // }                          // segv

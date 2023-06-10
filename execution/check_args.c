@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:33:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 22:13:37 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/10 18:27:21 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,6 @@ int	check_export(char **split)
 	valid = 1;
 	while (split[i])
 	{
-		if (split[i][0] == '\0')
-		{
-			i++;
-			continue ;
-		}
 		if (check_if_valid_args(get_arg(split[i])) == 0)
 		{
 			ft_putstr_fd("minishell: export: `", 2);

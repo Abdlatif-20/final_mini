@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:41:51 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 23:13:06 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/10 18:28:52 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ void	builint_simple(t_cmd *commands, t_info *info)
 
 void	builint_complex(t_cmd *commands, t_info *info)
 {
-	if ((!ft_strcmp(commands->main_cmd, "export")) && !commands->cmds[1])
+	if ((!ft_strcmp(commands->main_cmd, "export")) && commands->cmds[1] != NULL)
+	{
 		print_list_export(info);
+	}
 	if (info->head_en && !ft_strcmp(commands->main_cmd, "env")
 		&& !commands->cmds[1])
 		print_list_env(info);

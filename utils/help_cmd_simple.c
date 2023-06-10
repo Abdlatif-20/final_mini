@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   help_cmd_simple.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/10 13:35:00 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/10 14:57:19 by ahaloui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 char	*get_commande(char *command)
 {
-	int	i;
-	int start;
-	int end;
-	char *str;
+	int		i;
+	int		start;
+	int		end;
+	char	*str;
 
 	i = 0;
 	start = 0;
@@ -28,26 +39,34 @@ char	*get_commande(char *command)
 	return (str);
 }
 
-char  **join_path_command(char *command, t_export **head_ex)
+char	**check_command(char *command, char ***split_paths)
 {
-	char *path;
-	char **split_paths;
-	int i;
-	int j;
-
 	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
 	{
 		if (access(command, F_OK | X_OK) != 0)
 		{
 			printf("minishell: %s: No such file or directory\n", command);
-			exit(0);
+			g_shell.exit_status = EXIT_FAILURE;
+			exit(g_shell.exit_status);
 		}
 		split_paths = malloc(sizeof(char *) * 2);
 		if (!split_paths)
 			return (NULL);
-		split_paths[0] = ft_strdup(command);
-		return (split_paths);
+		*split_paths[0] = ft_strdup(command);
+		return (*(split_paths));
 	}
+	return (NULL);
+}
+
+char	**join_path_command(char *command, t_export **head_ex)
+{
+	char	*path;
+	char	**split_paths;
+	int		i;
+	int		j;
+
+	if (check_command(command, &split_paths))
+		return (split_paths);
 	path = get_value(head_ex, "PATH");
 	if (!path)
 		return (NULL);
@@ -61,37 +80,35 @@ char  **join_path_command(char *command, t_export **head_ex)
 			split_paths[i] = ft_strjoin(split_paths[i], get_commande(command));
 		else
 			split_paths[i] = ft_strjoin(split_paths[i], command);
-		// printf("split_paths[%d] = %s\n", i, split_paths[i]);
 		i++;
 	}
 	return (split_paths);
 }
 
-int is_builin(t_cmd *commands)
+int	is_builin(t_cmd *commands)
 {
-	if (ft_strcmp(commands->main_cmd, "echo") == 0)
+	if (!ft_strcmp(commands->main_cmd, "echo"))
 		return (1);
-	else if (ft_strcmp(commands->main_cmd, "cd") == 0)
+	else if (!ft_strcmp(commands->main_cmd, "cd"))
 		return (1);
-	else if (ft_strcmp(commands->main_cmd, "pwd") == 0)
+	else if (!ft_strcmp(commands->main_cmd, "pwd"))
 		return (1);
-	else if (ft_strcmp(commands->main_cmd, "export") == 0)
+	else if (!ft_strcmp(commands->main_cmd, "export"))
 		return (1);
-	else if (ft_strcmp(commands->main_cmd, "unset") == 0)
+	else if (!ft_strcmp(commands->main_cmd, "unset"))
 		return (1);
-	else if (ft_strcmp(commands->main_cmd, "env") == 0)
+	else if (!ft_strcmp(commands->main_cmd, "env"))
 		return (1);
-	else if (ft_strcmp(commands->main_cmd, "exit") == 0)
+	else if (!ft_strcmp(commands->main_cmd, "exit"))
 		return (1);
 	return (0);
 }
 
-char  *check_if_command_found(char *command, t_export **head_ex)
+char	*check_if_command_found(char *command, t_export **head_ex)
 {
-	char **split_paths;
-	int i;
+	char	**split_paths;
+	int		i;
 
-	
 	if (head_ex && *head_ex && command)
 	{
 		split_paths = join_path_command(command, head_ex);

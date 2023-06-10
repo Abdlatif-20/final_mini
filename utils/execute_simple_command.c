@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 22:46:47 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/10 18:06:30 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,13 @@ void	if_input_output_file(t_cmd *commands)
 		}
 	}
 	if (commands->fd_out != 1)
-	{
+	{puts("here");
+		if (commands->fd_out == 101)
+		{
+			printf ("bash: outfile: Permission denie\n");
+			g_shell.exit_status = 1;
+			exit(g_shell.exit_status);
+		}
 		dup2(commands->fd_out, 1);
 		close(commands->fd_out);
 	}

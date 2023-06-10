@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rederection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 18:47:44 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/10 18:07:08 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	rederection_in(t_list *args, int *fd_in, char **file_name)
 		skip_white_spaces(&args, &token);
 		if (token && token->key == FILE_INP)
 		{
+			if (*fd_in == -1)
+				return (1);
 			*fd_in = open(token->value, O_RDONLY);
 			*file_name = token->value;
 			args = args->next;
@@ -108,6 +110,11 @@ int	rederection_out(t_list *args, int *fd_out)
 		{
 			if (token->value[0])
 				*fd_out = open(token->value, O_CREAT | O_RDWR | O_TRUNC, 0777);
+			if (*fd_out == -1)
+			{
+				*fd_out = 101;
+				return (101);
+			}
 			args = args->next;
 			if (args)
 				token = args->data;
