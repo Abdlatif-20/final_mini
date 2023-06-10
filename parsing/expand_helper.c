@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_helper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 18:49:49 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 23:42:35 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/09 23:50:51 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/09 23:50:53 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	handel_var(t_list ***list, t_token **token, t_var *var, t_env *env)
+int	handel_var(t_token **token, t_var *var, t_env *env)
 {
 	if ((*token)->value[0] == '$'
 		&& ft_isdigit((*token)->value[1]))
@@ -34,26 +34,27 @@ int	handel_var(t_list ***list, t_token **token, t_var *var, t_env *env)
 		}
 	}
 	else
-		ft_expender_help(&list, &token, env, &var);
+		ft_expender_help(&token, env, &var);
 	return (0);
 }
 
-int	ft_expender_help(t_list ****list, t_token ***token, t_env *env, t_var **var)
+int	ft_expender_help(t_token ***token, t_env *env, t_var **var)
 {
-	(void)list;
-	if (ft_strcmp((**token)->value, "$?") == 0)
-		return ((**token)->value = ft_itoa(g_shell.exit_status), 0);
+	static char *str;
+
 	while (env)
 	{
 		(*var)->temp = get_variable_name((**token)->value);
+		if ((*var)->temp && (*var)->temp[0] == '?')
+		{
+			str = ft_itoa(g_shell.exit_status);
+			(**token)->value = ft_strdup(str);
+			(**token)->value = ft_strjoin((**token)->value, &(*var)->temp[1]);
+			return (0);
+		}
 		if (env && !ft_strcmp(env->env_var, (*var)->temp))
 		{
 			(**token)->value = ft_strdup(env->env_value);
-			// temp = ft_split((**token)->value, ' ');
-			// 	(**token)->value = ft_strdup(temp[0]);
-			// fill_token((**list), W_SPACE, ft_strdup(" "), 0);
-			// fill_token((**list), FLAG, ft_strdup(temp[1]), 0);
-			// free_array(temp);
 			env = (*var)->tmp_env;
 			return (0);
 		}

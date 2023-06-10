@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 20:19:45 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 20:20:24 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/09 15:31:32 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/09 15:31:53 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../include/minishell.h"
 
@@ -36,10 +35,10 @@ void	var_init(t_var *var, char *input)
 
 char	*skip_whitespace(char *input)
 {
-	if (!input)
-		return (NULL);
 	t_var	var;
 
+	if (!input)
+		return (NULL);
 	var_init(&var, input);
 	while (input[var.i] && ft_whitespace(input[var.i]))
 		var.i++;

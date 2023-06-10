@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 22:46:47 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/09 23:52:28 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/09 23:53:03 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 	}
 }
 
-void	execute_commande(t_cmd *commands, t_info *info, t_list *shell)
+void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
 {
 	pid_t	pid;
 

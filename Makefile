@@ -3,14 +3,11 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
+#    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/08 20:19:14 by ahaloui           #+#    #+#              #
-#    Updated: 2023/06/09 23:32:37 by ahaloui          ###   ########.fr        #
+#    Created: 2023/06/09 23:51:23 by aben-nei          #+#    #+#              #
+#    Updated: 2023/06/09 23:51:25 by aben-nei         ###   ########.fr        #
 #                                                                              #
-# **************************************************************************** #
-
-
 # **************************************************************************** #
 
 BOLDMAGENTA=\033[1;35m
@@ -25,9 +22,8 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror # -g -fsanitize=address 
 
-# CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 #  -Wno-misleading-indentation
 # -fsanitize=address
 
@@ -102,6 +98,3 @@ fclean: clean
 	@echo "\033[32m[OK] \033[0mCleaning done"
 
 re: fclean all
-
-
-# banner:

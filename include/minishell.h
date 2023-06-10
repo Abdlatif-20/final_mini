@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 23:45:46 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/09 23:51:49 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/09 23:51:51 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define ERR_UNX_TNKN "minishell: syntax error near unexpected token `|'\n"
 # define ERR_TK "minishell: syntax error near unexpected token `%s'\n"
 # define ERR_NL "minishell: syntax error near unexpected token `newline'\n"
-# define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^_`{|}~%#&()*,;=[]"
+# define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^`{|}~%#&()*,;=[]"
 # define ERR_ARG "minishell: can't open input file: %s\n"
 # define ERR_AMBG "minishell: %s: ambiguous redirect\n"
 # define MAX_LL 9223372036854775807
@@ -153,6 +153,8 @@ typedef struct t_var
 	t_list	*tmp;
 	t_env	*tmp_env;
 	char	*temp;
+	char	*input;
+	char	*buffer;
 }				t_var;
 
 char		**create_env(t_info *info);
@@ -276,8 +278,8 @@ void		ft_trim_quotes(t_list **args);
 void		ft_join_args(t_list **args);
 /*--------------------------------------------------------*/
 void		ft_expand(t_list **list, t_env *env);
-int			handel_var(t_list ***list, t_token **token, t_var *var, t_env *env);
-int			ft_expender_help(t_list ****list, t_token ***token,
+int			handel_var(t_token **token, t_var *var, t_env *env);
+int			ft_expender_help(t_token ***token,
 				t_env *env, t_var **var);
 char		*get_variable_name(char *name);
 void		free_array(char **array);
@@ -302,12 +304,12 @@ void		choose_command(t_list *shell, t_info *info);
 void		builtin_execution(t_list *shell, t_info *info, int flag);
 
 // signals_and_status_code.c
-void handle_specific_signal_1(int signal_number);
-void handle_specific_signal(int signal_number);
-void handle_signal_status(int status);
-void handle_exit_status(int status);
-void display_status_code(int status);
-void signal_handler(int sig);
+void		handle_specific_signal_1(int signal_number);
+void		handle_specific_signal(int signal_number);
+void		handle_signal_status(int status);
+void		handle_exit_status(int status);
+void		display_status_code(int status);
+void		signal_handler(int sig);
 
 
 long long	ft_atoi1(char *str, int *flag);

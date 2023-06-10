@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 20:19:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 23:44:57 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/09 23:51:40 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/09 23:51:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	main(int argc, char **argv, char **env)
 			ft_join_args(&args);
 			command_table(args, &cmd, info->head_en);
 			// print_list11(cmd);
-			if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
+			if (cmd && cmd->data && g_shell.signel_hedoc == 0)
 				choose_command(cmd, info);
 			ft_lstclear(&args);
 			ft_lstclear(&cmd);
