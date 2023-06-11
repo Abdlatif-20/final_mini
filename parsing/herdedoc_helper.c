@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 15:28:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 23:27:22 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/11 01:58:57 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/11 12:11:28 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ void	add_to_buffer(char **buffer, char *input)
 	*buffer = ft_strjoin(*buffer, "\n");
 }
 
+int	ft_break_while(t_var var)
+{
+	if (!var.input)
+	{
+		free(var.input);
+		return (1);
+	}
+	return (0);
+}
+
 void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 {
 	t_var	var;
@@ -70,11 +80,8 @@ void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 		rl_event_hook = get_0;
 		signal(SIGINT, handel);
 		var.input = readline("> HEREDOC$ ");
-		if (!var.input)
-		{
-			free(var.input);
+		if (ft_break_while(var))
 			break ;
-		}
 		else if (heredoc_help(&var.input, &args, env, name) == 2)
 		{
 			if (var.buffer)

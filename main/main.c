@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 23:51:40 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 23:51:42 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/11 01:58:38 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/11 16:15:15 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ void	print_list11(t_list *cmd)
 			printf("cmd = [%s]\n",token->cmds[i]);
 			i++;
 		}
+		printf ("main_cmd = [%s]\n", token->main_cmd);
+		printf ("fd_in = [%d]\n", token->fd_in);
+		printf ("fd_out = [%d]\n", token->fd_out);
+		printf("file_name = [%s]\n", token->file_name);
 		tmp = tmp->next;
 	}
 }
@@ -74,27 +78,24 @@ int	main(int argc, char **argv, char **env)
 	char	*input;
 	t_list	*args;
 	t_list	*cmd;
-	t_info	*info;
-	// char	**env1;
+	t_info	info;
+	t_var	var;
 
-	(void)argc;
-	(void)argv;
-	info = NULL;
-	info = (t_info *)malloc(sizeof(t_info));
-	if (info == NULL)
-		return (0);
+	// (void)var;
 	args = NULL;
 	cmd = NULL;
 	input = NULL;
-	info->head_ex = NULL;
-	info->head_en = NULL;
+	info.head_ex = NULL;
+	info.head_en = NULL;
+	if (argc != 1)
+		return (printf(ERR_ARG, argv[1]), 0);
 	if (env == NULL || *env == NULL)
 	{
-		add_export_ignored(info);
-		add_env_ignored(info);
+		add_export_ignored(&info);
+		add_env_ignored(&info);
 	}
-	fill_export_list(env, &info->head_ex);
-	fill_env_list(env, &info->head_en);
+	fill_export_list(env, &info.head_ex);
+	fill_env_list(env, &info.head_en);
 
 	// *********************************************
 	signal(SIGINT, signal_handler);
@@ -102,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 	// *********************************************
 
 
-	g_shell.path = get_path_home(&info->head_ex);
+	g_shell.path = get_path_home(&info.head_ex);
 	printf("\033[2J\033[1;1H");
 	while (42)
 	{
@@ -121,20 +122,19 @@ int	main(int argc, char **argv, char **env)
 			get_token(input, &args);
 			if (args && syntex_error(args))
 			{
-				ft_lstclear(&args);
+				free_token_list(&args);
 				continue ;
 			}
 			ft_trim_quotes(&args);
-			ft_expand(&args, info->head_en);
+			ft_expand(&args, info.head_en);
 			ft_join_args(&args);
-			command_table(args, &cmd, info->head_en);
+			command_table(args, &cmd, info.head_en, &var);
 			// print_list11(cmd);
-			if (cmd && cmd->data && g_shell.signel_hedoc == 0)
-				choose_command(cmd, info);
-			ft_lstclear(&args);
-			ft_lstclear(&cmd);
-			// free_token_list(&args);
-			// free_list_cmd(&cmd);
+			// print_list1(args);
+			if (cmd && cmd->data)
+				choose_command(cmd, &info, &var);
+			free_token_list(&args);
+			free_list_cmd(&cmd);
 			free (input);
 		}
 		else

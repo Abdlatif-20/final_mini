@@ -6,28 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 18:47:44 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 12:13:52 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	fill_cmd(t_list **cmd, t_var var, char **args, int heredoc)
-{
-	t_cmd	*cmds;
-
-	cmds = NULL;
-	cmds = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!cmds)
-		return ;
-		cmds->fd_in = var.fd_in;
-		cmds->fd_out = var.fd_out;
-		cmds->cmds = args;
-		cmds->main_cmd = cmds->cmds[0];
-		cmds->file_name = var.file_name;
-		cmds->heredoc = heredoc;
-	ft_lstadd_back(cmd, ft_lstnew(cmds));
-}
 
 void	skip_white_spaces(t_list **args, t_token **token)
 {
@@ -79,6 +62,8 @@ int	rederection_in(t_list *args, int *fd_in, char **file_name)
 		skip_white_spaces(&args, &token);
 		if (token && token->key == FILE_INP)
 		{
+			if (*fd_in == -1)
+				return (1);
 			*fd_in = open(token->value, O_RDONLY);
 			*file_name = token->value;
 			args = args->next;
@@ -87,6 +72,16 @@ int	rederection_in(t_list *args, int *fd_in, char **file_name)
 		}
 		else if (token->value[0] == '\0')
 			return (*fd_in = 404, printf(ERR_AMBG, token->value), 1);
+	}
+	return (0);
+}
+
+int	check_red_error(int **fd)
+{
+	if (**fd == -1)
+	{
+		**fd = 101;
+		return (101);
 	}
 	return (0);
 }
@@ -108,6 +103,8 @@ int	rederection_out(t_list *args, int *fd_out)
 		{
 			if (token->value[0])
 				*fd_out = open(token->value, O_CREAT | O_RDWR | O_TRUNC, 0777);
+			if (check_red_error(&fd_out))
+				return (101);
 			args = args->next;
 			if (args)
 				token = args->data;

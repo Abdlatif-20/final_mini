@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 23:07:49 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:38:51 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	dup_for_pipes(int **pipefd, int i, int nb_pipes)
 void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	int nb_pipes, t_cmd *commands)
 {
+	
 	dup_for_pipes(pipefd, i, nb_pipes);
 	close_pipe(pipefd, nb_pipes);
 	if_herdoc_or_inputfile(commands);
@@ -66,8 +67,9 @@ void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	}
 }
 
-void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes)
+void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var)
 {
+	
 	int	**pipefd;
 
 	pipefd = create_pipefd(nb_pipes);
@@ -85,7 +87,7 @@ void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes)
 		if (info->pid == -1)
 			print_error_fork();
 		else if (info->pid == 0)
-			execute3(info, cmd, pipefd, nb_pipes);
+			execute3(info, cmd, pipefd, nb_pipes, var);
 		info->i++;
 		cmd = cmd->next;
 		if (cmd)

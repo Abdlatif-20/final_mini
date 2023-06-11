@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:51:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 23:48:11 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 16:08:32 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	case_of_just_cd(t_info *info, char *path_home)
 	}
 	else
 	{
+		g_shell.exit_status = 1,
 		printf("minishell$: cd: %s: No such file or directory\n", path_home);
 		return (0);
 	}
@@ -51,6 +52,7 @@ int	case_of_cd_tilda(t_info *info, char *path_home)
 	}
 	else
 	{
+		g_shell.exit_status = 1,
 		printf("minishell$: cd: %s: No such file or directory\n", path_home);
 		return (0);
 	}
@@ -94,7 +96,8 @@ int	my_cd(t_cmd *commands, t_info *info)
 		else if (!chdir(commands->cmds[i]))
 			case_of_remove_directory(commands, info, &tmp, i);
 		else
-			return (printf("minishell$: cd: %s: No such file or directory\n",
+			return (g_shell.exit_status = 1,
+				printf("minishell$: cd: %s: No such file or directory\n",
 					commands->cmds[i]), 0);
 	}
 	return (1);

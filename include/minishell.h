@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 23:51:49 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/10 15:40:42 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/11 11:30:51 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/11 15:59:52 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
-#include <pwd.h>
-#include <limits.h>
-// # include <glob.h>
+# include <pwd.h>
+# include <limits.h>
 
 # define ERR_UNX_TNKN "minishell: syntax error near unexpected token `|'\n"
 # define ERR_TK "minishell: syntax error near unexpected token `%s'\n"
@@ -87,7 +86,7 @@ typedef struct g_shell
 	char	*path;
 }				t_shell;
 
-extern t_shell g_shell;
+extern t_shell	g_shell;
 
 typedef struct s_cmd
 {
@@ -120,6 +119,34 @@ typedef struct s_export
 	struct s_export		*next;
 }				t_export;
 
+typedef struct t_var
+{
+	int		i;
+	int		j;
+	int		flag;
+	int		flag_export;
+	int		fd_in;
+	int		fd_out;
+	int		heredoc;
+	char	*file_name;
+	int		len;
+	char	*str;
+	char	**cmd;
+	int		is_empty_str;
+	int		is_empty_str_export;
+	char	*string;
+	int		start;
+	int		end;
+	int		number_of_commands;
+	t_list	*tmp;
+	t_env	*tmp_env;
+	t_env	*env;
+	t_token	*token;
+	char	*temp;
+	char	*input;
+	char	*buffer;
+}				t_var;
+
 typedef struct s_info
 {
 	t_env		*head_en;
@@ -131,33 +158,11 @@ typedef struct s_info
 	pid_t		pid;
 	char		*temp;
 	int			i;
+	t_var		*var;
 }			t_info;
 
-typedef struct t_var
-{
-	int		i;
-	int		j;
-	int		flag;
-	int		fd_in;
-	int		fd_out;
-	int		heredoc;
-	char	*file_name;
-	int		len;
-	char	*str;
-	char	**cmd;
-	char	*string;
-	int		start;
-	int		end;
-	int		number_of_commands;
-	t_list	*tmp;
-	t_env	*tmp_env;
-	char	*temp;
-	char	*input;
-	char	*buffer;
-}				t_var;
-
 char		**create_env(t_info *info);
-void 		help(int status);
+// void 		help(int status);
 // file my_echo.c
 // int			my_echo(t_cmd *cmd);
 int			my_echo(t_cmd *cmd);
@@ -190,24 +195,25 @@ int			check_if_export_var_exist(t_export *head_ex, char *export_var);
 void		remove_export_element(t_export **head_ex, char *export_var);
 void		fill_export_list(char **environ, t_export **head_ex);
 
-
 // file my_unset.c
 void		my_unset(t_cmd *commands, t_info *info);
 
 // file my_exit.c
 // int			my_exit(void);
-int my_exit(t_cmd *commands);
+int			my_exit(t_cmd *commands);
 
 // file utils1.c
 char		*get_value(t_export **head_ex, char *var);
 
-void		execute_commande(t_cmd *commands, t_info *info, t_list *shell);
+void		execute_commande(t_cmd *commands, t_info *info,
+				t_list *shell, t_var *var);
 
 // file utils3.c
-void		execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes);
+void		execute_commands_with_pipe(t_list *cmd,
+				t_info *info, int nb_pipes, t_var *var);
 
 // file help_export.c
-int			check_export(char **split);
+int			check_export(char **split, t_var *var);
 void		concatenation_export(t_export **head_ex, char *export_variable,
 				char *new_value);
 void		add_export(t_export **head_ex, char **split);
@@ -235,7 +241,7 @@ int			ft_isdigit(int c );
 int			ft_isalnum(int c);
 size_t		ft_strlen(const char *str);
 char		*ft_strchr(const char *s, int c);
-long long	ft_atoi(const char *str);
+long long	ft_atoi(char *str);
 char		*ft_strdup(const char *s);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char *s1, char *s2);
@@ -280,6 +286,11 @@ void		ft_expand(t_list **list, t_env *env);
 int			handel_var(t_token **token, t_var *var, t_env *env);
 int			ft_expender_help(t_token ***token,
 				t_env *env, t_var **var);
+void		hold_string(t_var **var, t_token *token);
+int			help_expand(t_var **var, t_token *token);
+int			help_expand1(t_var **var, t_token *token);
+void		help_expand2(t_var **var, t_token *token, t_env *env);
+void		handl_expand_dquotes(t_var *var);
 char		*get_variable_name(char *name);
 void		free_array(char **array);
 /*--------------------------------------------------------*/
@@ -291,16 +302,18 @@ int			rederection_in(t_list *args, int *fd_in, char **file_name);
 int			rederection_app(t_list *args, int *fd_out);
 void		fill_token(t_list **args, int token, char *word, int is_heredoce);
 void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
-void		command_table(t_list *args, t_list **cmd, t_env *env);
+void		command_table(t_list *args, t_list **cmd, t_env *env, t_var *var);
 int			allocate_commande(t_list *args);
-char		**get_command1(t_list *args);
+int			check_dquotes(char *str);
+char		**get_command1(t_list *args, t_var **var);
 void		free_token_list(t_list **list);
 void		free_list_cmd(t_list **list);
 
 // utils
 // int		count_words_me(char *str, char c);
-void		choose_command(t_list *shell, t_info *info);
-void		builtin_execution(t_list *shell, t_info *info, int flag);
+void		choose_command(t_list *shell, t_info *info, t_var *var);
+void		builtin_execution(t_list *shell, t_info *info,
+				int flag, t_var *var);
 
 // signals_and_status_code.c
 void		handle_specific_signal_1(int signal_number);
@@ -310,22 +323,21 @@ void		handle_exit_status(int status);
 void		display_status_code(int status);
 void		signal_handler(int sig);
 
-
 long long	ft_atoi1(char *str, int *flag);
 
 // help_cd_functions.c
-void	set_value1(t_info *info, char *env_var, char *new_value);
-char	*get_value2(t_info *info, char *env_var);
-int		if_there_is_tilda(char *cmd);
-int		case_of_tilda_in_path(t_info *info, char *path_tmp1);
-int		case_of_remove_directory(t_cmd *commands, t_info *info, char **tmp, int i);
+void		set_value1(t_info *info, char *env_var, char *new_value);
+char		*get_value2(t_info *info, char *env_var);
+int			if_there_is_tilda(char *cmd);
+int			case_of_tilda_in_path(t_info *info, char *path_tmp1);
+int			case_of_remove_directory(t_cmd *commands,
+				t_info *info, char **tmp, int i);
 
 // check_args.c
-int check_is_contain(char *split);
-int check_if_valid_args(char *split);
-char *get_arg(char *arg);
-int  check_export(char **split);
-
+int			check_is_contain(char *split);
+int			check_if_valid_args(char *split);
+char		*get_arg(char *arg);
+// int  check_export(char **split);
 
 // file my_env.c
 char		*get_env_variable(char *variable);
@@ -337,34 +349,31 @@ int			check_if_env_var_exist(t_env *head_en, char *env_var);
 void		remove_env_element(t_env **head_en, char *env_var);
 void		fill_env_list(char **environ, t_env **head_env);
 
-
 // help_env_1.c
-t_env	*ft_lst_new_env(char *env_var, char *env_value);
-void	ft_lst_add_back_env(t_env **head_en, t_env *new);
-void 	remove_env_element(t_env **head_en, char *env_var);
-void	add_env_element(char *env_var, char *env_value, t_env **head_en);
-void	print_list_env(t_info *info);
-
+t_env		*ft_lst_new_env(char *env_var, char *env_value);
+void		ft_lst_add_back_env(t_env **head_en, t_env *new);
+void		remove_env_element(t_env **head_en, char *env_var);
+void		add_env_element(char *env_var, char *env_value, t_env **head_en);
+void		print_list_env(t_info *info);
 
 //utils6.c
-char	**create_env(t_info *info);
-void	execute1(t_list *cmd, t_info *info);
-void	execute2(t_info *info);
-void	execute3(t_info *info, t_list *cmd, int **pipefd, int nb_pipes);
-void	if_herdoc(t_cmd *commands);
-
+char		**create_env(t_info *info);
+void		execute1(t_list *cmd, t_info *info, t_var *var);
+void		execute2(t_info *info);
+void		execute3(t_info *info, t_list *cmd,
+				int **pipefd, int nb_pipes, t_var *var);
+void		if_herdoc(t_cmd *commands);
 
 //utils7.c
-int		**create_pipefd(int nb_pipes);
-void	create_pipe(int pipefd[2]);
-void	close_pipe(int **pipefd, int nb_pipes);
-void	wait_for_child(int nb_pipes);
-int		get_nbr_node(t_list *shell);
+int			**create_pipefd(int nb_pipes);
+void		create_pipe(int pipefd[2]);
+void		close_pipe(int **pipefd, int nb_pipes);
+void		wait_for_child(int nb_pipes);
+int			get_nbr_node(t_list *shell);
 
 // execute_multi_command.c
-void	merge_dup_pipe_herdoc(int **pipefd, int i, int nb_pipes, t_cmd *commands);
-
-void	reserve_list(t_info *info);
-
+void		merge_dup_pipe_herdoc(int **pipefd,
+				int i, int nb_pipes, t_cmd *commands);
+void		reserve_list(t_info *info);
 
 #endif

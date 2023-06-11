@@ -6,10 +6,9 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:50:59 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/10 11:46:32 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 12:56:37 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../include/minishell.h"
 
@@ -52,113 +51,32 @@ void	free_array(char **array)
 	free(array);
 }
 
+void	init_variable1(t_env **env_tmp, t_env *env, t_var *var)
+{
+	*env_tmp = env;
+	var->i = 0;
+	var->string = NULL;
+	var->str = NULL;
+	var->temp = NULL;
+	var->env = env;
+}
+
 void	ft_expand(t_list **list, t_env *env)
 {
-	t_list		*tmp;
-	t_env		*tmp_env;
-	t_token		*token;
 	t_var		var;
 
-	tmp = *list;
-	tmp_env = env;
-	var.i = 0;
-	var.string = NULL;
-	var.str = NULL;
-	var.temp = NULL;
-	while (tmp)
+	var.tmp = *list;
+	init_variable1(&var.tmp_env, env, &var);
+	while (var.tmp)
 	{
-		token = tmp->data;
-		if (tmp && token->key == VAR && token->is_herdoc == 0)
+		var.token = var.tmp->data;
+		if (var.tmp && var.token->key == VAR && var.token->is_herdoc == 0)
 		{
-			if (handel_var(&token, &var, env) == 2)
+			if (handel_var(&var.token, &var, var.env) == 2)
 				continue ;
 		}
-		else if (tmp && token->key == DQUATES && token->is_herdoc == 0)
-		{
-			var.i = 0;
-			var.string = NULL;
-			while (token->value[var.i])
-			{
-				var.len = 0;
-				while (token->value[var.i + var.len]
-					&& token->value[var.i + var.len] != '$')
-					var.len++;
-				if (var.len > 0)
-					var.string = ft_strjoin(var.string,
-							ft_substr(token->value, var.i, var.len));
-				var.i += var.len;
-				if (token->value[var.i] == '$')
-				{
-					if (token->value[var.i + 1] == '\0'
-						|| !ft_isalnum(token->value[var.i + 1]))
-					{
-						var.len = 1;
-						if (token->value[var.i + var.len] == '?')
-						{
-							var.temp = ft_itoa(g_shell.exit_status);
-							var.string = ft_strjoin(var.string, var.temp);
-							free(var.temp);
-							var.i += 2;
-							continue ;
-						}
-						while (token->value[var.i + var.len]
-							&& !ft_isalnum(token->value[var.i + var.len]))
-							var.len++;
-						if (var.len > 0)
-							var.string = ft_strjoin(var.string,
-									ft_substr(token->value,
-										var.i, var.len));
-						var.i += var.len;
-					}
-					else if (token->value[var.i] == '$')
-					{
-						var.i++;
-						if (ft_isdigit(token->value[var.i]))
-						{
-							var.i++;
-							continue ;
-						}
-					}
-					else if (token->value[var.i + 1]
-						&& !ft_isalpha(token->value[var.i + 1])
-						&& token->value[var.i + 1] != '_')
-					{
-						var.len = 0;
-						while (token->value[var.i + var.len]
-							&& !ft_isalpha(token->value[var.i + var.len])
-							&& token->value[var.i + var.len] != '_')
-								var.len++;
-						if (var.len > 0)
-							var.string = ft_strjoin(var.string,
-									ft_substr(token->value, var.i, var.len));
-						var.i += var.len;
-					}
-					var.len = 0;
-					while (token->value[var.i + var.len]
-						&& token->value[var.i + var.len] != '$'
-						&& token->value[var.i + var.len] != ' '
-						&& (ft_isalpha(token->value[var.i + var.len])
-							|| token->value[var.i + var.len] == '_'))
-							var.len++;
-					var.str = ft_substr(token->value, var.i, var.len);
-					var.i += var.len;
-					while (env)
-					{
-						if (tmp && !ft_strcmp(env->env_var, var.str))
-						{
-							if (var.len > 0)
-								var.string = ft_strjoin(var.string,
-										env->env_value);
-							break ;
-						}
-						env = env->next;
-					}
-					env = tmp_env;
-				}
-			}
-			if (var.string)
-				((t_token *)tmp->data)->value = var.string;
-		}
-		tmp = tmp->next;
+		else if (var.tmp && var.token->key == DQUATES && !var.token->is_herdoc)
+			handl_expand_dquotes(&var);
+		var.tmp = var.tmp->next;
 	}
 }

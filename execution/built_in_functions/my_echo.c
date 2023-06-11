@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:40:39 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 22:17:48 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/10 18:24:51 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@ int	help_echo(int i, t_cmd *cmd)
 
 int	my_echo(t_cmd *cmd)
 {
+	
+	// printf("cmd->cmds[0] = %s\n", cmd->cmds[0]);
+	// printf("cmd->cmds[1] = %s\n", cmd->cmds[1]);
+	// printf("cmd->cmds[2] = %s\n", cmd->cmds[2]);
+	// printf("cmd->cmds[3] = %s\n", cmd->cmds[3]);
+
+	
 	int	i;
 	int	find_option;
 	int	not_option;
@@ -70,6 +77,7 @@ int	my_echo(t_cmd *cmd)
 		not_option = 1;
 	while (cmd->cmds[i])
 	{
+		
 		if (find_option == 0 && !not_option)
 		{
 			while (check_option(cmd->cmds[i]))
@@ -78,6 +86,12 @@ int	my_echo(t_cmd *cmd)
 				find_option = 1;
 			}
 		}
+		// pu/ts("--here---");
+		// if (cmd->cmds[i][0] == '\0')
+		// {
+		// 	i++;
+		// 	continue ;
+		// }
 		help_echo(i, cmd);
 		i++;
 	}

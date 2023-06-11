@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 23:50:51 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/10 11:49:17 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/11 11:27:02 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/11 15:18:26 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	handel_var(t_token **token, t_var *var, t_env *env)
 
 int	ft_expender_help(t_token ***token, t_env *env, t_var **var)
 {
-	static char *str;
+	static char	*str;
 
 	while (env)
 	{
@@ -50,13 +50,13 @@ int	ft_expender_help(t_token ***token, t_env *env, t_var **var)
 			str = ft_itoa(g_shell.exit_status);
 			(**token)->value = ft_strdup(str);
 			(**token)->value = ft_strjoin((**token)->value, &(*var)->temp[1]);
-			return (0);
+			return (free((*var)->temp), 0);
 		}
 		if (env && !ft_strcmp(env->env_var, (*var)->temp))
 		{
 			(**token)->value = ft_strdup(env->env_value);
 			env = (*var)->tmp_env;
-			return (0);
+			return (free((*var)->temp), 0);
 		}
 		env = env->next;
 	}

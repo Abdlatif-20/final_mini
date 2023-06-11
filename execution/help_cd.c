@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:44:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/08 23:31:58 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 16:09:02 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	case_of_tilda_in_path(t_info *info, char *path_tmp1)
 	}
 	else
 	{
+		g_shell.exit_status = 1;
 		printf("minishell$: cd: %s: No such file or directory\n", path_tmp1);
 		return (0);
 	}

@@ -6,23 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:31:32 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 15:31:53 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 12:04:41 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	fill_white_space(char *input, t_list **token, t_var **var)
-{
-	int	len;
-
-	len = 0;
-	while (input[(*var)->i + len] && ft_whitespace(input[(*var)->i + len]))
-		len++;
-	if (len > 0)
-		fill_token(token, W_SPACE, ft_substr(input, (*var)->i, len), 0);
-	(*var)->i += len;
-}
 
 void	var_init(t_var *var, char *input)
 {
@@ -30,7 +18,7 @@ void	var_init(t_var *var, char *input)
 	var->start = 0;
 	var->end = 0;
 	var->string = NULL;
-    var->len = ft_strlen(input) - 1;
+	var->len = ft_strlen(input) - 1;
 }
 
 char	*skip_whitespace(char *input)
