@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:50:59 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 23:51:02 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/10 11:46:32 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@ char	*get_variable_name(char *name)
 	init_variable(&var, name);
 	if (!var.str)
 		return (NULL);
-	while (name[var.i] && (name[var.i] == '\''
-			|| name[var.i] == '\"' || name[var.i] == '|'))
-		var.i++;
-	while (name[var.end] && (name[var.end] == '\''
-			|| name[var.end] == '\"' || name[var.end] == '|'))
-		var.end--;
 	if (name[var.i] == '$')
 		var.i++;
 	while (name[var.i] && name[var.i] != '$'
@@ -68,6 +62,9 @@ void	ft_expand(t_list **list, t_env *env)
 	tmp = *list;
 	tmp_env = env;
 	var.i = 0;
+	var.string = NULL;
+	var.str = NULL;
+	var.temp = NULL;
 	while (tmp)
 	{
 		token = tmp->data;
@@ -96,6 +93,14 @@ void	ft_expand(t_list **list, t_env *env)
 						|| !ft_isalnum(token->value[var.i + 1]))
 					{
 						var.len = 1;
+						if (token->value[var.i + var.len] == '?')
+						{
+							var.temp = ft_itoa(g_shell.exit_status);
+							var.string = ft_strjoin(var.string, var.temp);
+							free(var.temp);
+							var.i += 2;
+							continue ;
+						}
 						while (token->value[var.i + var.len]
 							&& !ft_isalnum(token->value[var.i + var.len]))
 							var.len++;
@@ -128,7 +133,7 @@ void	ft_expand(t_list **list, t_env *env)
 									ft_substr(token->value, var.i, var.len));
 						var.i += var.len;
 					}
-				var.len = 0;
+					var.len = 0;
 					while (token->value[var.i + var.len]
 						&& token->value[var.i + var.len] != '$'
 						&& token->value[var.i + var.len] != ' '

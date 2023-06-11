@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:51:49 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 23:51:51 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/10 15:40:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-
 typedef struct s_token
 {
 	int			key;
@@ -92,10 +91,10 @@ extern t_shell g_shell;
 
 typedef struct s_cmd
 {
+	char		*main_cmd;
 	char		**cmds;
 	int			fd_in;
 	int			fd_out;
-	char		*main_cmd;
 	char		*file_name;
 	int			heredoc;
 }					t_cmd;
