@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 18:25:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/10 17:55:37 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/11 01:58:57 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/11 01:59:17 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,42 @@ int	heredoc_help(char **input, t_list ***args, t_env *env, char *name)
 	return (0);
 }
 
+void	add_to_buffer(char **buffer, char *input)
+{
+	char	*tmp;
+
+	tmp = ft_strdup(*buffer);
+	*buffer = ft_strjoin(tmp, input);
+	*buffer = ft_strjoin(*buffer, "\n");
+}
+
 void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 {
-	char	*input;
+	t_var	var;
 
+	var.buffer = NULL;
 	while (1)
 	{
 		rl_event_hook = get_0;
 		signal(SIGINT, handel);
-		input = readline("> HEREDOC$ ");
-		if (!input)
+		var.input = readline("> HEREDOC$ ");
+		if (!var.input)
 		{
-			free(input);
+			free(var.input);
 			break ;
 		}
-		if (heredoc_help(&input, &args, env, name) == 2)
+		else if (heredoc_help(&var.input, &args, env, name) == 2)
+		{
+			if (var.buffer)
+				write(**fd, var.buffer, ft_strlen(var.buffer));
 			break ;
-		else if (!input[0] && g_shell.signel_hedoc == 1)
+		}
+		else if (!var.input[0] && g_shell.signel_hedoc == 1)
 		{
 			rl_done = 0;
 			break ;
 		}
-		if (**fd == -1)
-			return ;
-		write((**fd), input, ft_strlen(input));
-		write((**fd), "\n", 1);
-		free(input);
+		add_to_buffer(&var.buffer, var.input);
+		free(var.input);
 	}
 }

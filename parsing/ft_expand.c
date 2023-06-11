@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 12:45:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 21:55:58 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/09 23:50:59 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/09 23:51:02 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/minishell.h"
 
@@ -72,7 +73,7 @@ void	ft_expand(t_list **list, t_env *env)
 		token = tmp->data;
 		if (tmp && token->key == VAR && token->is_herdoc == 0)
 		{
-			if (handel_var(&list, &token, &var, env) == 2)
+			if (handel_var(&token, &var, env) == 2)
 				continue ;
 		}
 		else if (tmp && token->key == DQUATES && token->is_herdoc == 0)

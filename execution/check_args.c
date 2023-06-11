@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:33:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 00:54:13 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 02:16:32 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ int	check_if_valid_args(char *split)
 	i = i + 1;
 	while (split[i])
 	{
-		if (ft_isalnum(split[i]) || split[i] == '_' || split[i] == '=')
+	// printf("split = [%s]\n", &split[i]);
+		if (split[i] && (ft_isalnum(split[i]) || split[i] == '_' || split[i] == '='))
 		{
 			i++;
 			continue ;
 		}
-		else if (split[i] == '+' && split[i + 1])
+		else if (split[i] && split[i] == '+' && split[i + 1])
 		{
 			if (split[i + 1] == '\0' || split[i + 1] == '=')
 				return (1);
@@ -58,7 +59,6 @@ int	check_if_valid_args(char *split)
 char	*get_arg(char *arg)
 {
 	int	i;
-
 	if (!arg)
 		return (NULL);
 	i = 0;
@@ -67,7 +67,7 @@ char	*get_arg(char *arg)
 	return (ft_substr(arg, 0, i + 1));
 }
 
-int	check_export(char **split)
+int	check_export(char **split, t_var *vars)
 {
 	int	i;
 
@@ -80,14 +80,15 @@ int	check_export(char **split)
 	}
 	while (split[i])
 	{
-		if (split[i] && check_if_valid_args(get_arg(split[i])) == 0)
+		int j = check_if_valid_args(get_arg(split[i]));
+		if (split[i] && j == 0)
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 			ft_putstr_fd(split[i], 2);
 		}
 		i++;
-		if (split[i] == NULL)
+		if (split[i] == NULL && vars->is_empty_str)
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);

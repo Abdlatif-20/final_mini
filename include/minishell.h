@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 01:23:08 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/11 01:59:42 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/11 02:17:28 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ typedef struct t_var
 	t_list	*tmp;
 	t_env	*tmp_env;
 	char	*temp;
+	char	*input;
+	char	*buffer;
 }				t_var;
 
 typedef struct s_info
@@ -208,7 +210,7 @@ void		execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 void		execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var);
 
 // file help_export.c
-int			check_export(char **split);
+int			check_export(char **split, t_var *var);
 void		concatenation_export(t_export **head_ex, char *export_variable,
 				char *new_value);
 void		add_export(t_export **head_ex, char **split);
@@ -278,8 +280,8 @@ void		ft_trim_quotes(t_list **args);
 void		ft_join_args(t_list **args);
 /*--------------------------------------------------------*/
 void		ft_expand(t_list **list, t_env *env);
-int			handel_var(t_list ***list, t_token **token, t_var *var, t_env *env);
-int			ft_expender_help(t_list ****list, t_token ***token,
+int			handel_var(t_token **token, t_var *var, t_env *env);
+int			ft_expender_help(t_token ***token,
 				t_env *env, t_var **var);
 char		*get_variable_name(char *name);
 void		free_array(char **array);
@@ -304,12 +306,12 @@ void		choose_command(t_list *shell, t_info *info, t_var *var);
 void		builtin_execution(t_list *shell, t_info *info, int flag, t_var *var);
 
 // signals_and_status_code.c
-void handle_specific_signal_1(int signal_number);
-void handle_specific_signal(int signal_number);
-void handle_signal_status(int status);
-void handle_exit_status(int status);
-void display_status_code(int status);
-void signal_handler(int sig);
+void		handle_specific_signal_1(int signal_number);
+void		handle_specific_signal(int signal_number);
+void		handle_signal_status(int status);
+void		handle_exit_status(int status);
+void		display_status_code(int status);
+void		signal_handler(int sig);
 
 
 long long	ft_atoi1(char *str, int *flag);
@@ -325,7 +327,7 @@ int		case_of_remove_directory(t_cmd *commands, t_info *info, char **tmp, int i);
 int check_is_contain(char *split);
 int check_if_valid_args(char *split);
 char *get_arg(char *arg);
-int  check_export(char **split);
+// int  check_export(char **split);
 
 
 // file my_env.c

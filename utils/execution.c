@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:41:51 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 00:43:09 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 02:17:42 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 	// printf("t_var = %d\n", var->is_empty_str);
 	if ((!ft_strcmp(commands->main_cmd, "export") && nb > 1) || var->is_empty_str == 1)
 	{
-		if (info->head_en && check_export(commands->cmds) == 0)
+		if (info->head_en && check_export(commands->cmds, var) == 0)
 			return ;
 		if (info->head_en && commands->cmds)
 		{
