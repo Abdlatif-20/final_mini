@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:43:47 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/10 17:35:46 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:38:15 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	if_herdoc(t_cmd *commands)
 	close(commands->fd_in);
 }
 
-void	execute1(t_list *cmd, t_info *info)
+void	execute1(t_list *cmd, t_info *info, t_var *var)
 {
-	builtin_execution(cmd, info, 0);
+	builtin_execution(cmd, info, 0, var);
 	g_shell.exit_status = 0;
 	exit(g_shell.exit_status);
 }
@@ -78,14 +78,13 @@ void	execute2(t_info *info)
 	}
 }
 
-void	execute3(t_info *info, t_list *cmd, int **pipefd, int nb_pipes)
+void	execute3(t_info *info, t_list *cmd, int **pipefd, int nb_pipes, t_var *var)
 {
-	
 	merge_dup_pipe_herdoc(pipefd, info->i, nb_pipes, info->commands);
 	info->temp = check_if_command_found (info->commands->main_cmd,
 			&info->head_ex);
 	if (is_builin(info->commands) == 1)
-		execute1(cmd, info);
+		execute1(cmd, info, var);
 	else if (info->commands->main_cmd)
 		execute2(info);
 	exit(g_shell.exit_status);

@@ -158,13 +158,13 @@ $USER
 oi
 HERE
 
-cat <minishell.h <<HERE <missing | ls // OK
+cat <include/minishell.h <<HERE <missing | ls // OK
 HERE
 
-cat <minishell.h <<HERE | cat // OK
+cat < include/minishell.h << HERE | cat // OK
 HERE
 
-cat <minishell.h <<HERE <missing <<DOC | echo oi
+cat < include/minishell.h << HERE < missing << DOC | echo oi // OK
 HERE
 DOC
 
@@ -225,3 +225,8 @@ hello + Ctrl+C
                 //      i++;
                 //      continue ;
                 // }                          // segv
+# cat << e < Makefile  > out
+# ls ''
+# ls ""
+
+

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:32:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 23:45:46 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 01:23:08 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define ERR_UNX_TNKN "minishell: syntax error near unexpected token `|'\n"
 # define ERR_TK "minishell: syntax error near unexpected token `%s'\n"
 # define ERR_NL "minishell: syntax error near unexpected token `newline'\n"
-# define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^_`{|}~%#&()*,;=[]"
+# define CHECK_SYMBOL "$\"'+-./:;<=>@[\\]^`{|}~%#&()*,;=[]"
 # define ERR_ARG "minishell: can't open input file: %s\n"
 # define ERR_AMBG "minishell: %s: ambiguous redirect\n"
 # define MAX_LL 9223372036854775807
@@ -121,19 +121,6 @@ typedef struct s_export
 	struct s_export		*next;
 }				t_export;
 
-typedef struct s_info
-{
-	t_env		*head_en;
-	t_export	*head_ex;
-	int			exit_status;
-	int			in;
-	int			out;
-	t_cmd		*commands;
-	pid_t		pid;
-	char		*temp;
-	int			i;
-}			t_info;
-
 typedef struct t_var
 {
 	int		i;
@@ -146,6 +133,7 @@ typedef struct t_var
 	int		len;
 	char	*str;
 	char	**cmd;
+	int		is_empty_str;
 	char	*string;
 	int		start;
 	int		end;
@@ -154,6 +142,20 @@ typedef struct t_var
 	t_env	*tmp_env;
 	char	*temp;
 }				t_var;
+
+typedef struct s_info
+{
+	t_env		*head_en;
+	t_export	*head_ex;
+	int			exit_status;
+	int			in;
+	int			out;
+	t_cmd		*commands;
+	pid_t		pid;
+	char		*temp;
+	int			i;
+	t_var		*var;
+}			t_info;
 
 char		**create_env(t_info *info);
 void 		help(int status);
@@ -200,10 +202,10 @@ int my_exit(t_cmd *commands);
 // file utils1.c
 char		*get_value(t_export **head_ex, char *var);
 
-void		execute_commande(t_cmd *commands, t_info *info, t_list *shell);
+void		execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var);
 
 // file utils3.c
-void		execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes);
+void		execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var);
 
 // file help_export.c
 int			check_export(char **split);
@@ -234,7 +236,7 @@ int			ft_isdigit(int c );
 int			ft_isalnum(int c);
 size_t		ft_strlen(const char *str);
 char		*ft_strchr(const char *s, int c);
-long long	ft_atoi(const char *str);
+long long	ft_atoi(char *str);
 char		*ft_strdup(const char *s);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char *s1, char *s2);
@@ -290,16 +292,16 @@ int			rederection_in(t_list *args, int *fd_in, char **file_name);
 int			rederection_app(t_list *args, int *fd_out);
 void		fill_token(t_list **args, int token, char *word, int is_heredoce);
 void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
-void		command_table(t_list *args, t_list **cmd, t_env *env);
+void		command_table(t_list *args, t_list **cmd, t_env *env, t_var *var);
 int			allocate_commande(t_list *args);
-char		**get_command1(t_list *args);
+char		**get_command1(t_list *args, t_var **var);
 void		free_token_list(t_list **list);
 void		free_list_cmd(t_list **list);
 
 // utils
 // int		count_words_me(char *str, char c);
-void		choose_command(t_list *shell, t_info *info);
-void		builtin_execution(t_list *shell, t_info *info, int flag);
+void		choose_command(t_list *shell, t_info *info, t_var *var);
+void		builtin_execution(t_list *shell, t_info *info, int flag, t_var *var);
 
 // signals_and_status_code.c
 void handle_specific_signal_1(int signal_number);
@@ -347,9 +349,9 @@ void	print_list_env(t_info *info);
 
 //utils6.c
 char	**create_env(t_info *info);
-void	execute1(t_list *cmd, t_info *info);
+void	execute1(t_list *cmd, t_info *info, t_var *var);
 void	execute2(t_info *info);
-void	execute3(t_info *info, t_list *cmd, int **pipefd, int nb_pipes);
+void	execute3(t_info *info, t_list *cmd, int **pipefd, int nb_pipes, t_var *var);
 void	if_herdoc(t_cmd *commands);
 
 

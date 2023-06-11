@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 23:15:58 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/10 18:06:30 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 01:14:20 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,28 @@ void	if_herdoc1(t_cmd *commands)
 		g_shell.exit_status = 1;
 		exit(g_shell.exit_status);
 	}
+	if (commands->fd_out != 1)
+	{
+		if (commands->fd_out == 101)
+		{
+			printf ("bash: outfile: Permission denie\n");
+			g_shell.exit_status = 1;
+			exit(g_shell.exit_status);
+		}
+		dup2(commands->fd_out, 1);
+		close(commands->fd_out);
+	}
 	close(commands->fd_in);
 }
 
 void	if_input_output_file(t_cmd *commands)
 {
+	
 	if (commands->fd_in != 0)
 	{
 		if (commands->fd_in == -1)
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(commands->file_name, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
+			print_error_file(commands->file_name);
 			g_shell.exit_status = 1;
 			exit(g_shell.exit_status);
 		}
@@ -51,7 +61,8 @@ void	if_input_output_file(t_cmd *commands)
 		}
 	}
 	if (commands->fd_out != 1)
-	{puts("here");
+	{
+		
 		if (commands->fd_out == 101)
 		{
 			printf ("bash: outfile: Permission denie\n");
@@ -66,13 +77,19 @@ void	if_input_output_file(t_cmd *commands)
 void	execute_child_process(t_cmd *commands, t_info *info)
 {
 	char	*path;
+	static int		i;
 
+	i = 1;
 	if (commands->heredoc)
 		if_herdoc1(commands);
 	else
 		if_input_output_file(commands);
 	if (!ft_strcmp(commands->main_cmd, "minishell"))
+	{
 		path = ft_strdup("minishell");
+		long long nb = ft_atoi(get_value2(info, "SHLVL"));
+		set_value1(info, "SHLVL", ft_itoa(++nb));
+	}
 	else
 		path = check_if_command_found(commands->main_cmd, &info->head_ex);
 	if (execve(path, commands->cmds, create_env(info)) == -1)
@@ -83,14 +100,14 @@ void	execute_child_process(t_cmd *commands, t_info *info)
 	}
 }
 
-void	execute_commande(t_cmd *commands, t_info *info, t_list *shell)
+void	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 {
 	pid_t	pid;
 
 	g_shell.signel_cat = 1;
 	if (is_builin(commands) == 1)
 	{
-		builtin_execution(shell, info, 1);
+		builtin_execution(shell, info, 1, var);
 		return ;
 	}
 	else if (commands->main_cmd)

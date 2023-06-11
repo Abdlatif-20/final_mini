@@ -6,7 +6,7 @@
 #    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 20:19:14 by ahaloui           #+#    #+#              #
-#    Updated: 2023/06/09 23:32:37 by ahaloui          ###   ########.fr        #
+#    Updated: 2023/06/11 01:22:00 by ahaloui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address 
 
 # CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 #  -Wno-misleading-indentation

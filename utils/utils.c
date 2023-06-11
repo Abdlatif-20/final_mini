@@ -6,17 +6,18 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/10 18:23:47 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:35:04 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	initiali_var(t_var *var, t_list *args)
+void	initiali_var(t_var ***var, t_list *args)
 {
-	var->i = 0;
-	var->flag = 0;
-	var->number_of_commands = allocate_commande(args);
+	(**var)->i = 0;
+	(**var)->flag = 0;
+	(**var)->is_empty_str = 0;
+	(**var)->number_of_commands = allocate_commande(args);
 }
 
 void	skip_spaces(t_list **args, t_token *token)
@@ -46,40 +47,41 @@ void	check_red(t_list **args, t_token *token, t_var *var)
 		var->flag = 0;
 }
 
-void	commands_helper(t_list **args, t_token *token, t_var *var)
+void	commands_helper(t_list **args, t_token *token, t_var ***var)
 {
 	if ((*args) && (token->key == WORD || token->key == FLAG
 			|| token->key == SQUATES || token->key == DQUATES
 			|| token->key == VAR))
 	{
-		if (!var->flag && token->value[0])
-			var->cmd[var->i++] = ft_strdup(token->value);
+		if (!(**var)->flag && token->value[0])
+			(**var)->cmd[(**var)->i++] = ft_strdup(token->value);
+		if (token->value[0] == '\0')
+			(**var)->is_empty_str = 1;
 		(*args) = (*args)->next;
 		if (*args)
 			token = (*args)->data;
-		var->flag = 0;
+		(**var)->flag = 0;
 	}
-	var->cmd[var->i] = NULL;
+	(**var)->cmd[(**var)->i] = NULL;
 }
 
-char	**get_command1(t_list *args)
+char	**get_command1(t_list *args, t_var **var)
 {
 	t_token	*token;
-	t_var	var;
 
 	initiali_var(&var, args);
-	var.cmd = (char **)malloc(sizeof(char *) * (var.number_of_commands + 1));
-	if (!var.cmd)
+	(*var)->cmd = (char **)malloc(sizeof(char *) * ((*var)->number_of_commands + 1));
+	if (!(*var)->cmd)
 		return (NULL);
-	var.cmd[var.number_of_commands] = NULL;
+	(*var)->cmd[(*var)->number_of_commands] = NULL;
 	while (args)
 	{
 		token = args->data;
-		check_red(&args, token, &var);
+		check_red(&args, token, *var);
 		if (token->key == PIPE)
 			break ;
 		skip_spaces(&args, token);
 		commands_helper(&args, token, &var);
 	}
-	return (var.cmd);
+	return ((*var)->cmd);
 }

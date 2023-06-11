@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:33:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/10 18:27:21 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:54:13 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	check_if_valid_args(char *split)
 {
 	int	i;
 
+	if (!split)
+		return (0);
 	i = 0;
 	if (split[i] && !check_is_contain(split))
 		return (0);
@@ -57,6 +59,8 @@ char	*get_arg(char *arg)
 {
 	int	i;
 
+	if (!arg)
+		return (NULL);
 	i = 0;
 	while (arg && arg[i] && arg[i] != '=')
 		i++;
@@ -66,19 +70,29 @@ char	*get_arg(char *arg)
 int	check_export(char **split)
 {
 	int	i;
-	int	valid;
 
 	i = 1;
-	valid = 1;
+	if (split[i] == NULL)
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		i++;
+	}
 	while (split[i])
 	{
-		if (check_if_valid_args(get_arg(split[i])) == 0)
+		if (split[i] && check_if_valid_args(get_arg(split[i])) == 0)
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 			ft_putstr_fd(split[i], 2);
 		}
 		i++;
+		if (split[i] == NULL)
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			i++;
+		}
 	}
 	return (1);
 }

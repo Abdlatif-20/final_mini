@@ -6,13 +6,13 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:47:52 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/07 18:38:25 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 01:08:42 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-long long	ft_atoi(const char *str)
+long long	ft_atoi(char *str)
 {
 	long long		res;
 	long long		sign;

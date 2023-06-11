@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/10 17:33:49 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:38:51 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,8 @@ void	if_input_file(t_cmd *commands)
 
 void	if_herdoc_or_inputfile(t_cmd *commands)
 {
-	printf("heredoc %d\n", commands->heredoc);
 	if (commands->heredoc)
-	{
 		if_herdoc(commands);
-	}
 	else
 		if_input_file(commands);
 }
@@ -70,7 +67,7 @@ void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	}
 }
 
-void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes)
+void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var)
 {
 	
 	int	**pipefd;
@@ -90,7 +87,7 @@ void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes)
 		if (info->pid == -1)
 			print_error_fork();
 		else if (info->pid == 0)
-			execute3(info, cmd, pipefd, nb_pipes);
+			execute3(info, cmd, pipefd, nb_pipes, var);
 		info->i++;
 		cmd = cmd->next;
 		if (cmd)

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 20:19:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 23:44:57 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:34:17 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ void	print_list11(t_list *cmd)
 			printf("cmd = [%s]\n",token->cmds[i]);
 			i++;
 		}
+		printf ("main_cmd = [%s]\n", token->main_cmd);
+		printf ("fd_in = [%d]\n", token->fd_in);
+		printf ("fd_out = [%d]\n", token->fd_out);
+		printf("file_name = [%s]\n", token->file_name);
 		tmp = tmp->next;
 	}
 }
@@ -75,6 +79,7 @@ int	main(int argc, char **argv, char **env)
 	t_list	*args;
 	t_list	*cmd;
 	t_info	*info;
+	t_var	var;
 	// char	**env1;
 
 	(void)argc;
@@ -127,10 +132,10 @@ int	main(int argc, char **argv, char **env)
 			ft_trim_quotes(&args);
 			ft_expand(&args, info->head_en);
 			ft_join_args(&args);
-			command_table(args, &cmd, info->head_en);
+			command_table(args, &cmd, info->head_en, &var);
 			// print_list11(cmd);
 			if (cmd && cmd->data && g_shell.signel_hedoc == 0)//check
-				choose_command(cmd, info);
+				choose_command(cmd, info, &var);
 			ft_lstclear(&args);
 			ft_lstclear(&cmd);
 			// free_token_list(&args);

@@ -75,10 +75,8 @@ void handle_signal_status(int status)
 
     if (WIFSIGNALED(status))
     {
-        // puts("2222\n");
         signal_number = WTERMSIG(status);
         g_shell.exit_status = 128 + signal_number;
-        // printf("the exit status isssssss %d\n", g_shell.exit_status);
         handle_specific_signal(signal_number);
     }
 }
@@ -86,11 +84,7 @@ void handle_signal_status(int status)
 void handle_exit_status(int status)
 {
     if (WIFEXITED(status))
-    {
-        // puts("111\n");
         g_shell.exit_status = WEXITSTATUS(status);
-        // printf("the exit status is %d\n", g_shell.exit_status);
-    }
 }
 
 void display_status_code(int status)

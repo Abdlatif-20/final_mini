@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:35:00 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/10 14:57:19 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/10 23:03:12 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*get_commande(char *command)
 	i = 0;
 	start = 0;
 	end = 0;
+	if (!command)
+		return (NULL);
 	while (command[i])
 	{
 		if (command[i] == '/')
@@ -38,49 +40,44 @@ char	*get_commande(char *command)
 	}
 	return (str);
 }
-
-char	**check_command(char *command, char ***split_paths)
+char	**get_cmd(char *command, char **split_paths)
 {
 	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
 	{
 		if (access(command, F_OK | X_OK) != 0)
 		{
 			printf("minishell: %s: No such file or directory\n", command);
-			g_shell.exit_status = EXIT_FAILURE;
-			exit(g_shell.exit_status);
+			exit(0);
 		}
 		split_paths = malloc(sizeof(char *) * 2);
 		if (!split_paths)
 			return (NULL);
-		*split_paths[0] = ft_strdup(command);
-		return (*(split_paths));
+		split_paths[0] = ft_strdup(command);
 	}
-	return (NULL);
+	return (split_paths);
 }
-
-char	**join_path_command(char *command, t_export **head_ex)
+char  **join_path_command(char *command, t_export **head_ex)
 {
 	char	*path;
 	char	**split_paths;
 	int		i;
-	int		j;
 
-	if (check_command(command, &split_paths))
+	split_paths = NULL;
+	split_paths = get_cmd(command, split_paths);
+	if (split_paths)
 		return (split_paths);
 	path = get_value(head_ex, "PATH");
 	if (!path)
 		return (NULL);
 	split_paths = ft_split(path, ':');
-	i = 0;
-	while (split_paths[i])
+	i = -1;
+	while (split_paths[++i])
 	{
-		j = 0;
 		split_paths[i] = ft_strjoin(split_paths[i], "/");
-		if (command[j] == '/')
+		if (command[0] == '/')
 			split_paths[i] = ft_strjoin(split_paths[i], get_commande(command));
 		else
 			split_paths[i] = ft_strjoin(split_paths[i], command);
-		i++;
 	}
 	return (split_paths);
 }
