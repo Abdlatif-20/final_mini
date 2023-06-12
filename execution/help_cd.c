@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:44:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:09:02 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:41:14 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	case_of_remove_directory(t_cmd *commands, t_info *info, char **tmp, int i)
 		ft_putstr_fd("parent directories: No such file or directory\n", 2);
 		*tmp = ft_strjoin(get_value2(info, "PWD"), "/");
 		set_value1(info, "PWD", ft_strjoin(*tmp, commands->cmds[i]));
+		// free(*tmp);
 	}
 	else
 		set_value1(info, "PWD", getcwd(NULL, 0));

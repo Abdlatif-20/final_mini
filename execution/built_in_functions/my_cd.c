@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:51:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:08:32 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:43:57 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	help_cd(t_info *info, char *path_home, t_cmd *commands, int i)
 		{
 			printf("minishell$: cd: HOME not set\n");
 			// reserve_list(info);
-			return (0);
+			return ( 0);
 		}
 		return (case_of_just_cd(info, path_home));
 	}
@@ -83,16 +83,22 @@ int	my_cd(t_cmd *commands, t_info *info)
 	char	*tmp;
 
 	i = 1;
+	tmp = NULL;
 	path_home = get_path_home(&info->head_ex);
 	if (!help_cd(info, path_home, commands, i))
+	{
+		free(path_home);
 		return (0);
+	}
 	else if (!ft_strcmp(commands->main_cmd, "cd") && commands->cmds[i])
 	{
 		set_value1(info, "OLDPWD", getcwd(NULL, 0));
 		if (if_there_is_tilda(commands->cmds[i]))
+		{
 			case_of_tilda_in_path(info, ft_strjoin(path_home,
 					ft_substr(commands->cmds[i], 1,
-						ft_strlen(commands->cmds[i]))));
+						ft_strlen(commands->cmds[i]))));		
+		}
 		else if (!chdir(commands->cmds[i]))
 			case_of_remove_directory(commands, info, &tmp, i);
 		else
@@ -100,5 +106,6 @@ int	my_cd(t_cmd *commands, t_info *info)
 				printf("minishell$: cd: %s: No such file or directory\n",
 					commands->cmds[i]), 0);
 	}
+	free(path_home);
 	return (1);
 }
