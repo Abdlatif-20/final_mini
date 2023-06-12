@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:27:02 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 15:18:26 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 20:16:30 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,41 @@ int	handel_var(t_token **token, t_var *var, t_env *env)
 	return (0);
 }
 
+void	ft_free(void *ptr)
+{
+	if(ptr)
+		free(ptr);
+}
+
 int	ft_expender_help(t_token ***token, t_env *env, t_var **var)
 {
 	static char	*str;
 
 	while (env)
 	{
-		(*var)->temp = get_variable_name((**token)->value);
+		(*var)->temp = get_variable_name((**token)->value);//user
 		if ((*var)->temp && (*var)->temp[0] == '?')
 		{
 			str = ft_itoa(g_shell.exit_status);
 			(**token)->value = ft_strdup(str);
+			ft_free(str);
 			(**token)->value = ft_strjoin((**token)->value, &(*var)->temp[1]);
-			return (free((*var)->temp), 0);
+			ft_free((*var)->temp);
+			return (0);
 		}
 		if (env && !ft_strcmp(env->env_var, (*var)->temp))
 		{
 			(**token)->value = ft_strdup(env->env_value);
 			env = (*var)->tmp_env;
-			return (free((*var)->temp), 0);
+			ft_free((*var)->temp);
+			return (0);
 		}
 		env = env->next;
+		ft_free((*var)->temp);
 	}
 	if (ft_strlen((**token)->value) == 1)
 		(**token)->value = ft_strdup("$");
 	else if (!env)
 		(**token)->value = ft_strdup("");
-	return (0);
+	return ( 0);
 }

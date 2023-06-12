@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:16:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 12:55:16 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 20:24:11 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 void	hold_string(t_var **var, t_token *token)
 {
+	char *tmp;
+
 	(*var)->len = 0;
 	while (token->value[(*var)->i + (*var)->len]
 		&& token->value[(*var)->i + (*var)->len] != '$')
 		(*var)->len++;
 	if ((*var)->len > 0)
-		(*var)->string = ft_strjoin((*var)->string,
-				ft_substr(token->value, (*var)->i, (*var)->len));
+	{
+		tmp = ft_substr(token->value, (*var)->i, (*var)->len);
+		(*var)->string = ft_strjoin((*var)->string, tmp);
+		ft_free(tmp);
+	}
 	(*var)->i += (*var)->len;
 }
 
@@ -96,6 +101,7 @@ void	help_expand2(t_var **var, t_token *token, t_env *env)
 			if ((*var)->len > 0)
 				(*var)->string = ft_strjoin((*var)->string,
 						env->env_value);
+				ft_free((*var)->str); //check_free
 			break ;
 		}
 		env = env->next;

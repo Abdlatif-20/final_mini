@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:38 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:15:15 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 00:35:41 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **env)
 	t_info	info;
 	t_var	var;
 
-	// (void)var;
+	(void)var;
 	args = NULL;
 	cmd = NULL;
 	input = NULL;

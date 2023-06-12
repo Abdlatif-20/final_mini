@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:30:51 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 15:59:52 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 20:16:51 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,7 @@ void		help_expand2(t_var **var, t_token *token, t_env *env);
 void		handl_expand_dquotes(t_var *var);
 char		*get_variable_name(char *name);
 void		free_array(char **array);
+void		ft_free(void *ptr);
 /*--------------------------------------------------------*/
 void		ft_remove_node(t_list **head, t_list *node);
 char		*skip_whitespace(char *input);

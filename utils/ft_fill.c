@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:03:36 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 13:42:24 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 22:48:05 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	fill_cmd(t_list **cmd, t_var var, char **args, int heredoc)
 		cmds->fd_in = var.fd_in;
 		cmds->fd_out = var.fd_out;
 		cmds->cmds = args;
+		args = NULL;
 		cmds->main_cmd = cmds->cmds[0];
 		cmds->file_name = var.file_name;
 		cmds->heredoc = heredoc;
@@ -53,6 +54,7 @@ void	fill_token(t_list **args, int token, char *word, int is_heredoc)
 		tokens->is_herdoc = is_heredoc;
 		ft_lstadd_back(args, ft_lstnew(tokens));
 	}
+
 }
 
 void	fill_white_space(char *input, t_list **token, t_var **var)

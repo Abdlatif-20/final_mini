@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:57 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 12:11:28 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 01:05:03 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void	add_to_buffer(char **buffer, char *input)
 	*buffer = ft_strjoin(*buffer, "\n");
 }
 
-int	ft_break_while(t_var var)
+int	ft_break_while(t_var *var)
 {
-	if (!var.input)
+	if (!var->input)
 	{
-		free(var.input);
+		free(var->input);
 		return (1);
 	}
 	return (0);
@@ -80,12 +80,14 @@ void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 		rl_event_hook = get_0;
 		signal(SIGINT, handel);
 		var.input = readline("> HEREDOC$ ");
-		if (ft_break_while(var))
+		if (ft_break_while(&var))
 			break ;
 		else if (heredoc_help(&var.input, &args, env, name) == 2)
 		{
 			if (var.buffer)
 				write(**fd, var.buffer, ft_strlen(var.buffer));
+			ft_free(var.buffer);
+			ft_free(var.input);
 			break ;
 		}
 		else if (!var.input[0] && g_shell.signel_hedoc == 1)

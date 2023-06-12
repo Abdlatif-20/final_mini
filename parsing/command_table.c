@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 00:36:50 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/12 00:31:57 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
 				token = args->data;
 			}
 		}
-		fill_cmd(cmd, *var, get_command1((*var).tmp, &var), (*var).heredoc);
+		char **temp = get_command1((*var).tmp, &var);
+		fill_cmd(cmd, *var, temp, (*var).heredoc);
 		if (args)
 			skip_pipe(&args, &(*var).tmp, token);
 	}
