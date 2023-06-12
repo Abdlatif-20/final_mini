@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:33:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 02:16:32 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/12 01:51:06 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	check_if_valid_args(char *split)
 	i = i + 1;
 	while (split[i])
 	{
-	// printf("split = [%s]\n", &split[i]);
 		if (split[i] && (ft_isalnum(split[i]) || split[i] == '_' || split[i] == '='))
 		{
 			i++;
@@ -70,8 +69,10 @@ char	*get_arg(char *arg)
 int	check_export(char **split, t_var *vars)
 {
 	int	i;
+	char	*arg;
 
 	i = 1;
+	arg = get_arg(split[i]);
 	if (split[i] == NULL)
 	{
 		ft_putstr_fd("minishell: export: `", 2);
@@ -80,12 +81,12 @@ int	check_export(char **split, t_var *vars)
 	}
 	while (split[i])
 	{
-		int j = check_if_valid_args(get_arg(split[i]));
-		if (split[i] && j == 0)
+		arg = get_arg(split[i]);
+		if (split[i] && check_if_valid_args(arg) == 0)
 		{
 			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
 			ft_putstr_fd(split[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
 		}
 		i++;
 		if (split[i] == NULL && vars->is_empty_str)
@@ -95,5 +96,6 @@ int	check_export(char **split, t_var *vars)
 			i++;
 		}
 	}
+	free(arg);
 	return (1);
 }

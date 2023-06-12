@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:38 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:15:15 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 23:24:16 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,7 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		}
 	}
+	free_export(&info.head_ex);
+	free_env(&info.head_en);
 	return (0);
 }

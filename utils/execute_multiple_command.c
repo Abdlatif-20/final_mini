@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 00:38:51 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/12 00:47:20 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	}
 }
 
-void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var)
+int	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var)
 {
-	
 	int	**pipefd;
 
 	pipefd = create_pipefd(nb_pipes);
@@ -88,6 +87,8 @@ void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *
 			print_error_fork();
 		else if (info->pid == 0)
 			execute3(info, cmd, pipefd, nb_pipes, var);
+		if (var->is_empty_str)
+			return (-1);
 		info->i++;
 		cmd = cmd->next;
 		if (cmd)
@@ -95,4 +96,6 @@ void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *
 	}
 	close_pipe(pipefd, nb_pipes);
 	wait_for_child(nb_pipes);
+	free_pipefd(pipefd, nb_pipes);
+	return (0);
 }

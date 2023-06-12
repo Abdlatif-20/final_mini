@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:06:45 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 12:11:06 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 00:38:58 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,17 @@ int	check_is_empty_string(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void free_pipefd(int **pipefd, int nb_pipes)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_pipes)
+	{
+		free(pipefd[i]);
+		i++;
+	}
+	free(pipefd);
 }

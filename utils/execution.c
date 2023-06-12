@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:41:51 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:01:44 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 00:25:45 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 	int nb;
 	
 	nb = count_str(commands->cmds);
-	// printf("nb = %d\n", nb);
-	// printf("t_var = %d\n", var->is_empty_str);
 	if ((!ft_strcmp(commands->main_cmd, "export") && nb > 1) || (var->is_empty_str == 1 && var->is_empty_str_export))
 	{
 		if (info->head_en && check_export(commands->cmds, var) == 0)
@@ -112,9 +110,14 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 		execute_commande(commands, info, shell, var);
 	}
 	else if (nb_node > 1)//check
-		execute_commands_with_pipe(shell, info, --nb_cmd, var);
+	if (execute_commands_with_pipe(shell, info, --nb_cmd, var) == -1)
+	{
+		// printf("here\n");
+	}
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);
 	close(info->in);
 	close(info->out);
 }
+
+
