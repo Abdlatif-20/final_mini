@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:41:51 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 00:25:45 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:04:54 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,7 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 		execute_commande(commands, info, shell, var);
 	}
 	else if (nb_node > 1)//check
-	if (execute_commands_with_pipe(shell, info, --nb_cmd, var) == -1)
-	{
-		// printf("here\n");
-	}
+		execute_commands_with_pipe(shell, info, --nb_cmd, var);
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);
 	close(info->in);
