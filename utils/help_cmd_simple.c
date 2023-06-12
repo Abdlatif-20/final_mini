@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_cmd_simple.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:35:00 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 15:49:05 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 01:39:43 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char  **join_path_command(char *command, t_export **head_ex)
 		else
 			split_paths[i] = ft_strjoin(split_paths[i], command);
 	}
-	return (split_paths);
+	return (free(path), split_paths);
 }
 
 int	is_builin(t_cmd *commands)
@@ -100,24 +100,55 @@ int	is_builin(t_cmd *commands)
 		return (1);
 	return (0);
 }
+// free split_paths
+void free_split_paths(char **split_paths)
+{
+	int i;
+
+	i = 0;
+	while (split_paths[i])
+	{
+		free(split_paths[i]);
+		i++;
+	}
+	free(split_paths);
+	split_paths = NULL;
+}
+void free_split(char **split)
+{
+	int i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
 
 char	*check_if_command_found(char *command, t_export **head_ex)
 {
 	char	**split_paths;
+	char	*str;
 	int		i;
 
+	split_paths = NULL;
 	if (head_ex && *head_ex)
 	{
 		split_paths = join_path_command(command, head_ex);
 		if (!split_paths)
-			return (NULL);
+			return (free_split_paths(split_paths), NULL);
 		i = 0;
 		while (split_paths[i])
 		{
 			if (access(split_paths[i], F_OK | X_OK) == 0)
-				return (split_paths[i]);
+			{
+				str = ft_strdup(split_paths[i]);
+				return (free_split_paths(split_paths), str);
+			}
 			i++;
 		}
 	}
-	return (NULL);
+	return (free_split_paths(split_paths), NULL);
 }

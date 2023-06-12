@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_export_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:01:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:16:49 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/11 23:10:59 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	add_export_element(char *export_var, char *export_value,
 	new = ft_lst_new_export(export_var, export_value);
 	ft_lst_add_back_export(head_ex, new);
 }
+
 
 void	print_list_export(t_info *info)
 {

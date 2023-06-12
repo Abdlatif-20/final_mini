@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/11 11:30:51 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 20:16:51 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/12 15:22:04 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/12 15:22:06 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void		execute_commande(t_cmd *commands, t_info *info,
 				t_list *shell, t_var *var);
 
 // file utils3.c
-void		execute_commands_with_pipe(t_list *cmd,
+int				execute_commands_with_pipe(t_list *cmd,
 				t_info *info, int nb_pipes, t_var *var);
 
 // file help_export.c
@@ -360,8 +360,8 @@ void		print_list_env(t_info *info);
 //utils6.c
 char		**create_env(t_info *info);
 void		execute1(t_list *cmd, t_info *info, t_var *var);
-void		execute2(t_info *info);
-void		execute3(t_info *info, t_list *cmd,
+void		execute2(t_info *info,t_var *var);
+void 		execute3(t_info *info, t_list *cmd,
 				int **pipefd, int nb_pipes, t_var *var);
 void		if_herdoc(t_cmd *commands);
 
@@ -376,5 +376,11 @@ int			get_nbr_node(t_list *shell);
 void		merge_dup_pipe_herdoc(int **pipefd,
 				int i, int nb_pipes, t_cmd *commands);
 void		reserve_list(t_info *info);
+
+char	*get_arg(char *arg);
+
+void free_export(t_export **head_ex);
+void free_env(t_env **head_en);
+void free_pipefd(int **pipefd, int nb_pipes);
 
 #endif
