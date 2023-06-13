@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 22:41:51 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 22:30:26 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/13 05:45:00 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/13 05:45:01 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,7 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 		execute_commande(commands, info, shell, var);
 	}
 	else if (nb_node > 1)//check
-	if (execute_commands_with_pipe(shell, info, --nb_cmd, var) == -1)
-	{
-		// printf("here\n");
-	}
+		execute_commands_with_pipe(shell, info, --nb_cmd, var);
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);
 	close(info->in);

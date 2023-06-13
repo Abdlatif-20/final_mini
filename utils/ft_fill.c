@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:03:36 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 22:48:05 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:50:46 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	fill_token(t_list **args, int token, char *word, int is_heredoc)
 		tokens->is_herdoc = is_heredoc;
 		ft_lstadd_back(args, ft_lstnew(tokens));
 	}
-
 }
 
 void	fill_white_space(char *input, t_list **token, t_var **var)

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 00:47:20 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:05:09 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	}
 }
 
-int	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var)
+void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var)
 {
 	int	**pipefd;
 
@@ -87,8 +87,6 @@ int	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *v
 			print_error_fork();
 		else if (info->pid == 0)
 			execute3(info, cmd, pipefd, nb_pipes, var);
-		if (var->is_empty_str)
-			return (-1);
 		info->i++;
 		cmd = cmd->next;
 		if (cmd)
@@ -97,5 +95,4 @@ int	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *v
 	close_pipe(pipefd, nb_pipes);
 	wait_for_child(nb_pipes);
 	free_pipefd(pipefd, nb_pipes);
-	return (0);
 }

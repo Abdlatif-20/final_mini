@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:48:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/09 23:37:50 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:36:28 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void default_case()
 
 void special_case(t_cmd *commands, int i, int flag)
 {
-	printf("exit--------\n");
+	// printf("exit--------\n");
 	(void)flag;
 	printf("exit\n");
 	printf("minishell: exit: %s: numeric argument required\n", commands->cmds[i]);
@@ -121,6 +121,19 @@ void help_case(t_cmd *commands, int i, int flag, long long *status_code)
 		special_case(commands, i, flag);
 }
 
+// void free_commands(t_cmd *commands)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (commands->cmds[i])
+// 	{
+// 		free(commands->cmds[i]);
+// 		i++;
+// 	}
+// 	free(commands->cmds);
+// }
+
 int my_exit(t_cmd *commands)
 {
 	int i;
@@ -137,5 +150,5 @@ int my_exit(t_cmd *commands)
 		help_case(commands, i, flag, &status_code);
 	else
 		default_case();
-	return (0);
+	return (free(commands->cmds[i]), 0);
 }

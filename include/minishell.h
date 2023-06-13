@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 15:22:04 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 05:32:36 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/13 05:44:47 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/13 05:44:49 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void		execute_commande(t_cmd *commands, t_info *info,
 				t_list *shell, t_var *var);
 
 // file utils3.c
-int				execute_commands_with_pipe(t_list *cmd,
+void				execute_commands_with_pipe(t_list *cmd,
 				t_info *info, int nb_pipes, t_var *var);
 
 // file help_export.c
