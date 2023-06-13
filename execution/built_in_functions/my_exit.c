@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:48:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 15:36:28 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:01:12 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ int	check_white_spaces(char *split)
 void	case1(t_cmd *commands, int i)
 {
 	ft_putstr_fd("exit\n", 2);
-	printf("minishell: exit: %s :numeric argument required\n", commands->cmds[i]);
+	printf("minishell: exit: %s :numeric argument required\n",
+		commands->cmds[i]);
 	g_shell.exit_status = 255;
 	exit(g_shell.exit_status);
 }
 
-int case2()
+int	case2(void)
 {
 	printf("exit\n");
 	printf("minishell: exit: too many arguments\n");
@@ -63,7 +64,7 @@ int case2()
 	return (g_shell.exit_status);
 }
 
-void case_positive(long long status_code)
+void	case_positive(long long status_code)
 {
 	if ((status_code >= 0 && status_code <= 255))
 		g_shell.exit_status = status_code;
@@ -74,23 +75,22 @@ void case_positive(long long status_code)
 	exit(g_shell.exit_status);
 }
 
-void case_negative(long long status_code)
+void	case_negative(long long status_code)
 {
 	printf("exit\n");
 	g_shell.exit_status = status_code + 256;
 	exit(g_shell.exit_status);
 }
 
-void default_case()
+void	default_case()
 {
 	printf("exit\n");
 	g_shell.exit_status = 127;
 	exit(g_shell.exit_status);
 }
 
-void special_case(t_cmd *commands, int i, int flag)
+void	special_case(t_cmd *commands, int i, int flag)
 {
-	// printf("exit--------\n");
 	(void)flag;
 	printf("exit\n");
 	printf("minishell: exit: %s: numeric argument required\n", commands->cmds[i]);
@@ -101,7 +101,7 @@ void special_case(t_cmd *commands, int i, int flag)
 	exit(g_shell.exit_status);
 }
 
-void help_case(t_cmd *commands, int i, int flag, long long *status_code)
+void	help_case(t_cmd *commands, int i, int flag, long long *status_code)
 {
 	if (check_is_numeric(commands->cmds[i]) && !commands->cmds[i + 1])
 	{
@@ -113,32 +113,22 @@ void help_case(t_cmd *commands, int i, int flag, long long *status_code)
 		else
 			case1(commands, i);
 	}
-	else if (check_is_numeric(commands->cmds[i]) && check_is_numeric(commands->cmds[i + 1]))
+	else if (check_is_numeric(commands->cmds[i])
+		&& check_is_numeric(commands->cmds[i + 1]))
 		case2();
-	else if (check_is_numeric(commands->cmds[i]) && !check_is_numeric(commands->cmds[i + 1]))
+	else if (check_is_numeric(commands->cmds[i])
+		&& !check_is_numeric(commands->cmds[i + 1]))
 		case2();
-	else if ((!check_is_numeric(commands->cmds[i]) || (*status_code == -1 && flag)))
+	else if ((!check_is_numeric(commands->cmds[i])
+			|| (*status_code == -1 && flag)))
 		special_case(commands, i, flag);
 }
 
-// void free_commands(t_cmd *commands)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (commands->cmds[i])
-// 	{
-// 		free(commands->cmds[i]);
-// 		i++;
-// 	}
-// 	free(commands->cmds);
-// }
-
-int my_exit(t_cmd *commands)
+int	my_exit(t_cmd *commands)
 {
-	int i;
-	int flag;
-	long long status_code;
+	int			i;
+	int			flag;
+	long long	status_code;
 
 	i = 1;
 	status_code = 0;

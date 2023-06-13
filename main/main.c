@@ -6,17 +6,12 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:21:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 21:03:26 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:32:48 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void reserve_list(t_info *info)
-{
-	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("PWD"), ft_strdup(getcwd(NULL, 0))));
-	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("HOME"), ft_strdup("/Users/ahaloui")));
-}
 
 void	print_list1(t_list *cmd)
 {
@@ -55,23 +50,6 @@ void	print_list11(t_list *cmd)
 }
 
 
-void add_export_ignored(t_info *info)
-{
-	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("PWD"), ft_strdup(getcwd(NULL, 0))));
-	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("SHLVL"), ft_strdup("1")));
-	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("_"), ft_strjoin(ft_strdup(getcwd(NULL, 0)) ,ft_strdup( "./minishell"))));
-	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("OLDPWD"), ft_strdup("")));
-	ft_lst_add_back_export(&info->head_ex, ft_lst_new_export(ft_strdup("PATH"), ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin")));
-}
-
-void	add_env_ignored(t_info *info)
-{
-	ft_lst_add_back_env(&info->head_en, ft_lst_new_env(ft_strdup("PWD"), ft_strdup(getcwd(NULL, 0))));
-	ft_lst_add_back_env(&info->head_en, ft_lst_new_env(ft_strdup("SHLVL"), ft_strdup("1")));
-	ft_lst_add_back_env(&info->head_en, ft_lst_new_env(ft_strdup("_"), ft_strjoin(ft_strdup(getcwd(NULL, 0)), ft_strdup("/./minishell"))));
-	ft_lst_add_back_env(&info->head_en, ft_lst_new_env(ft_strdup("OLDPWD"), ft_strdup("")));
-	ft_lst_add_back_env(&info->head_en, ft_lst_new_env(ft_strdup("PATH"), ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin")));
-}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -96,14 +74,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	fill_export_list(env, &info.head_ex);
 	fill_env_list(env, &info.head_en);
-
-	// *********************************************
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	// *********************************************
-
-
-	// g_shell.path = get_path_home(&info.head_ex);
 	printf("\033[2J\033[1;1H");
 	while (42)
 	{
@@ -130,8 +101,6 @@ int	main(int argc, char **argv, char **env)
 			ft_expand(&args, info.head_en);
 			ft_join_args(&args);
 			command_table(args, &cmd, info.head_en, &var);
-			// print_list11(cmd);
-			// print_list1(args);
 			if (cmd && cmd->data)
 				choose_command(cmd, &info, &var);
 			free_token_list(&args);

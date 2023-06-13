@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:42:13 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 20:05:52 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/13 23:59:16 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_env_value(char *value)
 
 int	check_is_empty_string_env(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:33:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 17:58:39 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:03:35 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	check_if_valid_args(char *split)
 	i = i + 1;
 	while (split[i])
 	{
-		if (split[i] && (ft_isalnum(split[i]) || split[i] == '_' || split[i] == '='))
+		if (split[i] && (ft_isalnum(split[i])
+				|| split[i] == '_' || split[i] == '='))
 		{
 			i++;
 			continue ;
@@ -55,11 +56,11 @@ int	check_if_valid_args(char *split)
 	return (1);
 }
 
-
 char	*get_arg(char *arg , t_var *vars)
 {
 	int	i;
-	if (!arg ||  vars->is_empty_str)
+
+	if (!arg || vars->is_empty_str)
 		return (NULL);
 	i = 0;
 	while (arg && arg[i] && arg[i] != '=')
@@ -69,13 +70,9 @@ char	*get_arg(char *arg , t_var *vars)
 
 int	check_export(char **split, t_var *vars)
 {
-	int	i;
+	int		i;
 	char	*arg;
-	i = 0;
-	// printf("%s\n", split[++i]);
-	// for (i = 0;split[i];i++)
-	// 	printf("%s\n", split[i]);
-	// printf("%s\n", split[i]);
+
 	i = 1;
 	if (vars->is_empty_str == 1 && vars->is_empty_str_export)
 	{

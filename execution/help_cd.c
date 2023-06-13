@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:44:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 16:24:07 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:04:02 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	case_of_tilda_in_path(t_info *info, char *path_tmp1)
 
 int	case_of_remove_directory(t_cmd *commands, t_info *info, char **tmp, int i)
 {
-	char *cwd;
-	
+	char	*cwd;
+
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{

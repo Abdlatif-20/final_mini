@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:39:17 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 21:18:32 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:04:18 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_env	*ft_lst_new_env(char *env_var, char *env_value)
 	{
 		element->env_var = ft_strdup(env_var);
 		element->env_value = ft_strdup(env_value);
-		// free(env_var);
 		element->next = NULL;
 	}
 	return (element);
@@ -80,7 +79,6 @@ void	add_env_element(char *env_var, char *env_value, t_env **head_en)
 
 	new = ft_lst_new_env(env_var, env_value);
 	ft_lst_add_back_env(head_en, new);
-	// system("leaks minishell");
 }
 
 void	print_list_env(t_info *info)

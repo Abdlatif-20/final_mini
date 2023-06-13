@@ -6,7 +6,7 @@
 #    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 01:57:51 by ahaloui           #+#    #+#              #
-#    Updated: 2023/06/13 19:43:25 by ahaloui          ###   ########.fr        #
+#    Updated: 2023/06/14 00:28:18 by ahaloui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SOURCE_BUILT_IN = execution/built_in_functions/my_export.c execution/built_in_fu
 				execution/built_in_functions/my_pwd.c execution/built_in_functions/my_cd.c execution/built_in_functions/my_echo.c execution/built_in_functions/my_exit.c
 
 # source files
-SRC_EXEC = utils/execution.c utils/signals_and_status_code.c utils/utils5.c utils/utils1.c utils/utils_error.c utils/utils6.c utils/utils7.c \
+SRC_EXEC = utils/execution.c utils/signals_and_status_code.c utils/utils5.c utils/utils1.c utils/utils_error.c utils/utils6.c utils/utils7.c utils/utils8.c \
 			utils/help_cmd_simple.c utils/execute_simple_command.c utils/execute_multiple_command.c \
 			execution/help_export.c execution/help_env.c execution/help_cd.c execution/check_args.c execution/help_env_1.c execution/help_export_1.c $(SOURCE_BUILT_IN)
 # libft

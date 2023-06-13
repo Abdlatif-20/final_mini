@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:25:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 20:12:04 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:06:08 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,17 @@ void	process_env_argument(t_env **head_en, char *arg)
 	{
 		if (env_variable[ft_strlen(env_variable) - 2] == '+')
 		{
-			printf("minishell: env: `%s': not a valid identifier\n", arg);
 			g_shell.exit_status = EXIT_FAILURE;
-			return ;
+			return (free(env_variable), free(env_value));
 		}
 		concatenate = 1;
 		env_variable[ft_strlen(env_variable) - 1] = '\0';
 	}
 	if (help_env1(head_en, env_variable, env_value, concatenate))
-		return ;
+		return (free(env_variable), free(env_value));
 	add_env_element(env_variable, env_value, head_en);
+	free(env_variable);
+	free(env_value);
 }
 
 void	add_env(t_env **head_en, char **split)
@@ -83,47 +84,9 @@ void	add_env(t_env **head_en, char **split)
 	}
 }
 
-// void add_env(t_env **head,  char **split)
-// {
-//     int i;
-//     char *env_var;
-//     char *env_value;
-//     int concatenate;
-
-//     i = 1;
-//     while (split[i])
-//     {
-//         concatenate = 0;
-//         if (split[i][0] == '\0' || (check_if_valid_args(split[i]) == false))
-// 		{
-// 			i++;
-// 			continue;        
-// 		}
-//         env_value = get_env_value(split[i]);
-//         env_var = get_env_variable(split[i]);
-//         if (env_var[ft_strlen(env_var) - 1] == '+')
-//         {
-//             concatenate = 1;
-//             env_var[ft_strlen(env_var) - 1] = '\0';
-//         }
-//         if (check_if_env_var_exist(*head, env_var))
-//         {
-//             if (concatenate == 1)
-//             {
-//                 concatenation_env(head, env_var, env_value);
-//                 i++;
-//                 continue;
-//             }
-//             else
-//                 remove_env_element(head, env_var);
-//         }
-//         add_env_element(env_var, env_value, head);
-//         i++;
-//     }
-// }
-void free_env(t_env **head_en)
+void	free_env(t_env **head_en)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while (*head_en)
 	{

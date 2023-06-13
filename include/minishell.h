@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:44:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 17:52:21 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:37:54 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # define MAX_LL 9223372036854775807
 # define MIN_LL -9223372036854775808
 
-// int g_exit_status;
 
 enum e_type
 {
@@ -162,9 +161,6 @@ typedef struct s_info
 }			t_info;
 
 char		**create_env(t_info *info);
-// void 		help(int status);
-// file my_echo.c
-// int			my_echo(t_cmd *cmd);
 int			my_echo(t_cmd *cmd);
 int			check_option(char *cmd);
 char		*get_last_split(t_cmd *cmd);
@@ -377,9 +373,13 @@ void		merge_dup_pipe_herdoc(int **pipefd,
 				int i, int nb_pipes, t_cmd *commands);
 void		reserve_list(t_info *info);
 
-void free_export(t_export **head_ex);
-void free_env(t_env **head_en);
-void free_pipefd(int **pipefd, int nb_pipes);
-void	print_list11(t_list *cmd);
+void		free_export(t_export **head_ex);
+void		free_env(t_env **head_en);
+void		free_pipefd(int **pipefd, int nb_pipes);
+void		print_list11(t_list *cmd);
+
+// utils8.c
+void		add_export_ignored(t_info *info);
+void		add_env_ignored(t_info *info);
 
 #endif

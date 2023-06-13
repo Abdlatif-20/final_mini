@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:40:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 21:24:22 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:01:30 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	fill_export_list(char **environ, t_export **head_ex)
 	export_var = NULL;
 	export_value = NULL;
 	while (environ[i])
-	{ 
+	{
 		export_var = get_export_variable(environ[i]);
 		export_value = get_export_value(environ[i]);
 		add_export_element(export_var, export_value, head_ex);

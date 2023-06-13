@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 15:05:09 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:33:11 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	dup_for_pipes(int **pipefd, int i, int nb_pipes)
 void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	int nb_pipes, t_cmd *commands)
 {
-	
 	dup_for_pipes(pipefd, i, nb_pipes);
 	close_pipe(pipefd, nb_pipes);
 	if_herdoc_or_inputfile(commands);
