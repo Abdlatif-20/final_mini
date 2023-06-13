@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:43:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 11:31:52 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:39:18 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	join_helper(t_list **args, t_token *tokens, char **token)
 				|| tokens->key == WORD || tokens->key == FLAG))
 		{
 			*token = ft_strjoin(*token, tokens->value);
+			free(tokens->value);
+			free(tokens);
 			((t_token *)((*args)->data))->value = *token;
 			ft_remove_node(args, (*args)->next);
 			if ((*args))

@@ -6,10 +6,9 @@
 #    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 01:57:51 by ahaloui           #+#    #+#              #
-#    Updated: 2023/06/11 15:09:35 by aben-nei         ###   ########.fr        #
+#    Updated: 2023/06/13 01:15:31 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 BOLDMAGENTA=\033[1;35m
 BOLDYELLOW=\033[1;33m
@@ -24,7 +23,6 @@ NAME = minishell
 CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address 
-
 
 #  -Wno-misleading-indentation
 # -fsanitize=address
@@ -49,7 +47,6 @@ SRCS = main/main.c parsing/ft_trim_quotes.c parsing/join_args.c utils/help_comma
 	parsing/check_quotes.c parsing/rederection.c parsing/heredoc.c parsing/command_table.c utils/utils4.c parsing/herdedoc_helper.c parsing/expand_helper.c utils/ft_fill.c parsing/expand_dquotes.c $(SRC_EXEC) $(LIB)
 
 OBJS = $(SRCS:.c=.o)
-
 
 RL_INC = -I $(shell brew --prefix readline)/include
 RL_LIB = -L $(shell brew --prefix readline)/lib
@@ -76,25 +73,12 @@ $(NAME): $(OBJS)
 %.o: %.c include/minishell.h
 	@$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
 	@clear
-	@printf "$(BOLDMAGENTA)"
-	@printf " __  __ _____ _   _ _____  _____ _    _ ______ _      _      \n"
-	@printf "|  \/  |_   _| \ | |_   _|/ ____| |  | |  ____| |    | |     \n"
-	@printf "| \  / | | | |  \| | | | | (___ | |__| | |__  | |    | |     \n"
-	@printf "| |\/| | | | | . \` | | |  \___ \|  __  |  __| | |    | |     \n"
-	@printf "| |  | |_| |_| |\  |_| |_ ____) | |  | | |____| |____| |____ \n"
-	@printf "|_|  |_|_____|_| \_|_____|_____/|_|  |_|______|______|______|\n$(RESET)"
-	@echo
-	@printf "$(BOLDYELLOW)"
-	@printf "                          Copyright (c) $(YEAR) NO_NAME, ahaloui\n"
-	@printf "$(RESET)"
-	@echo
 	@echo "$(GREEN)Compiled $<$(NC)"
-	@sleep 0.05
 
 clean:
 	rm -f $(OBJS)
 
-fclean: clean
+fclean: clean 
 	rm -f $(NAME)
 	@clear
 	@echo "\033[32m[OK] \033[0mCleaning done"

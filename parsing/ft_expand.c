@@ -6,18 +6,39 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:50:59 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 22:57:24 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 05:08:06 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+void	init_variable(t_var *var, char *name)
+{
+	var->i = 0;
+	var->j = 0;
+	var->flag = 0;
+	var->end = ft_strlen(name) - 1;
+	var->str = (char *)malloc(ft_strlen(name) + 1);
+}
+
 char	*get_variable_name(char *name)
 {
-	if (ft_strchr(name, '$'))
-		return (ft_strdup(strchr(name, '$') + 1));
-	else
+	t_var	var;
+
+	init_variable(&var, name);
+	if (!var.str)
 		return (NULL);
+	if (name[var.i] == '$')
+		var.i++;
+	while (name[var.i] && name[var.i] != '$'
+		&& name[var.i] != ' ' && var.i <= var.end)
+	{
+		var.str[var.j++] = name[var.i++];
+		var.flag = 1;
+	}
+	if (var.flag)
+		var.str[var.j] = '\0';
+	return (var.str);
 }
 
 void	free_array(char **array)
@@ -26,12 +47,9 @@ void	free_array(char **array)
 
 	i = 0;
 	if (!*array)
-		return ;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
+		return (free(array));
+	while (array[i] && *array)
+		free(array[i++]);
 	free(array);
 }
 

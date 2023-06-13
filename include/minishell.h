@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:22:04 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 15:22:06 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 05:32:36 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,8 +261,8 @@ void		ft_lstadd_back(t_list **lst, t_list *new);
 void		ft_lstclear(t_list **lst);
 /*-----------------------------------------------*/
 void		ft_heredoc(t_list *args, int *fd, char **file, t_env *env);
-void		heredoc_helper(t_list **args, char *name, int **fd, t_env *env);
-int			heredoc_help(char **input, t_list ***args, t_env *env, char *name);
+void		heredoc_helper(t_list **args, char *name, int *fd, t_env *env);
+int			heredoc_help(char **input, t_list **args, t_env *env, char *name);
 int			get_0(void);
 void		handel(int SIG);
 /*---------------------- token --------------------*/
@@ -284,16 +284,16 @@ void		ft_join_args(t_list **args);
 /*--------------------------------------------------------*/
 void		ft_expand(t_list **list, t_env *env);
 int			handel_var(t_token **token, t_var *var, t_env *env);
-int			ft_expender_help(t_token ***token,
-				t_env *env, t_var **var);
-void		hold_string(t_var **var, t_token *token);
-int			help_expand(t_var **var, t_token *token);
-int			help_expand1(t_var **var, t_token *token);
-void		help_expand2(t_var **var, t_token *token, t_env *env);
+int			ft_expender_help(t_token **token, t_env *env, t_var *var);
+void		hold_string(t_var *var, t_token *token);
+int			help_expand(t_var *var, t_token *token);
+int			help_expand1(t_var *var, t_token *token);
+void		help_expand2(t_var *var, t_token *token, t_env *env);
 void		handl_expand_dquotes(t_var *var);
 char		*get_variable_name(char *name);
 void		free_array(char **array);
 void		ft_free(void *ptr);
+void		print_list1(t_list *cmd);
 /*--------------------------------------------------------*/
 void		ft_remove_node(t_list **head, t_list *node);
 char		*skip_whitespace(char *input);

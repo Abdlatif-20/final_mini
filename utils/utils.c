@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 00:28:25 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 20:36:26 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	commands_helper(t_list **args, t_token *token, t_var ***var)
 			token = (*args)->data;
 		(**var)->flag = 0;
 	}
-	// (**var)->cmd[(**var)->i] = NULL;
+	(**var)->cmd[(**var)->i] = NULL;
 }
 
 char	**get_command1(t_list *args, t_var **var)
@@ -85,7 +85,6 @@ char	**get_command1(t_list *args, t_var **var)
 			* ((*var)->number_of_commands + 1));
 	if (!(*var)->cmd)
 		return (NULL);
-	(*var)->cmd[(*var)->number_of_commands] = NULL;
 	while (args)
 	{
 		token = args->data;

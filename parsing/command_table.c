@@ -6,17 +6,17 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 00:31:57 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 05:39:27 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	increment_args(t_list ***args, t_token **token)
+void	increment_args(t_list **args, t_token **token)
 {
-	(**args) = (**args)->next;
-	if (**args)
-		*token = (**args)->data;
+	(*args) = (*args)->next;
+	if (*args)
+		*token = (*args)->data;
 }
 
 void	handel_redere(t_list **args, t_var **var, t_token **token, t_env *env)
@@ -24,23 +24,23 @@ void	handel_redere(t_list **args, t_var **var, t_token **token, t_env *env)
 	if (*token && (*token)->key == RED_OUT)
 	{
 		rederection_out(*args, &(*var)->fd_out);
-		increment_args(&args, token);
+		increment_args(args, token);
 	}
 	if (*token && (*token)->key == RED_INP)
 	{
 		rederection_in((*args), &(*var)->fd_in, &(*var)->file_name);
-		increment_args(&args, token);
+		increment_args(args, token);
 	}
 	else if (*token && (*token)->key == RED_APP)
 	{
 		rederection_app((*args), &(*var)->fd_out);
-		increment_args(&args, token);
+		increment_args(args, token);
 	}
 	else if (*token && (*token)->key == HEREDOC)
 	{
 		(*var)->heredoc = 1;
 		ft_heredoc((*args), &(*var)->fd_in, &(*var)->file_name, env);
-		increment_args(&args, token);
+		increment_args(args, token);
 	}
 }
 
@@ -59,6 +59,7 @@ void	init_var(t_var **var)
 	(*var)->heredoc = 0;
 	(*var)->fd_in = 0;
 	(*var)->fd_out = 1;
+	(*var)->file_name = NULL;
 }
 
 void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
@@ -83,8 +84,7 @@ void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
 				token = args->data;
 			}
 		}
-		char **temp = get_command1((*var).tmp, &var);
-		fill_cmd(cmd, *var, temp, (*var).heredoc);
+		fill_cmd(cmd, *var, get_command1((*var).tmp, &var), (*var).heredoc);
 		if (args)
 			skip_pipe(&args, &(*var).tmp, token);
 	}

@@ -293,3 +293,11 @@ export TES^T=123
 export TES!T=123
 export TES\~T=123
 export TEST+=100
+export with quotes // segv
+ emty string should be print command not found !!!
+ << here < Makefile grep print | cat > fu | ls -al >> fu | << lim << lim2 grep 13 >> fu | ls -la > fu  //leaks
+
+ ls -la > out | < Makefile wc -l >> out | grep main << end > out1 | echo "$PWD"$USER"Hello World"
+
+
+ small error in expand in herdoc >> $USER$USER

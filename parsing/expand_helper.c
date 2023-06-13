@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:27:02 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 20:16:30 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 05:30:14 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,53 @@ int	handel_var(t_token **token, t_var *var, t_env *env)
 		}
 	}
 	else
-		ft_expender_help(&token, env, &var);
+		ft_expender_help(token, env, var);
 	return (0);
 }
 
 void	ft_free(void *ptr)
 {
-	if(ptr)
+	if (ptr)
 		free(ptr);
 }
 
-int	ft_expender_help(t_token ***token, t_env *env, t_var **var)
+int	ft_expender_help(t_token **token, t_env *env, t_var *var)
 {
 	static char	*str;
 
 	while (env)
 	{
-		(*var)->temp = get_variable_name((**token)->value);//user
-		if ((*var)->temp && (*var)->temp[0] == '?')
+		var->temp = get_variable_name((*token)->value);
+		if (var->temp && var->temp[0] == '?')
 		{
 			str = ft_itoa(g_shell.exit_status);
-			(**token)->value = ft_strdup(str);
+			free((*token)->value);
+			(*token)->value = ft_strdup(str);
 			ft_free(str);
-			(**token)->value = ft_strjoin((**token)->value, &(*var)->temp[1]);
-			ft_free((*var)->temp);
+			(*token)->value = ft_strjoin((*token)->value, &var->temp[1]);
+			ft_free(var->temp);
 			return (0);
 		}
-		if (env && !ft_strcmp(env->env_var, (*var)->temp))
+		if (env && !ft_strcmp(env->env_var, var->temp))
 		{
-			(**token)->value = ft_strdup(env->env_value);
-			env = (*var)->tmp_env;
-			ft_free((*var)->temp);
+			free((*token)->value);
+			(*token)->value = ft_strdup(env->env_value);
+			env = var->tmp_env;
+			ft_free(var->temp);
 			return (0);
 		}
 		env = env->next;
-		ft_free((*var)->temp);
+		ft_free(var->temp);
 	}
-	if (ft_strlen((**token)->value) == 1)
-		(**token)->value = ft_strdup("$");
+	if (ft_strlen((*token)->value) == 1)
+	{
+		ft_free((*token)->value);
+		(*token)->value = ft_strdup("$");
+	}
 	else if (!env)
-		(**token)->value = ft_strdup("");
-	return ( 0);
+	{
+		free((*token)->value);
+		(*token)->value = ft_strdup("");
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:57 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 01:05:03 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 05:37:00 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,20 @@ int	check_is_quotes(char *input)
 	return (0);
 }
 
-int	heredoc_help(char **input, t_list ***args, t_env *env, char *name)
+int	heredoc_help(char **input, t_list **args, t_env *env, char *name)
 {
 	t_list	*tmp;
 
 	tmp = NULL;
-	if (*input && !ft_strcmp(*input, ((t_token *)(**args)->data)->value))
+	if (*input && !ft_strcmp(*input, ((t_token *)(*args)->data)->value))
 	{
-		((t_token *)(**args)->data)->value = ft_strdup(name);
-		((t_token *)(**args)->data)->key = FILE_INP;
+		free(((t_token *)(*args)->data)->value);
+		((t_token *)(*args)->data)->value = ft_strdup(name);
+		((t_token *)(*args)->data)->key = FILE_INP;
 		free(*input);
 		return (2);
 	}
-	if (args && *input && ((t_token *)(**args)->data)->flag_quote == 0)
+	if (args && *input && ((t_token *)(*args)->data)->flag_quote == 0)
 	{
 		if (*input && *input[0] == '$' && check_is_quotes(*input) == 0)
 			fill_token(&tmp, VAR, *input, 0);
@@ -46,6 +47,9 @@ int	heredoc_help(char **input, t_list ***args, t_env *env, char *name)
 			fill_token(&tmp, DQUATES, *input, 0);
 		ft_expand(&tmp, env);
 		*input = ft_strdup(((t_token *)tmp->data)->value);
+		ft_free(((t_token *)tmp->data)->value);
+		ft_free(tmp->data);
+		ft_free(tmp);
 		tmp = NULL;
 	}
 	return (0);
@@ -56,21 +60,25 @@ void	add_to_buffer(char **buffer, char *input)
 	char	*tmp;
 
 	tmp = ft_strdup(*buffer);
+	free(*buffer);
 	*buffer = ft_strjoin(tmp, input);
 	*buffer = ft_strjoin(*buffer, "\n");
 }
 
-int	ft_break_while(t_var *var)
+int	ft_break_while(t_var *var, int *fd)
 {
 	if (!var->input)
 	{
+		if (var->buffer)
+			write(*fd, var->buffer, ft_strlen(var->buffer));
+		ft_free(var->buffer);
 		free(var->input);
 		return (1);
 	}
 	return (0);
 }
 
-void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
+void	heredoc_helper(t_list **args, char *name, int *fd, t_env *env)
 {
 	t_var	var;
 
@@ -80,19 +88,21 @@ void	heredoc_helper(t_list **args, char *name, int **fd, t_env *env)
 		rl_event_hook = get_0;
 		signal(SIGINT, handel);
 		var.input = readline("> HEREDOC$ ");
-		if (ft_break_while(&var))
+		if (ft_break_while(&var, fd))
 			break ;
-		else if (heredoc_help(&var.input, &args, env, name) == 2)
+		else if (heredoc_help(&var.input, args, env, name) == 2)
 		{
 			if (var.buffer)
-				write(**fd, var.buffer, ft_strlen(var.buffer));
-			ft_free(var.buffer);
-			ft_free(var.input);
+			{
+				write(*fd, var.buffer, ft_strlen(var.buffer));
+				ft_free(var.buffer);
+			}
 			break ;
 		}
 		else if (!var.input[0] && g_shell.signel_hedoc == 1)
 		{
 			rl_done = 0;
+			free(var.input);
 			break ;
 		}
 		add_to_buffer(&var.buffer, var.input);

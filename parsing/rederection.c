@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 12:13:52 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 04:45:31 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	rederection_in(t_list *args, int *fd_in, char **file_name)
 			if (*fd_in == -1)
 				return (1);
 			*fd_in = open(token->value, O_RDONLY);
-			*file_name = token->value;
+			ft_free(*file_name);
+			*file_name = ft_strdup(token->value);
 			args = args->next;
 			if (args)
 				token = args->data;

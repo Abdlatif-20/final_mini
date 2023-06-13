@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:56:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 00:42:23 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/12 20:36:36 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	free_list_cmd(t_list **list)
 	{
 		tmp = (*list)->next;
 		free_array(((t_cmd *)(*list)->data)->cmds);
+		ft_free(((t_cmd *)(*list)->data)->file_name);
 		((t_cmd *)(*list)->data)->cmds = NULL;
 		free((*list)->data);
 		free((*list));

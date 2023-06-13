@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:21:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 15:38:09 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 04:42:34 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	main(int argc, char **argv, char **env)
 	t_info	info;
 	t_var	var;
 
+	(void)var;
 	args = NULL;
 	cmd = NULL;
 	input = NULL;
@@ -122,6 +123,7 @@ int	main(int argc, char **argv, char **env)
 			if (args && syntex_error(args))
 			{
 				free_token_list(&args);
+				free(input);
 				continue ;
 			}
 			ft_trim_quotes(&args);
@@ -138,8 +140,10 @@ int	main(int argc, char **argv, char **env)
 		}
 		else
 		{
-			free(input);
 			printf(" exit\n");
+			free_token_list(&args);
+			free_list_cmd(&cmd);
+			free(input);
 			break ;
 		}
 	}
