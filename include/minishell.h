@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:44:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 05:44:49 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:52:21 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,7 +337,7 @@ int			case_of_remove_directory(t_cmd *commands,
 // check_args.c
 int			check_is_contain(char *split);
 int			check_if_valid_args(char *split);
-char		*get_arg(char *arg);
+char		*get_arg(char *arg, t_var *var);
 // int  check_export(char **split);
 
 // file my_env.c
@@ -377,10 +377,9 @@ void		merge_dup_pipe_herdoc(int **pipefd,
 				int i, int nb_pipes, t_cmd *commands);
 void		reserve_list(t_info *info);
 
-char	*get_arg(char *arg);
-
 void free_export(t_export **head_ex);
 void free_env(t_env **head_en);
 void free_pipefd(int **pipefd, int nb_pipes);
+void	print_list11(t_list *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:42:13 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 17:35:53 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/13 20:05:52 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ void	fill_env_list(char **environ, t_env **head_env)
 	char	*env_value;
 
 	i = 0;
+	env_variable = NULL;
 	env_value = NULL;
 	while (environ[i])
 	{
 		env_variable = get_env_variable(environ[i]);
 		env_value = get_env_value(environ[i]);
 		add_env_element(env_variable, env_value, head_env);
-		// free(env_variable);
+		free(env_variable);
+		free(env_value);
 		i++;
 	}
 }

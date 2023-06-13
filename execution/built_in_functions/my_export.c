@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:40:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:16:44 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:24:22 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	remove_export_element(t_export **head_ex, char *export_var)
 	if (!ft_strcmp(tmp->export_var, export_var))
 	{
 		*head_ex = tmp->next;
+		free(tmp->export_value);
+		free(tmp->export_var);
 		free(tmp);
 		return ;
 	}
@@ -70,6 +72,8 @@ void	remove_export_element(t_export **head_ex, char *export_var)
 		if (tmp2 && !ft_strcmp(tmp2->export_var, export_var))
 		{
 			tmp->next = tmp2->next;
+			free(tmp2->export_value);
+			free(tmp2->export_var);
 			free(tmp2);
 			return ;
 		}
@@ -84,11 +88,15 @@ void	fill_export_list(char **environ, t_export **head_ex)
 	char	*export_value;
 
 	i = 0;
+	export_var = NULL;
+	export_value = NULL;
 	while (environ[i])
-	{
+	{ 
 		export_var = get_export_variable(environ[i]);
 		export_value = get_export_value(environ[i]);
 		add_export_element(export_var, export_value, head_ex);
+		free(export_var);
+		free(export_value);
 		i++;
 	}
 	if ((*head_ex) && head_ex)

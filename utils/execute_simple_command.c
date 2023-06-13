@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:19 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:03:39 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:10:24 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,7 @@ void	if_input_output_file(t_cmd *commands)
 void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 {
 	char	*path;
-	static int		i;
 
-	// printf("commands->main_cmd = [%s]\n", commands->cmds[0]);
-	// printf("commands->main_cmd = [%s]\n", commands->cmds[1]);
-	i = 1;
 	if (commands->heredoc)
 		if_herdoc1(commands);
 	else

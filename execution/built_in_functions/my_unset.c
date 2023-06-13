@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 17:24:38 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/09 22:10:55 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/13 21:15:32 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	my_unset(t_cmd *cmd, t_info *info)
 	char	*variable;
 
 	i = 1;
+	variable = NULL;
 	while (cmd->cmds[i])
 	{
 		variable = get_env_variable(cmd->cmds[i]);

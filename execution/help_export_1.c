@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:01:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 23:10:59 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/13 21:13:51 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_export	*ft_lst_new_export(char *export_var, char *export_value)
 	element = (t_export *)malloc(sizeof(t_export));
 	if (element != NULL)
 	{
-		element->export_var = export_var;
-		element->export_value = export_value;
+		element->export_var = ft_strdup(export_var);
+		element->export_value = ft_strdup(export_value);
 		element->next = NULL;
 	}
 	return (element);
@@ -34,6 +34,8 @@ void	ft_lst_add_back_export(t_export **lst, t_export *new)
 	if (*lst == NULL)
 	{
 		*lst = new;
+		// free(new->export_value);
+		// free(new->export_var);
 		return ;
 	}
 	else
@@ -44,6 +46,8 @@ void	ft_lst_add_back_export(t_export **lst, t_export *new)
 		(*lst)->next = new;
 		(*lst) = tmp;
 	}
+	// free(new->export_value);
+	// free(new->export_var);
 }
 
 void	add_export_element(char *export_var, char *export_value,

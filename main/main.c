@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:21:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 04:42:34 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:03:26 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 	// *********************************************
 
 
-	g_shell.path = get_path_home(&info.head_ex);
+	// g_shell.path = get_path_home(&info.head_ex);
 	printf("\033[2J\033[1;1H");
 	while (42)
 	{
