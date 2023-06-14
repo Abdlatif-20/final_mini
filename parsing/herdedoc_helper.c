@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:57 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 05:37:00 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:27:34 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,28 @@ int	check_is_quotes(char *input)
 
 int	heredoc_help(char **input, t_list **args, t_env *env, char *name)
 {
-	t_list	*tmp;
+	t_var	var;
 
-	tmp = NULL;
-	if (*input && !ft_strcmp(*input, ((t_token *)(*args)->data)->value))
+	var.tmp = NULL;
+	var.flag = 0;
+	var.token = ((t_token *)(*args)->data);
+	if (*input && !ft_strcmp(*input, var.token->value))
+		return (free(var.token->value), var.token->value = ft_strdup(name),
+			var.token->key = FILE_INP, free(*input), 2);
+	if (args && *input && var.token->flag_quote == 0)
 	{
-		free(((t_token *)(*args)->data)->value);
-		((t_token *)(*args)->data)->value = ft_strdup(name);
-		((t_token *)(*args)->data)->key = FILE_INP;
-		free(*input);
-		return (2);
-	}
-	if (args && *input && ((t_token *)(*args)->data)->flag_quote == 0)
-	{
-		if (*input && *input[0] == '$' && check_is_quotes(*input) == 0)
-			fill_token(&tmp, VAR, *input, 0);
+		if (*input && *input[0] == '$' && !check_is_quotes(*input))
+			handel_expand_heredoc(*input, &var.tmp);
 		else
-			fill_token(&tmp, DQUATES, *input, 0);
-		ft_expand(&tmp, env);
-		*input = ft_strdup(((t_token *)tmp->data)->value);
-		ft_free(((t_token *)tmp->data)->value);
-		ft_free(tmp->data);
-		ft_free(tmp);
-		tmp = NULL;
+		{
+			fill_token(&var.tmp, DQUATES, *input, 0);
+			var.flag = 1;
+		}
+		ft_expand(&var.tmp, env);
+		if (!var.flag)
+			ft_free(*input);
+			*input = get_value_heredoc(var.tmp, *input);
+		free_token_list(&var.tmp);
 	}
 	return (0);
 }
@@ -94,17 +93,14 @@ void	heredoc_helper(t_list **args, char *name, int *fd, t_env *env)
 		{
 			if (var.buffer)
 			{
+				*fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 				write(*fd, var.buffer, ft_strlen(var.buffer));
 				ft_free(var.buffer);
 			}
 			break ;
 		}
-		else if (!var.input[0] && g_shell.signel_hedoc == 1)
-		{
-			rl_done = 0;
-			free(var.input);
+		if (check_sig(&var))
 			break ;
-		}
 		add_to_buffer(&var.buffer, var.input);
 		free(var.input);
 	}

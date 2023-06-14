@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:19 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/11 16:03:39 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 00:46:55 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	if_herdoc1(t_cmd *commands)
 		close(commands->fd_out);
 	}
 	close(commands->fd_in);
+	unlink(commands->file_name);
 }
 
 void	if_input_output_file(t_cmd *commands)

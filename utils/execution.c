@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:45:00 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 05:45:01 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 00:29:24 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	dup_for_builin(t_cmd *commands)
 	{
 		dup2(commands->fd_in, STDIN_FILENO);
 		close(commands->fd_in);
+		// unlink(commands->file_name);
 	}
 	if (commands->fd_out != 1)
 	{

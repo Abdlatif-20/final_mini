@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_multiple_command.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 15:05:09 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:29:41 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *
 		cmd = cmd->next;
 		if (cmd)
 			info->commands = cmd->data;
+		unlink(info->commands->file_name);
 	}
 	close_pipe(pipefd, nb_pipes);
 	wait_for_child(nb_pipes);

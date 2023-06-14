@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils6.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:43:47 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 00:34:57 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:27:22 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	if_herdoc(t_cmd *commands)
 		exit(g_shell.exit_status);
 	}
 	close(commands->fd_in);
+	unlink(commands->file_name);
 }
 
 void	execute1(t_list *cmd, t_info *info, t_var *var)

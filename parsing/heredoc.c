@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 05:22:59 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 00:16:35 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ void	handel(int SIG)
 
 void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 {
-	char	*name;
+	static char	*name;
 
-	name = NULL;
 	while (args)
 	{
 		if (g_shell.signel_hedoc)
@@ -58,10 +57,7 @@ void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 			((t_token *)args->data)->value = ft_strdup("<");
 			args = args->next;
 			if (!args)
-			{
-				free(name);
 				break ;
-			}
 			if (((t_token *)args->data)->key == W_SPACE)
 					args = args->next;
 			heredoc_helper(&args, name, fd, env);

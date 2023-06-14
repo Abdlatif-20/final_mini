@@ -375,3 +375,5 @@ arg = TE*ST
 arg = TE*ST+
 -> minishell$ 
  exit
+
+cat $dsf

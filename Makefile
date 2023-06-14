@@ -6,7 +6,7 @@
 #    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 01:57:51 by ahaloui           #+#    #+#              #
-#    Updated: 2023/06/13 01:15:31 by aben-nei         ###   ########.fr        #
+#    Updated: 2023/06/14 01:14:19 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address 
-
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 #  -Wno-misleading-indentation
 # -fsanitize=address
 
@@ -44,7 +43,7 @@ LIB = libft/ft_isalpha.c libft/ft_isdigit.c libft/ft_isalnum.c libft/ft_strlen.c
 	libft/ft_lstlast.c libft/ft_lstadd_back.c libft/ft_lstclear.c libft/ft_strlcpy.c libft/ft_bzero.c libft/ft_memset.c
 # SRC parsing
 SRCS = main/main.c parsing/ft_trim_quotes.c parsing/join_args.c utils/help_command_table.c parsing/ft_expand.c parsing/token.c utils/utils.c parsing/ft_token.c parsing/syntex_error.c\
-	parsing/check_quotes.c parsing/rederection.c parsing/heredoc.c parsing/command_table.c utils/utils4.c parsing/herdedoc_helper.c parsing/expand_helper.c utils/ft_fill.c parsing/expand_dquotes.c $(SRC_EXEC) $(LIB)
+	parsing/check_quotes.c parsing/rederection.c parsing/heredoc.c parsing/command_table.c utils/utils4.c parsing/herdedoc_helper.c parsing/expand_helper.c utils/ft_fill.c parsing/expand_dquotes.c parsing/expand_help.c $(SRC_EXEC) $(LIB)
 
 OBJS = $(SRCS:.c=.o)
 

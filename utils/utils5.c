@@ -6,11 +6,22 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:56:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 20:36:36 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:14:46 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../include/minishell.h"
+
+int	check_sig(t_var *var)
+{
+	if (!var->input[0] && g_shell.signel_hedoc == 1)
+	{
+		rl_done = 0;
+		free(var->input);
+		return (1);
+	}
+	return (0);
+}
 
 int	check_dquotes(char *str)
 {
@@ -49,6 +60,7 @@ void	free_token_list(t_list **list)
 		free((*list));
 		(*list) = tmp;
 	}
+	(*list) = NULL;
 }
 
 void	free_list_cmd(t_list **list)

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:44:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 05:44:49 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 00:02:50 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,9 @@ int			help_expand(t_var *var, t_token *token);
 int			help_expand1(t_var *var, t_token *token);
 void		help_expand2(t_var *var, t_token *token, t_env *env);
 void		handl_expand_dquotes(t_var *var);
+void		handel_expand_heredoc(char *input, t_list **temp);
+char		*get_value_heredoc(t_list *tmp, char *input);
+int			check_sig(t_var *var);
 char		*get_variable_name(char *name);
 void		free_array(char **array);
 void		ft_free(void *ptr);
@@ -304,6 +307,7 @@ int			rederection_app(t_list *args, int *fd_out);
 void		fill_token(t_list **args, int token, char *word, int is_heredoce);
 void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
 void		command_table(t_list *args, t_list **cmd, t_env *env, t_var *var);
+void		increment_args(t_list **args, t_token **token);
 int			allocate_commande(t_list *args);
 int			check_dquotes(char *str);
 char		**get_command1(t_list *args, t_var **var);

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:27:02 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 05:30:14 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:06:39 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,39 @@ void	ft_free(void *ptr)
 		free(ptr);
 }
 
+int	get_var(t_token **token, t_env *env, t_var *var)
+{
+	char	*str;
+
+	str = NULL;
+	if (var->temp && var->temp[0] == '?')
+	{
+		str = ft_itoa(g_shell.exit_status);
+		free((*token)->value);
+		(*token)->value = ft_strdup(str);
+		ft_free(str);
+		(*token)->value = ft_strjoin((*token)->value, &var->temp[1]);
+		ft_free(var->temp);
+		return (0);
+	}
+	if (env && !ft_strcmp(env->env_var, var->temp))
+	{
+		free((*token)->value);
+		(*token)->value = ft_strdup(env->env_value);
+		env = var->tmp_env;
+		ft_free(var->temp);
+		return (0);
+	}
+	return (1);
+}
+
 int	ft_expender_help(t_token **token, t_env *env, t_var *var)
 {
-	static char	*str;
-
 	while (env)
 	{
 		var->temp = get_variable_name((*token)->value);
-		if (var->temp && var->temp[0] == '?')
-		{
-			str = ft_itoa(g_shell.exit_status);
-			free((*token)->value);
-			(*token)->value = ft_strdup(str);
-			ft_free(str);
-			(*token)->value = ft_strjoin((*token)->value, &var->temp[1]);
-			ft_free(var->temp);
+		if (!get_var(token, env, var))
 			return (0);
-		}
-		if (env && !ft_strcmp(env->env_var, var->temp))
-		{
-			free((*token)->value);
-			(*token)->value = ft_strdup(env->env_value);
-			env = var->tmp_env;
-			ft_free(var->temp);
-			return (0);
-		}
 		env = env->next;
 		ft_free(var->temp);
 	}

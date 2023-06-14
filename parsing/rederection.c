@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 04:45:31 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 00:03:30 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ int	rederection_in(t_list *args, int *fd_in, char **file_name)
 	token = args->data;
 	if (token && token->key == RED_INP)
 	{
-		args = args->next;
-		if (args)
-			token = args->data;
+		increment_args(&args, &token);
 		skip_white_spaces(&args, &token);
 		if (token && token->key == FILE_INP)
 		{
