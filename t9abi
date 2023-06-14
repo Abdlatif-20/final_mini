@@ -380,3 +380,16 @@ cat $dsf
 
 
 ls -l >> file | cat << file
+
+
+-> minishell$ << end << end | grep hello | haha| sleep 2
+> HEREDOC$ end
+> HEREDOC$ end
+minishell: : command not found
+minishell: haha: command not found
+
+-> minishell$ << file >> outfile | grep hello
+> HEREDOC$ 
+-> minishell$ < file >> outfile | grep hello
+minishell: file: No such file or directory ===> file gets created even if the command is not found
+signal(SIGINT, SIG_IGN) // segv);

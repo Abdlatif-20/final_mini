@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:31:03 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 17:37:41 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:19:37 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct g_shell
 	int		exit_status;
 	int		signel_hedoc;
 	int		signel_cat;
-	char	*path;
 }			t_shell;
 
 extern t_shell	g_shell;
@@ -242,7 +241,7 @@ int			is_builin(t_cmd *commands);
 // utils_error.c
 void		print_error_cmd(char *command);
 void		print_error_file(char *command);
-void		print_error_fork(void);
+int		print_error_fork(void);
 
 /*--------------- libft ------------------------*/
 int			ft_isalpha(int c);

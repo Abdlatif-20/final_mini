@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils6.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:43:47 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 17:24:22 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 21:36:18 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	if_herdoc(t_cmd *commands)
 		exit(g_shell.exit_status);
 	}
 	close(commands->fd_in);
-	unlink(commands->file_name);
+	// unlink(commands->file_name);
 }
 
 void	execute1(t_list *cmd, t_info *info, t_var *var)
@@ -71,8 +71,8 @@ void	execute1(t_list *cmd, t_info *info, t_var *var)
 
 void	execute2(t_info *info, t_var *var)
 {
-	// (void)var;
-	if (!var->is_empty_str && execve(info->temp, info->commands->cmds, create_env(info)) == -1)
+	(void)var;
+	if (execve(info->temp, info->commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(info->commands->main_cmd);
 		g_shell.exit_status = 127;

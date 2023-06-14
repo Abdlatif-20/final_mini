@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:45:00 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 17:30:33 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:07:05 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	dup_for_builin(t_cmd *commands)
 	{
 		dup2(commands->fd_in, STDIN_FILENO);
 		close(commands->fd_in);
-		// unlink(commands->file_name);
 	}
 	if (commands->fd_out != 1)
 	{
@@ -47,7 +46,6 @@ int count_str(char **str)
 	int i;
 
 	i = 0;
-
 	while (str[i])
 		i++;
 	return (i);
@@ -58,7 +56,7 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 	int nb;
 	
 	nb = count_str(commands->cmds);
-	if ((!ft_strcmp(commands->main_cmd, "export") && nb > 1) || (var->is_empty_str == 1 && var->is_empty_str_export))
+	if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
 	{
 		if (info->head_en && check_export(commands->cmds, var) == 0)
 			return ;
@@ -69,7 +67,7 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 			g_shell.exit_status = 0;
 		}
 	}
-	else if (info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1)
+	else if ((info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1))
 		print_list_export(info);
 	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env") && nb == 1)
 		print_list_env(info);
@@ -108,8 +106,9 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 	nb_node = get_nbr_node(shell);
 	if (nb_node == 1)
 	{
-
 		execute_commande(commands, info, shell, var);
+		close(commands->fd_in);
+		close(commands->fd_out);
 	}
 	else if (nb_node > 1)
 		execute_commands_with_pipe(shell, info, --nb_cmd, var);
@@ -118,5 +117,4 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 	close(info->in);
 	close(info->out);
 }
-
 

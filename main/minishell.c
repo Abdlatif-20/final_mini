@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:01:55 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 15:08:57 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:11:57 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,28 @@
 // 		tmp = tmp->next;
 // 	}
 // }
-// void	print_list11(t_list *cmd)
-// {
-// 	if (!cmd)
-// 		return ;
-// 	t_list *tmp = cmd;
-// 	t_cmd *token = cmd->data;
-// 	while (tmp)
-// 	{
-// 		int	i = 0;
-// 		token = tmp->data;
-// 		while (tmp && token->cmds[i] && token->cmds)
-// 		{
-// 			printf("cmd = [%s]\n",token->cmds[i]);
-// 			i++;
-// 		}
-// 		printf ("main_cmd = [%s]\n", token->main_cmd);
-// 		printf ("fd_in = [%d]\n", token->fd_in);
-// 		printf ("fd_out = [%d]\n", token->fd_out);
-// 		printf("file_name = [%s]\n", token->file_name);
-// 		tmp = tmp->next;
-// 	}
-// }
+void	print_list11(t_list *cmd)
+{
+	if (!cmd)
+		return ;
+	t_list *tmp = cmd;
+	t_cmd *token = cmd->data;
+	while (tmp)
+	{
+		int	i = 0;
+		token = tmp->data;
+		while (tmp && token->cmds[i] && token->cmds)
+		{
+			printf("cmd = [%s]\n",token->cmds[i]);
+			i++;
+		}
+		printf ("main_cmd = [%s]\n", token->main_cmd);
+		printf ("fd_in = [%d]\n", token->fd_in);
+		printf ("fd_out = [%d]\n", token->fd_out);
+		printf("file_name = [%s]\n", token->file_name);
+		tmp = tmp->next;
+	}
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -67,6 +67,7 @@ int	main(int argc, char **argv, char **env)
 	fill_export_list(env, &info.head_ex);
 	fill_env_list(env, &info.head_en);
 	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	printf("\033[2J\033[1;1H");
 	ft_loop(&args, &cmd, &info, &var);
 	free_export(&info.head_ex);

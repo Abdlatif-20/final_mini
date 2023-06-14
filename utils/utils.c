@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 20:36:26 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:02:35 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ void	initiali_var(t_var ***var, t_list *args)
 {
 	(**var)->i = 0;
 	(**var)->flag = 0;
-	(**var)->flag_export = 0;
-	(**var)->is_empty_str = 0;
-	(**var)->is_empty_str_export = 0;
 	(**var)->number_of_commands = allocate_commande(args);
 }
 
@@ -55,19 +52,9 @@ void	commands_helper(t_list **args, t_token *token, t_var ***var)
 			|| token->key == SQUATES || token->key == DQUATES
 			|| token->key == VAR))
 	{
-		if (!(**var)->flag && token->value[0])
-		{
-			if (!ft_strcmp(token->value, "export"))
-			{
-				(**var)->flag_export = 1;
-				(**var)->is_empty_str_export = 1;
-			}
+		if (!(**var)->flag)
 			(**var)->cmd[(**var)->i++] = ft_strdup(token->value);
-		}
-		if (token->value[0] == '\0')
-		{
-			(**var)->is_empty_str = 1;
-		}
+		// printf("\n[%d]", (**var)->is_empty_str
 		(*args) = (*args)->next;
 		if (*args)
 			token = (*args)->data;

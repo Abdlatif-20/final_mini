@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:37:27 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 17:17:45 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 21:01:29 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	print_error_file(char *command)
 	g_shell.exit_status = 127;
 }
 
-void	print_error_fork(void)
+int	print_error_fork(void)
 {
 	perror("fork");
 	g_shell.exit_status = 1;
-	exit(g_shell.exit_status);
+	return -1;
 }

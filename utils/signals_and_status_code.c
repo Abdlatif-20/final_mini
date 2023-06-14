@@ -33,6 +33,8 @@ void	handle_specific_signal_1(int signal_number)
 		printf("Child process terminated by file size limit exceeded (SIGXFSZ)\n");
 	else if (signal_number == SIGALRM)
 		printf("Child process terminated by alarm clock (SIGALRM)\n");
+	else if (signal_number == SIGSEGV)
+		printf("Segmentation fault : 11\n");
 }
 
 void	handle_specific_signal(int signal_number)
