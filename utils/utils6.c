@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:43:47 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 00:27:22 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:24:22 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,24 @@ void	execute1(t_list *cmd, t_info *info, t_var *var)
 
 void	execute2(t_info *info, t_var *var)
 {
-	(void)var;
-	if (execve(info->temp, info->commands->cmds, create_env(info)) == -1)
+	// (void)var;
+	if (!var->is_empty_str && execve(info->temp, info->commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(info->commands->main_cmd);
 		g_shell.exit_status = 127;
 		exit(g_shell.exit_status);
 	}
-	// else
-	// {
-	// 	perror("wc:");
-	// 	g_shell.exit_status = 127;
-	// 	exit(g_shell.exit_status);
-	// }
+	else
+	{
+		printf("minishell: : command not found\n");
+		g_shell.exit_status = 127;
+		exit(g_shell.exit_status);
+	}
 }
 
-void	execute3(t_info *info, t_list *cmd, int **pipefd, int nb_pipes, t_var *var)
+void	execute3(t_info *info, t_list *cmd, int **pipefd, t_var *var)
 {
-	merge_dup_pipe_herdoc(pipefd, info->i, nb_pipes, info->commands);
+	merge_dup_pipe_herdoc(pipefd, info->i, var->nb_pipes, info->commands);
 	info->temp = check_if_command_found (info->commands->main_cmd,
 			&info->head_ex);
 	if (is_builin(info->commands) == 1)

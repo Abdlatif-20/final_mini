@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:47:52 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 01:08:42 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:17:54 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ long long	ft_atoi(char *str)
 
 long long	ft_atoi1(char *str, int *flag)
 {
-	long long		i;
+	long long			i;
 	int					signe;
-	long long	result;
+	long long			result;
 
 	i = 0;
 	result = 0;
@@ -54,11 +54,6 @@ long long	ft_atoi1(char *str, int *flag)
 		i++;
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		// if (str[i] < '0' || str[i] > '9')
-		// {
-		// 	*flag = 1;
-		// 	return (-1);
-		// }
 		result = (str[i] - '0') + (result * 10);
 		i++;
 	}

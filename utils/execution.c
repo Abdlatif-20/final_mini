@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:45:00 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 00:29:24 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:30:33 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,10 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 	nb_node = get_nbr_node(shell);
 	if (nb_node == 1)
 	{
+
 		execute_commande(commands, info, shell, var);
 	}
-	else if (nb_node > 1)//check
+	else if (nb_node > 1)
 		execute_commands_with_pipe(shell, info, --nb_cmd, var);
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);

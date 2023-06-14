@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:16:25 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 01:32:29 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:37:23 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,46 @@
 
 void	add_export_ignored(t_info *info)
 {
+	char	*tmp;
+	char	*name;
+
+	tmp = getcwd(NULL, 0);
+	name = ft_strdup("/./minishell");
 	ft_lst_add_back_export(&info->head_ex,
-		ft_lst_new_export(ft_strdup("PWD"), ft_strdup(getcwd(NULL, 0))));
+		ft_lst_new_export(ft_strdup("PWD"), ft_strdup(tmp), 1));
 	ft_lst_add_back_export(&info->head_ex,
-		ft_lst_new_export(ft_strdup("SHLVL"), ft_strdup("1")));
+		ft_lst_new_export(ft_strdup("SHLVL"), ft_strdup("1"), 1));
 	ft_lst_add_back_export(&info->head_ex,
-		ft_lst_new_export(ft_strdup("_"),
-			ft_strjoin(ft_strdup(getcwd(NULL, 0)), ft_strdup("/./minishell"))));
+		ft_lst_new_export(ft_strdup("_"), ft_strjoin(ft_strdup(tmp), name), 1));
 	ft_lst_add_back_export(&info->head_ex,
-		ft_lst_new_export(ft_strdup("OLDPWD"), ft_strdup("")));
+		ft_lst_new_export(ft_strdup("OLDPWD"), ft_strdup(""), 1));
 	ft_lst_add_back_export(&info->head_ex,
 		ft_lst_new_export(ft_strdup("PATH"),
-			ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin")));
+			ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"), 1));
+	free(tmp);
+	free(name);
 }
 
 void	add_env_ignored(t_info *info)
 {
+	char	*tmp;
+	char	*name;
+
+	tmp = getcwd(NULL, 0);
+	name = ft_strdup("/./minishell");
 	ft_lst_add_back_env(&info->head_en,
-		ft_lst_new_env(ft_strdup("PWD"), ft_strdup(getcwd(NULL, 0))));
+		ft_lst_new_env(ft_strdup("PWD"), ft_strdup(tmp), 1));
 	ft_lst_add_back_env(&info->head_en,
-		ft_lst_new_env(ft_strdup("SHLVL"), ft_strdup("1")));
+		ft_lst_new_env(ft_strdup("SHLVL"), ft_strdup("1"), 1));
 	ft_lst_add_back_env(&info->head_en,
-		ft_lst_new_env(ft_strdup("_"),
-			ft_strjoin(ft_strdup(getcwd(NULL, 0)), ft_strdup("/./minishell"))));
+		ft_lst_new_env(ft_strdup("_"), ft_strjoin(ft_strdup(tmp), name), 1));
 	ft_lst_add_back_env(&info->head_en,
-		ft_lst_new_env(ft_strdup("OLDPWD"), ft_strdup("")));
+		ft_lst_new_env(ft_strdup("OLDPWD"), ft_strdup(""), 1));
 	ft_lst_add_back_env(&info->head_en,
 		ft_lst_new_env(ft_strdup("PATH"),
-			ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin")));
+			ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"), 1));
+	free(tmp);
+	free(name);
 }
 
 void	help_main(t_info *info, char **env)

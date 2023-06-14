@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   help_export_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:01:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 00:09:34 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:31:17 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_export	*ft_lst_new_export(char *export_var, char *export_value)
+t_export	*ft_lst_new_export(char *export_var, char *export_value, int flag)
 {
 	t_export	*element;
 
@@ -22,6 +22,11 @@ t_export	*ft_lst_new_export(char *export_var, char *export_value)
 	{
 		element->export_var = ft_strdup(export_var);
 		element->export_value = ft_strdup(export_value);
+		if (flag)
+		{
+			free(export_var);
+			free(export_value);
+		}
 		element->next = NULL;
 	}
 	return (element);
@@ -55,7 +60,7 @@ void	add_export_element(char *export_var, char *export_value,
 {
 	t_export	*new;
 
-	new = ft_lst_new_export(export_var, export_value);
+	new = ft_lst_new_export(export_var, export_value, 0);
 	ft_lst_add_back_export(head_ex, new);
 }
 

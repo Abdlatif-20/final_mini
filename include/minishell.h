@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:31:03 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 01:53:14 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:37:41 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_cmd
 	int			fd_out;
 	char		*file_name;
 	int			heredoc;
+	int			flag_empty;
 }					t_cmd;
 
 typedef struct s_init
@@ -119,6 +120,7 @@ typedef struct s_export
 
 typedef struct t_var
 {
+
 	int		i;
 	int		j;
 	int		flag;
@@ -143,6 +145,8 @@ typedef struct t_var
 	char	*temp;
 	char	*input;
 	char	*buffer;
+	int 	**pipefd;
+	int 	nb_pipes;
 }				t_var;
 
 typedef struct s_info
@@ -158,6 +162,16 @@ typedef struct s_info
 	int			i;
 	t_var		*var;
 }			t_info;
+
+//------------------------------- main -----------------------------------//
+
+void		init_main(t_list **args, t_list **cmd, t_info *info, t_var *var);
+void		main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var);
+int			main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var);
+void		break_while(t_list *args, t_list *cmd, t_var *var);
+void		ft_loop(t_list **args, t_list **cmd, t_info *info, t_var *var);
+
+//-----------------------------------------------------------------------//
 
 char		**create_env(t_info *info);
 int			my_echo(t_cmd *cmd);
@@ -177,7 +191,7 @@ int			get_pos(char *str, char c);
 int			my_cd(t_cmd *commands, t_info *info);
 
 // file my_export.c
-t_export	*ft_lst_new_export(char *export_var, char *export_value);
+t_export	*ft_lst_new_export(char *export_var, char *export_value, int flag);
 void		ft_lst_add_back_export(t_export **head_ex, t_export *new);
 char		*get_export_variable(char *variable);
 char		*get_export_value(char *value);
@@ -200,7 +214,7 @@ int			my_exit(t_cmd *commands);
 // file utils1.c
 char		*get_value(t_export **head_ex, char *var);
 
-void		execute_commande(t_cmd *commands, t_info *info,
+int			execute_commande(t_cmd *commands, t_info *info,
 				t_list *shell, t_var *var);
 
 // file utils3.c
@@ -255,11 +269,14 @@ t_list		*ft_lstlast(t_list *lst);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 void		ft_lstclear(t_list **lst);
 /*-----------------------------------------------*/
+
+/*--------------------------------- heredoc ---------------------------*/
 void		ft_heredoc(t_list *args, int *fd, char **file, t_env *env);
 void		heredoc_helper(t_list **args, char *name, int *fd, t_env *env);
 int			heredoc_help(char **input, t_list **args, t_env *env, char *name);
 int			get_0(void);
 void		handel(int SIG);
+/*--------------------------------------------------------------------*/
 /*---------------------- token --------------------*/
 void		get_token(char *input, t_list **token);
 void		fill_white_space(char *input, t_list **token, t_var **var);
@@ -270,6 +287,7 @@ void		check_pipe(char *input, t_list **token, int *i, int *flag);
 void		check_variable(char *input, t_list **token, int *i);
 /*-----------------------------------------------------*/
 
+/*------------------- syntex_error --------------------------*/
 int			syntex_error(t_list *list);
 int			check_quotes(char *input);
 void		fill_env_list(char **environ, t_env **head_env);
@@ -277,6 +295,9 @@ int			ft_strcmp(char *s1, char *s2);
 void		ft_trim_quotes(t_list **args);
 void		ft_join_args(t_list **args);
 /*--------------------------------------------------------*/
+
+/*------------------ expand -------------------------------*/
+
 void		ft_expand(t_list **list, t_env *env);
 int			handel_var(t_token **token, t_var *var, t_env *env);
 int			ft_expender_help(t_token **token, t_env *env, t_var *var);
@@ -289,11 +310,22 @@ void		handel_expand_heredoc(char *input, t_list **temp);
 char		*get_value_heredoc(t_list *tmp, char *input);
 int			check_sig(t_var *var);
 char		*get_variable_name(char *name);
+/*--------------------------------------------------------*/
+
+/*---------- free functions ------------------*/
+
 void		free_array(char **array);
 void		ft_free(void *ptr);
-void		print_list1(t_list *cmd);
-/*--------------------------------------------------------*/
+void		free_token_list(t_list **list);
+void		free_list_cmd(t_list **list);
 void		ft_remove_node(t_list **head, t_list *node);
+void		free_export(t_export **head_ex);
+void		free_env(t_env **head_en);
+void		free_pipefd(int **pipefd, int nb_pipes);
+
+/*---------------------------------------------*/
+
+/*----------------------- command table ---------------------------------*/
 char		*skip_whitespace(char *input);
 int			ft_whitespace(char c);
 int			rederection_out(t_list *args, int *fd_out);
@@ -306,8 +338,8 @@ void		increment_args(t_list **args, t_token **token);
 int			allocate_commande(t_list *args);
 int			check_dquotes(char *str);
 char		**get_command1(t_list *args, t_var **var);
-void		free_token_list(t_list **list);
-void		free_list_cmd(t_list **list);
+/*------------------------------------------------------------------------*/
+
 
 // utils
 // int		count_words_me(char *str, char c);
@@ -350,7 +382,7 @@ void		remove_env_element(t_env **head_en, char *env_var);
 void		fill_env_list(char **environ, t_env **head_env);
 
 // help_env_1.c
-t_env		*ft_lst_new_env(char *env_var, char *env_value);
+t_env		*ft_lst_new_env(char *env_var, char *env_value, int flag);
 void		ft_lst_add_back_env(t_env **head_en, t_env *new);
 void		remove_env_element(t_env **head_en, char *env_var);
 void		add_env_element(char *env_var, char *env_value, t_env **head_en);
@@ -360,8 +392,7 @@ void		print_list_env(t_info *info);
 char		**create_env(t_info *info);
 void		execute1(t_list *cmd, t_info *info, t_var *var);
 void		execute2(t_info *info, t_var *var);
-void		execute3(t_info *info, t_list *cmd,
-				int **pipefd, int nb_pipes, t_var *var);
+void		execute3(t_info *info, t_list *cmd,int **pipefd, t_var *var);
 void		if_herdoc(t_cmd *commands);
 
 //utils7.c
@@ -376,9 +407,9 @@ void		merge_dup_pipe_herdoc(int **pipefd,
 				int i, int nb_pipes, t_cmd *commands);
 void		reserve_list(t_info *info);
 
-void		free_export(t_export **head_ex);
-void		free_env(t_env **head_en);
-void		free_pipefd(int **pipefd, int nb_pipes);
+// void		free_export(t_export **head_ex);
+// void		free_env(t_env **head_en);
+// void		free_pipefd(int **pipefd, int nb_pipes);
 void		print_list11(t_list *cmd);
 
 // utils8.c

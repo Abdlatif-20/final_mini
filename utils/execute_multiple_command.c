@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:29:24 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 01:29:26 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:36:18 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,55 @@ void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	}
 }
 
+void	check_is_empty(t_list *commands, t_var *var)
+{
+	t_cmd	*cmd;
+
+	cmd = commands->data;
+	while (commands)
+	{
+		cmd = commands->data;
+		printf("is_empty_str = %d\n", var->is_empty_str);
+		if (var->is_empty_str)
+		{
+			print_error_cmd(cmd->main_cmd);
+			g_shell.exit_status = 0;
+			commands = commands->next;
+			continue ;
+		}
+		commands = commands->next;
+	}
+}
+
 void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var)
 {
 	int	**pipefd;
 
-	pipefd = create_pipefd(nb_pipes);
+	var->nb_pipes = nb_pipes;
+	pipefd = create_pipefd(var->nb_pipes);
 	info->i = 0;
-	while (info->i < nb_pipes)
+	while (info->i < var->nb_pipes)
 	{
 		create_pipe(pipefd[info->i]);
 		info->i++;
 	}
 	info->commands = cmd->data;
+	check_is_empty(cmd, var);
 	info->i = 0;
-	while (info->i < nb_pipes + 1)
+	while (info->i < var->nb_pipes + 1)
 	{
 		info->pid = fork();
 		if (info->pid == -1)
 			print_error_fork();
 		else if (info->pid == 0)
-			execute3(info, cmd, pipefd, nb_pipes, var);
+			execute3(info, cmd, pipefd, var);
 		info->i++;
 		cmd = cmd->next;
 		if (cmd)
 			info->commands = cmd->data;
 		unlink(info->commands->file_name);
 	}
-	close_pipe(pipefd, nb_pipes);
-	wait_for_child(nb_pipes);
-	free_pipefd(pipefd, nb_pipes);
+	close_pipe(pipefd, var->nb_pipes);
+	wait_for_child(var->nb_pipes);
+	free_pipefd(pipefd, var->nb_pipes);
 }

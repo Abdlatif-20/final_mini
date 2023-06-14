@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_cmd_simple.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:35:00 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 23:55:36 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:16:53 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**get_cmd(char *command, char **split_paths)
 	{
 		if (access(command, F_OK | X_OK) != 0 || !command)
 		{
-			printf("minishell: %s: No such file or directory\n", command);
+			print_error_cmd(command);
 			exit(0);
 		}
 		split_paths = malloc(sizeof(char *) * 2);

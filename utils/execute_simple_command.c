@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:29:54 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 01:33:04 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:15:46 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 	char		*path;
 	long long	nb;
 
+	// printf("is_empty_str = %d\n", var->is_empty_str);
 	if (commands->heredoc)
 		if_herdoc1(commands);
 	else
@@ -104,16 +105,14 @@ void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 	}
 }
 
-void	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
+int	execute_commande(t_cmd *commands, t_info *info,
+	t_list *shell, t_var *var)
 {
 	pid_t	pid;
 
 	g_shell.signel_cat = 1;
 	if (is_builin(commands) == 1)
-	{
-		builtin_execution(shell, info, 1, var);
-		return ;
-	}
+		return (builtin_execution(shell, info, 1, var), 0);
 	else if (commands->main_cmd)
 	{
 		pid = fork();
@@ -130,4 +129,7 @@ void	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 			display_status_code(g_shell.exit_status);
 		}
 	}
+	else
+		return (print_error_cmd(commands->main_cmd), g_shell.exit_status = 127);
+	return (0);
 }

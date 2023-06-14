@@ -377,3 +377,6 @@ arg = TE*ST+
  exit
 
 cat $dsf
+
+
+ls -l >> file | cat << file

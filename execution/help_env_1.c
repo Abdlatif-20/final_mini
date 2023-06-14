@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   help_env_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:39:17 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 00:04:18 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:33:01 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_env	*ft_lst_new_env(char *env_var, char *env_value)
+t_env	*ft_lst_new_env(char *env_var, char *env_value, int flag)
 {
 	t_env	*element;
 
@@ -23,6 +23,11 @@ t_env	*ft_lst_new_env(char *env_var, char *env_value)
 		element->env_var = ft_strdup(env_var);
 		element->env_value = ft_strdup(env_value);
 		element->next = NULL;
+		if (flag)
+		{
+			free(env_var);
+			free(env_value);
+		}
 	}
 	return (element);
 }
@@ -77,7 +82,7 @@ void	add_env_element(char *env_var, char *env_value, t_env **head_en)
 {
 	t_env	*new;
 
-	new = ft_lst_new_env(env_var, env_value);
+	new = ft_lst_new_env(env_var, env_value, 0);
 	ft_lst_add_back_env(head_en, new);
 }
 
