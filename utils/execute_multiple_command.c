@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 00:29:41 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/14 01:29:24 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/14 01:29:26 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	dup_for_pipes(int **pipefd, int i, int nb_pipes)
 void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	int nb_pipes, t_cmd *commands)
 {
-	
 	dup_for_pipes(pipefd, i, nb_pipes);
 	close_pipe(pipefd, nb_pipes);
 	if_herdoc_or_inputfile(commands);

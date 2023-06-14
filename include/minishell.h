@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 05:44:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 00:02:50 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/14 01:31:03 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/14 01:53:14 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@
 # define ERR_AMBG "minishell: %s: ambiguous redirect\n"
 # define MAX_LL 9223372036854775807
 # define MIN_LL -9223372036854775808
-
-// int g_exit_status;
 
 enum e_type
 {
@@ -84,7 +82,7 @@ typedef struct g_shell
 	int		signel_hedoc;
 	int		signel_cat;
 	char	*path;
-}				t_shell;
+}			t_shell;
 
 extern t_shell	g_shell;
 
@@ -162,9 +160,6 @@ typedef struct s_info
 }			t_info;
 
 char		**create_env(t_info *info);
-// void 		help(int status);
-// file my_echo.c
-// int			my_echo(t_cmd *cmd);
 int			my_echo(t_cmd *cmd);
 int			check_option(char *cmd);
 char		*get_last_split(t_cmd *cmd);
@@ -209,7 +204,7 @@ void		execute_commande(t_cmd *commands, t_info *info,
 				t_list *shell, t_var *var);
 
 // file utils3.c
-void				execute_commands_with_pipe(t_list *cmd,
+void		execute_commands_with_pipe(t_list *cmd,
 				t_info *info, int nb_pipes, t_var *var);
 
 // file help_export.c
@@ -341,7 +336,7 @@ int			case_of_remove_directory(t_cmd *commands,
 // check_args.c
 int			check_is_contain(char *split);
 int			check_if_valid_args(char *split);
-char		*get_arg(char *arg);
+char		*get_arg(char *arg, t_var *var);
 // int  check_export(char **split);
 
 // file my_env.c
@@ -364,8 +359,8 @@ void		print_list_env(t_info *info);
 //utils6.c
 char		**create_env(t_info *info);
 void		execute1(t_list *cmd, t_info *info, t_var *var);
-void		execute2(t_info *info,t_var *var);
-void 		execute3(t_info *info, t_list *cmd,
+void		execute2(t_info *info, t_var *var);
+void		execute3(t_info *info, t_list *cmd,
 				int **pipefd, int nb_pipes, t_var *var);
 void		if_herdoc(t_cmd *commands);
 
@@ -381,10 +376,13 @@ void		merge_dup_pipe_herdoc(int **pipefd,
 				int i, int nb_pipes, t_cmd *commands);
 void		reserve_list(t_info *info);
 
-char	*get_arg(char *arg);
+void		free_export(t_export **head_ex);
+void		free_env(t_env **head_en);
+void		free_pipefd(int **pipefd, int nb_pipes);
+void		print_list11(t_list *cmd);
 
-void free_export(t_export **head_ex);
-void free_env(t_env **head_en);
-void free_pipefd(int **pipefd, int nb_pipes);
+// utils8.c
+void		add_export_ignored(t_info *info);
+void		add_env_ignored(t_info *info);
 
 #endif

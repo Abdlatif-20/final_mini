@@ -5,14 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/11 01:58:19 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 00:46:55 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/14 01:29:54 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/14 01:33:04 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_shell	g_shell;
 
 void	if_herdoc1(t_cmd *commands)
 {
@@ -46,7 +44,6 @@ void	if_herdoc1(t_cmd *commands)
 
 void	if_input_output_file(t_cmd *commands)
 {
-	
 	if (commands->fd_in != 0)
 	{
 		if (commands->fd_in == -1)
@@ -63,7 +60,6 @@ void	if_input_output_file(t_cmd *commands)
 	}
 	if (commands->fd_out != 1)
 	{
-		
 		if (commands->fd_out == 101)
 		{
 			printf ("bash: outfile: Permission denie\n");
@@ -77,25 +73,24 @@ void	if_input_output_file(t_cmd *commands)
 
 void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 {
-	char	*path;
-	static int		i;
+	char		*path;
+	long long	nb;
 
-	// printf("commands->main_cmd = [%s]\n", commands->cmds[0]);
-	// printf("commands->main_cmd = [%s]\n", commands->cmds[1]);
-	i = 1;
 	if (commands->heredoc)
 		if_herdoc1(commands);
 	else
 		if_input_output_file(commands);
-	if (!ft_strcmp(commands->main_cmd, "minishell"))
+	if (!ft_strcmp(commands->main_cmd, "minishell")
+		|| !ft_strcmp(commands->main_cmd, "./minishell"))
 	{
 		path = ft_strdup("minishell");
-		long long nb = ft_atoi(get_value2(info, "SHLVL"));
+		nb = ft_atoi(get_value2(info, "SHLVL"));
 		set_value1(info, "SHLVL", ft_itoa(++nb));
 	}
 	else
 		path = check_if_command_found(commands->main_cmd, &info->head_ex);
-	if (!var->is_empty_str && execve(path, commands->cmds, create_env(info)) == -1)
+	if (!var->is_empty_str && execve(path,
+			commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(commands->main_cmd);
 		g_shell.exit_status = 127;

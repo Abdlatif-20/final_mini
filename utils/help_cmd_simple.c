@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:35:00 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 01:39:43 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/13 23:55:36 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void free_split_paths(char **split_paths)
 	i = 0;
 	while (split_paths[i])
 	{
-		free(split_paths[i]);
+		if (split_paths[i])
+			free(split_paths[i]);
 		i++;
 	}
 	free(split_paths);
@@ -145,7 +146,7 @@ char	*check_if_command_found(char *command, t_export **head_ex)
 			if (access(split_paths[i], F_OK | X_OK) == 0)
 			{
 				str = ft_strdup(split_paths[i]);
-				return (free_split_paths(split_paths), str);
+				return (str);
 			}
 			i++;
 		}
