@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:50:59 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 18:33:00 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 00:20:46 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ void	init_variable1(t_env **env_tmp, t_env *env, t_var *var)
 	var->env = env;
 }
 
-void	ft_expand(t_list **list, t_env *env)
+int	ft_expand(t_list **list, t_env *env)
 {
 	t_var		var;
+	int 		flag;
 
+	flag = 0;
 	var.tmp = *list;
 	init_variable1(&var.tmp_env, env, &var);
 	while (var.tmp)
@@ -74,11 +76,12 @@ void	ft_expand(t_list **list, t_env *env)
 		var.token = var.tmp->data;
 		if (var.tmp && var.token->key == VAR && var.token->is_herdoc == 0)
 		{
-			if (handel_var(&var.token, &var, var.env) == 2)
+			if (handel_var(&var.token, &var, var.env, &flag) == 2)
 				continue ;
 		}
 		else if (var.tmp && var.token->key == DQUATES && !var.token->is_herdoc)
 			handl_expand_dquotes(&var);
 		var.tmp = var.tmp->next;
 	}
+	return (flag);
 }

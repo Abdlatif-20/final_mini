@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:08:36 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 19:05:39 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 00:22:20 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 {
 	ft_trim_quotes(args);
-	ft_expand(args, (*info).head_en);
+	var->is_empty_str = ft_expand(args, (*info).head_en);
 	ft_join_args(args);
 	command_table(*args, cmd, (*info).head_en, var);
 	// print_list11(*cmd);

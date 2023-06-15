@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:33:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 18:15:53 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 02:19:26 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,25 @@ int	check_is_contain(char *split)
 	return (1);
 }
 
+int	help_check_if_valid_args(char *split, int *i)
+{
+	if (split[*i] && (ft_isalnum(split[*i])
+			|| split[*i] == '_' || split[*i] == '='))
+	{
+		*i = *i + 1;
+		return (2);
+	}
+	else if (split[*i] && split[*i] == '+' && split[*i + 1])
+	{
+		if (split[*i + 1] == '\0' || split[*i + 1] == '=')
+			return (1);
+		else
+			return (0);
+	}
+	else
+		return (0);
+}
+
 int	check_if_valid_args(char *split)
 {
 	int	i;
@@ -36,27 +55,16 @@ int	check_if_valid_args(char *split)
 	i = i + 1;
 	while (split[i])
 	{
-		if (split[i] && (ft_isalnum(split[i])
-				|| split[i] == '_' || split[i] == '='))
-		{
-			i++;
+		if (help_check_if_valid_args(split, &i) == 2)
 			continue ;
-		}
-		else if (split[i] && split[i] == '+' && split[i + 1])
-		{
-			if (split[i + 1] == '\0' || split[i + 1] == '=')
-				return (1);
-			else
-				return (0);
-		}
-		else
+		else if (!help_check_if_valid_args(split, &i))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-char	*get_arg(char *arg , t_var *vars)
+char	*get_arg(char *arg, t_var *vars)
 {
 	int	i;
 
@@ -78,7 +86,7 @@ int	check_export(char **split, t_var *vars)
 	while (split[i])
 	{
 		arg = get_arg(split[i], vars);
-		if (arg[0] == '\0')
+		if (arg[0] == '\0' && !vars->is_empty_str)
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(split[i], 2);

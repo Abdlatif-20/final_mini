@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:45:00 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 22:07:05 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 02:23:25 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,15 @@ void	builint_simple(t_cmd *commands, t_info *info)
 		my_unset(commands, info);
 }
 
-int count_str(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
 void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 {
-	int nb;
-	
+	int	nb;
+
 	nb = count_str(commands->cmds);
-	if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
+	if ((info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1)
+		|| (var->is_empty_str && nb == 2))
+		print_list_export(info);
+	else if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
 	{
 		if (info->head_en && check_export(commands->cmds, var) == 0)
 			return ;
@@ -67,8 +60,6 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 			g_shell.exit_status = 0;
 		}
 	}
-	else if ((info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1))
-		print_list_export(info);
 	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env") && nb == 1)
 		print_list_env(info);
 }
@@ -117,4 +108,3 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 	close(info->in);
 	close(info->out);
 }
-

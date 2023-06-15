@@ -6,11 +6,25 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:43:47 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 21:36:18 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 01:40:30 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char	*get_path_home(t_export **head_x)
+{
+	t_export	*temp;
+
+	temp = *head_x;
+	while (temp)
+	{
+		if (!ft_strcmp(temp->export_var, "HOME"))
+			return (ft_strdup(temp->export_value));
+		temp = temp->next;
+	}
+	return (NULL);
+}
 
 char	**create_env(t_info *info)
 {
@@ -75,12 +89,6 @@ void	execute2(t_info *info, t_var *var)
 	if (execve(info->temp, info->commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(info->commands->main_cmd);
-		g_shell.exit_status = 127;
-		exit(g_shell.exit_status);
-	}
-	else
-	{
-		printf("minishell: : command not found\n");
 		g_shell.exit_status = 127;
 		exit(g_shell.exit_status);
 	}

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:06:45 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/12 00:38:58 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 02:24:39 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_is_empty_string(char *str)
 	return (1);
 }
 
-void free_pipefd(int **pipefd, int nb_pipes)
+void	free_pipefd(int **pipefd, int nb_pipes)
 {
 	int	i;
 
@@ -69,4 +69,14 @@ void free_pipefd(int **pipefd, int nb_pipes)
 		i++;
 	}
 	free(pipefd);
+}
+
+int	count_str(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

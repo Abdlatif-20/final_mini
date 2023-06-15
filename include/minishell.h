@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:31:03 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 22:19:37 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 02:25:17 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,7 @@ int			my_exit(t_cmd *commands);
 
 // file utils1.c
 char		*get_value(t_export **head_ex, char *var);
+int			count_str(char **str);
 
 int			execute_commande(t_cmd *commands, t_info *info,
 				t_list *shell, t_var *var);
@@ -241,7 +242,7 @@ int			is_builin(t_cmd *commands);
 // utils_error.c
 void		print_error_cmd(char *command);
 void		print_error_file(char *command);
-int		print_error_fork(void);
+int			print_error_fork(void);
 
 /*--------------- libft ------------------------*/
 int			ft_isalpha(int c);
@@ -297,9 +298,9 @@ void		ft_join_args(t_list **args);
 
 /*------------------ expand -------------------------------*/
 
-void		ft_expand(t_list **list, t_env *env);
-int			handel_var(t_token **token, t_var *var, t_env *env);
-int			ft_expender_help(t_token **token, t_env *env, t_var *var);
+int			ft_expand(t_list **list, t_env *env);
+int			handel_var(t_token **token, t_var *var, t_env *env, int *flag);
+int			ft_expender_help(t_token **token, t_env *env, t_var *var, int *flag);
 void		hold_string(t_var *var, t_token *token);
 int			help_expand(t_var *var, t_token *token);
 int			help_expand1(t_var *var, t_token *token);
@@ -338,7 +339,6 @@ int			allocate_commande(t_list *args);
 int			check_dquotes(char *str);
 char		**get_command1(t_list *args, t_var **var);
 /*------------------------------------------------------------------------*/
-
 
 // utils
 // int		count_words_me(char *str, char c);
@@ -415,4 +415,10 @@ void		print_list11(t_list *cmd);
 void		add_export_ignored(t_info *info);
 void		add_env_ignored(t_info *info);
 
+// help_exit.c
+void		case1(t_cmd *commands, int i);
+void		default_case(void);
+int			case2(void);
+void		case_positive(long long status_code);
+void		case_negative(long long status_code);
 #endif

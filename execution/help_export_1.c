@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:01:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 21:22:18 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 02:02:49 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	ft_lst_add_back_export(t_export **lst, t_export *new)
 	if (*lst == NULL)
 	{
 		*lst = new;
-		// free(new->export_value);
-		// free(new->export_var);
 		return ;
 	}
 	else
@@ -51,8 +49,6 @@ void	ft_lst_add_back_export(t_export **lst, t_export *new)
 		(*lst)->next = new;
 		(*lst) = tmp;
 	}
-	// free(new->export_value);
-	// free(new->export_var);
 }
 
 void	add_export_element(char *export_var, char *export_value,
@@ -63,7 +59,6 @@ void	add_export_element(char *export_var, char *export_value,
 	new = ft_lst_new_export(export_var, export_value, 0);
 	ft_lst_add_back_export(head_ex, new);
 }
-
 
 void	print_list_export(t_info *info)
 {
@@ -93,30 +88,28 @@ void	print_list_export(t_info *info)
 
 void	sort_export_list(t_export **head_ex)
 {
-	t_export	*tmp;
-	t_export	*tmp2;
-	char		*tmp_name;
+	t_export	*prev;
+	t_export	*suivant;
+	char		*tmp_var;
 	char		*tmp_value;
 
-	tmp = *head_ex;
-	if (!head_ex || !*head_ex || tmp)
-		return ;
-	while (tmp)
+	prev = *head_ex;
+	while (prev)
 	{
-		tmp2 = tmp->next;
-		while (tmp2)
+		suivant = prev->next;
+		while (suivant)
 		{
-			if (ft_strcmp(tmp->export_var, tmp2->export_var) > 0)
+			if (ft_strcmp(prev->export_var, suivant->export_var) > 0)
 			{
-				tmp_name = tmp->export_var;
-				tmp_value = tmp->export_value;
-				tmp->export_var = tmp2->export_var;
-				tmp->export_value = tmp2->export_value;
-				tmp2->export_var = tmp_name;
-				tmp2->export_value = tmp_value;
+				tmp_var = prev->export_var;
+				tmp_value = prev->export_value;
+				prev->export_var = suivant->export_var;
+				prev->export_value = suivant->export_value;
+				suivant->export_var = tmp_var;
+				suivant->export_value = tmp_value;
 			}
-			tmp2 = tmp2->next;
+			suivant = suivant->next;
 		}
-		tmp = tmp->next;
+		prev = prev->next;
 	}
 }

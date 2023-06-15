@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:29:24 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 22:20:24 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 02:26:32 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	merge_dup_pipe_herdoc(int **pipefd, int i,
 	}
 }
 
-
-void	execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes, t_var *var)
+void	execute_commands_with_pipe(t_list *cmd, t_info *info,
+	int nb_pipes, t_var *var)
 {
 	int	**pipefd;
 

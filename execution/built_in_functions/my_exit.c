@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:48:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 00:01:12 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 01:47:23 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,54 +47,14 @@ int	check_white_spaces(char *split)
 	return (1);
 }
 
-void	case1(t_cmd *commands, int i)
-{
-	ft_putstr_fd("exit\n", 2);
-	printf("minishell: exit: %s :numeric argument required\n",
-		commands->cmds[i]);
-	g_shell.exit_status = 255;
-	exit(g_shell.exit_status);
-}
-
-int	case2(void)
-{
-	printf("exit\n");
-	printf("minishell: exit: too many arguments\n");
-	g_shell.exit_status = 1;
-	return (g_shell.exit_status);
-}
-
-void	case_positive(long long status_code)
-{
-	if ((status_code >= 0 && status_code <= 255))
-		g_shell.exit_status = status_code;
-	else if (status_code > 255)
-		g_shell.exit_status = status_code % 256;
-	printf("exit\n");
-	g_shell.exit_status = status_code;
-	exit(g_shell.exit_status);
-}
-
-void	case_negative(long long status_code)
-{
-	printf("exit\n");
-	g_shell.exit_status = status_code + 256;
-	exit(g_shell.exit_status);
-}
-
-void	default_case()
-{
-	printf("exit\n");
-	g_shell.exit_status = 127;
-	exit(g_shell.exit_status);
-}
-
 void	special_case(t_cmd *commands, int i, int flag)
 {
 	(void)flag;
-	printf("exit\n");
-	printf("minishell: exit: %s: numeric argument required\n", commands->cmds[i]);
-	if (!check_is_numeric(commands->cmds[i]) && (!check_is_numeric(commands->cmds[i + 1])))
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(commands->cmds[i], 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
+	if (!check_is_numeric(commands->cmds[i])
+		&& (!check_is_numeric(commands->cmds[i + 1])))
 		g_shell.exit_status = 255;
 	else
 		g_shell.exit_status = 1;

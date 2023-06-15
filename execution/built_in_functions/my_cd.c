@@ -6,25 +6,11 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:51:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/13 23:58:35 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 01:39:42 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	*get_path_home(t_export **head_x)
-{
-	t_export	*temp;
-
-	temp = *head_x;
-	while (temp)
-	{
-		if (!ft_strcmp(temp->export_var, "HOME"))
-			return (ft_strdup(temp->export_value));
-		temp = temp->next;
-	}
-	return (NULL);
-}
 
 int	case_of_just_cd(t_info *info, char *path_home)
 {
@@ -37,7 +23,7 @@ int	case_of_just_cd(t_info *info, char *path_home)
 	}
 	else
 	{
-		g_shell.exit_status = 1,
+		g_shell.exit_status = 1;
 		printf("minishell$: cd: %s: No such file or directory\n", path_home);
 		return (free(path_home), 0);
 	}
@@ -54,7 +40,7 @@ int	case_of_cd_tilda(t_info *info, char *path_home)
 	}
 	else
 	{
-		g_shell.exit_status = 1,
+		g_shell.exit_status = 1;
 		printf("minishell$: cd: %s: No such file or directory\n", path_home);
 		return (free(path_home), 0);
 	}

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:44:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 00:04:02 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 01:51:54 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ int	case_of_tilda_in_path(t_info *info, char *path_tmp1)
 	else
 	{
 		g_shell.exit_status = 1;
-		printf("minishell$: cd: %s: No such file or directory\n", path_tmp1);
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(path_tmp1, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (free(path_tmp1), 0);
 	}
 }

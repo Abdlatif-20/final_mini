@@ -6,13 +6,13 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:27:02 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 19:05:07 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 00:19:13 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	handel_var(t_token **token, t_var *var, t_env *env)
+int	handel_var(t_token **token, t_var *var, t_env *env, int *flag)
 {
 	if ((*token)->value[0] == '$'
 		&& ft_isdigit((*token)->value[1]))
@@ -34,7 +34,7 @@ int	handel_var(t_token **token, t_var *var, t_env *env)
 		}
 	}
 	else
-		ft_expender_help(token, env, var);
+		ft_expender_help(token, env, var, flag);
 	return (0);
 }
 
@@ -70,7 +70,7 @@ int	get_var(t_token **token, t_env *env, t_var *var)
 	return (1);
 }
 
-int	ft_expender_help(t_token **token, t_env *env, t_var *var)
+int	ft_expender_help(t_token **token, t_env *env, t_var *var, int *flag)
 {
 	while (env)
 	{
@@ -89,6 +89,7 @@ int	ft_expender_help(t_token **token, t_env *env, t_var *var)
 	{
 		free((*token)->value);
 		(*token)->value = ft_strdup("");
+		*flag = 1;
 	}
-	return (0);
+	return (*flag);
 }

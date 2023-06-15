@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:25:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 00:06:08 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 01:53:05 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	concatenation_env(t_env **head_en, char *env_var, char *new_value)
 {
-   t_env	*tmp;
+	t_env	*tmp;
 
 	tmp = *head_en;
 	while (tmp)
@@ -33,7 +33,7 @@ int	help_env1(t_env **head_en, char *env_variable,
 		if (concatenate == 1)
 		{
 			concatenation_env(head_en, env_variable, env_value);
-			return (1) ;
+			return (1);
 		}
 		else
 			remove_env_element(head_en, env_variable);
@@ -74,7 +74,7 @@ void	add_env(t_env **head_en, char **split)
 	i = 1;
 	while (split[i])
 	{
-		if (split[i][0] == '\0')
+		if (split[i][0] == '\0' || check_if_valid_args(split[i]) == 0)
 		{
 			i++;
 			continue ;
