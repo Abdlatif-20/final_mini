@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:35:00 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 23:43:19 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:41:36 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ char	*get_commande(char *command)
 	}
 	return (str);
 }
+
 char	**get_cmd(char *command, char **split_paths)
 {
-	if (!command || command[0] == '/' || (command[0] == '.' && command[1] == '/'))
+	if (!command || command[0] == '/'
+		|| (command[0] == '.' && command[1] == '/'))
 	{
-		if (access(command, F_OK | X_OK) != 0)
+		if (access(command, F_OK | X_OK) != 0 && command[0] != '.')
 		{
-			// puts("here");
+			printf("minishell: %s no such file or directory\n", command);
 			exit(0);
 		}
 		split_paths = malloc(sizeof(char *) * 2);
@@ -56,7 +58,8 @@ char	**get_cmd(char *command, char **split_paths)
 	}
 	return (split_paths);
 }
-char  **join_path_command(char *command, t_export **head_ex)
+
+char	**join_path_command(char *command, t_export **head_ex)
 {
 	char	*path;
 	char	**split_paths;
@@ -99,33 +102,6 @@ int	is_builin(t_cmd *commands)
 	else if (!ft_strcmp(commands->main_cmd, "exit"))
 		return (1);
 	return (0);
-}
-// free split_paths
-void free_split_paths(char **split_paths)
-{
-	int i;
-
-	i = 0;
-	while (split_paths[i])
-	{
-		if (split_paths[i])
-			free(split_paths[i]);
-		i++;
-	}
-	free(split_paths);
-	split_paths = NULL;
-}
-void free_split(char **split)
-{
-	int i;
-
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
 }
 
 char	*check_if_command_found(char *command, t_export **head_ex)

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals_and_status_code.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/15 15:44:25 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/15 15:44:30 by ahaloui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
-t_shell g_shell;
+t_shell	g_shell;
 
 void	signal_handler(int sig)
 {
@@ -15,13 +27,11 @@ void	signal_handler(int sig)
 		g_shell.signel_cat = 0;
 }
 
-
 void	handle_specific_signal(int signal_number)
 {
 	if (signal_number == SIGINT)
 		printf("\n");
 }
-
 
 void	handle_exit_status(int status)
 {

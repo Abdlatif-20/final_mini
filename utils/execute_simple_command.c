@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:29:54 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 02:21:32 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 19:46:11 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	if_herdoc1(t_cmd *commands)
 		dup2(commands->fd_out, 1);
 		close(commands->fd_out);
 	}
-	unlink(commands->file_name);
 	close(commands->fd_in);
 }
 
@@ -71,6 +70,28 @@ void	if_input_output_file(t_cmd *commands)
 	}
 }
 
+// int	ft_strchar(char *string, char c)
+// {
+// 	if (c == *string)
+// 		return (0);
+// 	else
+// 		return (1);
+// }
+
+// void	execlhal(char *executable, t_info *info)
+// {
+// 	char	**strs;
+// 	char	**envp;
+
+// 	executable = ft_strjoin("bash ", executable);
+// 	strs = ft_split(executable, ' ');
+// 	free(executable);
+// 	execve("/bin/bash", strs, create_env(info));
+// 	// free_all(strs);
+// 	// ft_free_envp_array(envp);
+// 	exit(127);
+// }
+
 void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 {
 	char		*path;
@@ -82,6 +103,7 @@ void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 		if_herdoc1(commands);
 	else
 		if_input_output_file(commands);
+		
 	if (!ft_strcmp(commands->main_cmd, "minishell")
 		|| !ft_strcmp(commands->main_cmd, "./minishell"))
 	{
@@ -91,6 +113,8 @@ void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 	}
 	else
 		path = check_if_command_found(commands->main_cmd, &info->head_ex);
+	// if (ft_strchar(commands->main_cmd, '/'))
+	// 	execlhal(commands->main_cmd, info);
 	if (execve(path, commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(commands->main_cmd);
@@ -106,8 +130,8 @@ int	execute_commande(t_cmd *commands, t_info *info,
 
 	if (is_builin(commands) == 1)
 		return (builtin_execution(shell, info, 1, var), 0);
-	else if (commands->main_cmd)
-	{
+	// else if (commands->main_cmd)
+	// {
 		pid = fork();
 		if (pid == -1)
 			print_error_fork();
@@ -123,6 +147,6 @@ int	execute_commande(t_cmd *commands, t_info *info,
 			display_status_code(g_shell.exit_status);
 			signal(SIGINT, signal_handler);
 		}
-	}
+	// }
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:37:27 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 23:14:02 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:32:37 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_error_file(char *command)
 
 int	print_error_fork(void)
 {
-	perror("fork");
+	ft_putstr_fd("fork ", 2);
 	g_shell.exit_status = 1;
-	return -1;
+	return (-1);
 }

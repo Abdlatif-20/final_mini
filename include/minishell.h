@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:31:03 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 02:25:17 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:40:29 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -414,6 +414,7 @@ void		print_list11(t_list *cmd);
 // utils8.c
 void		add_export_ignored(t_info *info);
 void		add_env_ignored(t_info *info);
+void		free_split_paths(char **split_paths);
 
 // help_exit.c
 void		case1(t_cmd *commands, int i);

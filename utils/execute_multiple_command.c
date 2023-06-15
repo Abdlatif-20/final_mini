@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 01:29:24 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 02:26:32 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 19:46:30 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	execute_commands_with_pipe(t_list *cmd, t_info *info,
 	{
 		info->pid = fork();
 		if (info->pid == -1)
-			if(print_error_fork() == -1)
+			if (print_error_fork() == -1)
 				return ;
 		if (info->pid == 0)
 			execute3(info, cmd, pipefd, var);
@@ -93,7 +93,6 @@ void	execute_commands_with_pipe(t_list *cmd, t_info *info,
 		cmd = cmd->next;
 		if (cmd)
 			info->commands = cmd->data;
-		// unlink(info->commands->file_name);
 	}
 	close_pipe(pipefd, var->nb_pipes);
 	wait_for_child(var->nb_pipes);
