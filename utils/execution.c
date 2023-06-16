@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:45:00 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 18:42:28 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 23:06:48 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	builint_simple(t_cmd *commands, t_info *info)
 	else if (!ft_strcmp(commands->main_cmd, "exit"))
 		my_exit(commands);
 	else if (info->head_en && info->head_ex
-		&& !ft_strcmp(commands->main_cmd, "unset"))
+		&& !ft_strcmp(commands->main_cmd, "unset") && commands->cmds[1])
 		my_unset(commands, info);
 }
 
@@ -48,7 +48,11 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 	nb = count_str(commands->cmds);
 	if ((info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1)
 		|| (var->is_empty_str && nb == 2))
+		{
+		// printf("%s____\n", commands->main_cmd);
+		// puts("_____________________________________________________________");
 		print_list_export(info);
+		}
 	else if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
 	{
 		if (info->head_en && check_export(commands->cmds, var) == 0)

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:08:36 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 18:33:36 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 23:14:40 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	if (check_quotes(var->input))
 	{
 		free(var->input);
-		printf("minishell: quotes not closed\n");
+		ft_putstr_fd("minishell: quotes not closed\n", 2);
 		return (2);
 	}
 	get_token(var->input, args);
@@ -58,7 +58,7 @@ int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)
 
 void	break_while(t_list *args, t_list *cmd, t_var *var)
 {
-	printf(" exit\n");
+	ft_putstr_fd("exit\n", 2);
 	free_token_list(&args);
 	free_list_cmd(&cmd);
 	free(var->input);

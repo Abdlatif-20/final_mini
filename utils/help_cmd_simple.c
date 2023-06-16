@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:35:00 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 18:41:36 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 01:44:04 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ char	*get_commande(char *command)
 
 char	**get_cmd(char *command, char **split_paths)
 {
-	if (!command || command[0] == '/'
-		|| (command[0] == '.' && command[1] == '/'))
+	if ((command && command[0] == '/')
+		|| (command && command[0] == '.' && command[1] == '/'))
 	{
-		if (access(command, F_OK | X_OK) != 0 && command[0] != '.')
+		if (command && access(command, F_OK | X_OK) != 0 && command[0] != '.')
 		{
 			printf("minishell: %s no such file or directory\n", command);
 			exit(0);
@@ -77,7 +77,7 @@ char	**join_path_command(char *command, t_export **head_ex)
 	while (split_paths[++i])
 	{
 		split_paths[i] = ft_strjoin(split_paths[i], "/");
-		if (command[0] == '/')
+		if (command && command[0] == '/')
 			split_paths[i] = ft_strjoin(split_paths[i], get_commande(command));
 		else
 			split_paths[i] = ft_strjoin(split_paths[i], command);
