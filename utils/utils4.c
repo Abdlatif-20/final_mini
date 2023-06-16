@@ -6,11 +6,37 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:31:32 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 12:04:41 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 01:14:39 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	init_var(t_var *var)
+{
+	var->heredoc = 0;
+	var->fd_in = 0;
+	var->fd_out = 1;
+	var->file_name = NULL;
+}
+
+int	herdoc_count(t_list *args)
+{
+	t_token	*token;
+	int		count;
+
+	if (!args)
+		return (-1);
+	count = 0;
+	while (args)
+	{
+		token = args->data;
+		if (token->key == HEREDOC)
+			count++;
+		args = args->next;
+	}
+	return (count);
+}
 
 void	var_init(t_var *var, char *input)
 {

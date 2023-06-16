@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 01:31:03 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 15:40:29 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/15 19:59:25 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/16 01:15:08 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,10 @@ typedef struct s_export
 
 typedef struct t_var
 {
-
+	char	**heredoc_names;
 	int		i;
 	int		j;
 	int		flag;
-	int		flag_export;
 	int		fd_in;
 	int		fd_out;
 	int		heredoc;
@@ -132,7 +131,6 @@ typedef struct t_var
 	char	*str;
 	char	**cmd;
 	int		is_empty_str;
-	int		is_empty_str_export;
 	char	*string;
 	int		start;
 	int		end;
@@ -144,8 +142,8 @@ typedef struct t_var
 	char	*temp;
 	char	*input;
 	char	*buffer;
-	int 	**pipefd;
-	int 	nb_pipes;
+	int		**pipefd;
+	int		nb_pipes;
 }				t_var;
 
 typedef struct s_info
@@ -162,6 +160,7 @@ typedef struct s_info
 	t_var		*var;
 }			t_info;
 
+void 		unlink_heredoc(char **file_names);
 //------------------------------- main -----------------------------------//
 
 void		init_main(t_list **args, t_list **cmd, t_info *info, t_var *var);
@@ -182,11 +181,6 @@ int			my_pwd(t_info *info);
 
 // file my_cd.c
 char		*get_path_home(t_export **head_ex);
-char		*get_old_path(t_export **head_ex);
-char		*get_path(t_export **head_ex);
-void		set_value(t_export **head_ex, char *export_var, char *new_value);
-void		init_pwd(t_export **head_ex);
-int			get_pos(char *str, char c);
 int			my_cd(t_cmd *commands, t_info *info);
 
 // file my_export.c
@@ -244,7 +238,9 @@ void		print_error_cmd(char *command);
 void		print_error_file(char *command);
 int			print_error_fork(void);
 
-/*--------------- libft ------------------------*/
+/*-------------- libft ------------------------*/
+void		ft_putchar_fd(char c, int fd);
+void		ft_nbr(int nu, int fd);
 int			ft_isalpha(int c);
 int			ft_isdigit(int c );
 int			ft_isalnum(int c);
@@ -274,12 +270,13 @@ void		ft_lstclear(t_list **lst);
 void		ft_heredoc(t_list *args, int *fd, char **file, t_env *env);
 void		heredoc_helper(t_list **args, char *name, int *fd, t_env *env);
 int			heredoc_help(char **input, t_list **args, t_env *env, char *name);
+int			herdoc_count(t_list *args);
 int			get_0(void);
 void		handel(int SIG);
 /*--------------------------------------------------------------------*/
 /*---------------------- token --------------------*/
 void		get_token(char *input, t_list **token);
-void		fill_white_space(char *input, t_list **token, t_var **var);
+void		fill_white_space(char *input, t_list **token, t_var *var);
 void		get_flags(char *input, t_list **token, t_var *var);
 void		check_quote(char *input, t_list **token, t_var *var, int len);
 void		check_word(char *input, t_list **token, t_var *var, int len);
@@ -336,10 +333,10 @@ void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
 void		command_table(t_list *args, t_list **cmd, t_env *env, t_var *var);
 void		increment_args(t_list **args, t_token **token);
 int			allocate_commande(t_list *args);
+void		init_var(t_var *var);
 int			check_dquotes(char *str);
-char		**get_command1(t_list *args, t_var **var);
+char		**get_command1(t_list *args, t_var *var);
 /*------------------------------------------------------------------------*/
-
 // utils
 // int		count_words_me(char *str, char c);
 void		choose_command(t_list *shell, t_info *info, t_var *var);
@@ -391,7 +388,7 @@ void		print_list_env(t_info *info);
 char		**create_env(t_info *info);
 void		execute1(t_list *cmd, t_info *info, t_var *var);
 void		execute2(t_info *info, t_var *var);
-void		execute3(t_info *info, t_list *cmd,int **pipefd, t_var *var);
+void		execute3(t_info *info, t_list *cmd, int **pipefd, t_var *var);
 void		if_herdoc(t_cmd *commands);
 
 //utils7.c
@@ -404,11 +401,7 @@ int			get_nbr_node(t_list *shell);
 // execute_multi_command.c
 void		merge_dup_pipe_herdoc(int **pipefd,
 				int i, int nb_pipes, t_cmd *commands);
-void		reserve_list(t_info *info);
 
-// void		free_export(t_export **head_ex);
-// void		free_env(t_env **head_en);
-// void		free_pipefd(int **pipefd, int nb_pipes);
 void		print_list11(t_list *cmd);
 
 // utils8.c

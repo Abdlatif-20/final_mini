@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 05:45:00 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 23:06:48 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/16 01:51:36 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/16 01:58:35 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	dup_for_builin(t_cmd *commands)
 	}
 }
 
-void	builint_simple(t_cmd *commands, t_info *info)
+int	builint_simple(t_cmd *commands, t_info *info, t_var *var)
 {
 	if (!ft_strcmp(commands->main_cmd, "echo"))
 		my_echo(commands);
@@ -38,7 +38,13 @@ void	builint_simple(t_cmd *commands, t_info *info)
 		my_exit(commands);
 	else if (info->head_en && info->head_ex
 		&& !ft_strcmp(commands->main_cmd, "unset") && commands->cmds[1])
-		my_unset(commands, info);
+	{
+		if (var->is_empty_str)
+			return (505);
+		else
+			my_unset(commands, info);
+	}
+	return (0);
 }
 
 void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
@@ -48,11 +54,7 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 	nb = count_str(commands->cmds);
 	if ((info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1)
 		|| (var->is_empty_str && nb == 2))
-		{
-		// printf("%s____\n", commands->main_cmd);
-		// puts("_____________________________________________________________");
 		print_list_export(info);
-		}
 	else if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
 	{
 		if (info->head_en && check_export(commands->cmds, var) == 0)
@@ -79,23 +81,10 @@ void	builtin_execution(t_list *shell, t_info *info, int flag, t_var *var)
 		return ;
 	else if (is_builin(commands))
 	{
-		builint_simple(commands, info);
-		builint_complex(commands, info, var);
-	}
-}
-
-void unlink_heredoc(t_list *cmd)
-{
-	if (!cmd)
-		return ;
-	t_list *tmp = cmd;
-	t_cmd *token = cmd->data;
-	while (tmp)
-	{
-		token = tmp->data;
-		if (token->heredoc)
-			unlink(token->file_name);
-		tmp = tmp->next;
+		if (builint_simple(commands, info, var) == 505)
+			return ;
+		else
+			builint_complex(commands, info, var);
 	}
 }
 
@@ -122,7 +111,6 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 	}
 	else if (nb_node > 1)
 		execute_commands_with_pipe(shell, info, --nb_cmd, var);
-	unlink_heredoc(shell);	
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);
 	close(info->in);

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/14 19:02:35 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/14 23:10:24 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	initiali_var(t_var ***var, t_list *args)
+void	initiali_var(t_var *var, t_list *args)
 {
-	(**var)->i = 0;
-	(**var)->flag = 0;
-	(**var)->number_of_commands = allocate_commande(args);
+	var->i = 0;
+	var->flag = 0;
+	var->number_of_commands = allocate_commande(args);
 }
 
 void	skip_spaces(t_list **args, t_token *token)
@@ -46,40 +46,39 @@ void	check_red(t_list **args, t_token *token, t_var *var)
 		var->flag = 0;
 }
 
-void	commands_helper(t_list **args, t_token *token, t_var ***var)
+void	commands_helper(t_list **args, t_token *token, t_var *var)
 {
 	if ((*args) && (token->key == WORD || token->key == FLAG
 			|| token->key == SQUATES || token->key == DQUATES
 			|| token->key == VAR))
 	{
-		if (!(**var)->flag)
-			(**var)->cmd[(**var)->i++] = ft_strdup(token->value);
-		// printf("\n[%d]", (**var)->is_empty_str
+		if (!var->flag)
+			var->cmd[var->i++] = ft_strdup(token->value);
 		(*args) = (*args)->next;
 		if (*args)
 			token = (*args)->data;
-		(**var)->flag = 0;
+		var->flag = 0;
 	}
-	(**var)->cmd[(**var)->i] = NULL;
+	var->cmd[var->i] = NULL;
 }
 
-char	**get_command1(t_list *args, t_var **var)
+char	**get_command1(t_list *args, t_var *var)
 {
 	t_token	*token;
 
-	initiali_var(&var, args);
-	(*var)->cmd = (char **)malloc(sizeof(char *)
-			* ((*var)->number_of_commands + 1));
-	if (!(*var)->cmd)
+	initiali_var(var, args);
+	var->cmd = (char **)malloc(sizeof(char *)
+			* (var->number_of_commands + 1));
+	if (!var->cmd)
 		return (NULL);
 	while (args)
 	{
 		token = args->data;
-		check_red(&args, token, *var);
+		check_red(&args, token, var);
 		if (token->key == PIPE)
 			break ;
 		skip_spaces(&args, token);
-		commands_helper(&args, token, &var);
+		commands_helper(&args, token, var);
 	}
-	return ((*var)->cmd);
+	return (var->cmd);
 }
