@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:50:59 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 00:20:46 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 01:11:11 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	init_variable1(t_env **env_tmp, t_env *env, t_var *var)
 int	ft_expand(t_list **list, t_env *env)
 {
 	t_var		var;
-	int 		flag;
+	int			flag;
 
 	flag = 0;
 	var.tmp = *list;

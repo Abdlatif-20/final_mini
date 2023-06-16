@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 05:45:00 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 18:42:28 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/15 22:55:12 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,6 @@ void	builtin_execution(t_list *shell, t_info *info, int flag, t_var *var)
 	}
 }
 
-void unlink_heredoc(t_list *cmd)
-{
-	if (!cmd)
-		return ;
-	t_list *tmp = cmd;
-	t_cmd *token = cmd->data;
-	while (tmp)
-	{
-		token = tmp->data;
-		if (token->heredoc)
-			unlink(token->file_name);
-		tmp = tmp->next;
-	}
-}
-
 void	choose_command(t_list *shell, t_info *info, t_var *var)
 {
 	t_cmd	*commands;
@@ -118,7 +103,6 @@ void	choose_command(t_list *shell, t_info *info, t_var *var)
 	}
 	else if (nb_node > 1)
 		execute_commands_with_pipe(shell, info, --nb_cmd, var);
-	unlink_heredoc(shell);	
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);
 	close(info->in);

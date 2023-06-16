@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils6.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:43:47 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 18:48:44 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 01:37:10 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**create_env(t_info *info)
 void	if_herdoc(t_cmd *commands)
 {
 	commands->fd_in = open(commands->file_name, O_RDONLY);
-	if (commands->fd_in == 0)
+	if (commands->fd_in == -1)
 	{
 		perror("open");
 		g_shell.exit_status = 1;
@@ -59,7 +59,6 @@ void	if_herdoc(t_cmd *commands)
 		exit(g_shell.exit_status);
 	}
 	close(commands->fd_in);
-	unlink(commands->file_name);
 }
 
 void	execute1(t_list *cmd, t_info *info, t_var *var)

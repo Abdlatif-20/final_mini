@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:55:34 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 18:20:48 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 23:58:48 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	get_flags(char *input, t_list **token, t_var *var)
 void	check_quote(char *input, t_list **token, t_var *var, int len)
 {
 	if (input[var->i] && ft_whitespace(input[var->i]))
-		fill_white_space(input, token, &var);
+		fill_white_space(input, token, var);
 	else if (input[var->i] && input[var->i] == '\"')
 	{
 		len = 1;

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:03:36 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/13 22:05:56 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 00:34:55 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ void	fill_token(t_list **args, int token, char *word, int is_heredoc)
 	}
 }
 
-void	fill_white_space(char *input, t_list **token, t_var **var)
+void	fill_white_space(char *input, t_list **token, t_var *var)
 {
 	int	len;
 
 	len = 0;
-	while (input[(*var)->i + len] && ft_whitespace(input[(*var)->i + len]))
+	while (input[var->i + len] && ft_whitespace(input[var->i + len]))
 		len++;
 	if (len > 0)
-		fill_token(token, W_SPACE, ft_substr(input, (*var)->i, len), 0);
-	(*var)->i += len;
+		fill_token(token, W_SPACE, ft_substr(input, var->i, len), 0);
+	var->i += len;
 }

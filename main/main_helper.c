@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:08:36 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 18:33:36 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 01:07:20 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void unlink_heredoc(char **file_names)
+{
+	int i;
+
+	i = 0;
+	while (file_names[i])
+	{
+		printf("unlinking %s\n", file_names[i]);
+		unlink(file_names[i]);
+		i++;
+	}
+}
 
 void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 {
@@ -21,6 +34,8 @@ void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	// print_list11(*cmd);
 	if ((*cmd) && (*cmd)->data)
 		choose_command((*cmd), info, var);
+	unlink_heredoc(var->heredoc_names);
+	free_array(var->heredoc_names);
 	free_token_list(args);
 	free_list_cmd(cmd);
 }

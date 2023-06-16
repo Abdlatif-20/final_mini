@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
+#    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 01:29:13 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/15 01:45:56 by ahaloui          ###   ########.fr        #
+#    Updated: 2023/06/16 01:34:39 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 #  -Wno-misleading-indentation
 # -fsanitize=address
 
