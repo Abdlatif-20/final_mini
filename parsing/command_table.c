@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 01:34:58 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 04:03:46 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	handel_redere(t_list **args, t_var *var, t_token **token, t_env *env)
 	{
 		var->heredoc = 1;
 		ft_heredoc((*args), &var->fd_in, &var->file_name, env);
+		var->file_name_herdoc = var->file_name;
 		increment_args(args, token);
 	}
 }
@@ -62,9 +63,15 @@ void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
 	i = 0;
 	var->tmp = args;
 	var->heredoc_names = NULL;
-	var->heredoc_names = malloc((herdoc_count(args) + 1) * sizeof(char *));
-	if (!var->heredoc_names)
-		return ;
+	var->file_name_herdoc = NULL;
+	var->len = herdoc_count(args);
+	if (var->len > 0)
+	{
+		var->heredoc_names = malloc((herdoc_count(args) + 1) * sizeof(char *));
+		if (!var->heredoc_names)
+			return ;
+		var->heredoc_names[herdoc_count(args)] = NULL;
+	}
 	while (args)
 	{
 		init_var(var);
@@ -75,7 +82,8 @@ void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
 					|| token->key == RED_APP || token->key == HEREDOC))
 			{
 				handel_redere(&args, var, &token, env);
-				var->heredoc_names[i++] = ft_strdup(var->file_name);
+				if (var->heredoc && var->len > 0)
+					var->heredoc_names[i++] = ft_strdup(var->file_name_herdoc);
 			}
 			else
 				increment_args(&args, &token);
@@ -84,5 +92,4 @@ void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
 		if (args)
 			skip_pipe(&args, &(*var).tmp, token);
 	}
-	var->heredoc_names[i] = NULL;
 }

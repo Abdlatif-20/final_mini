@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_cmd_simple.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 01:51:45 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 02:11:39 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/16 02:20:34 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/16 02:29:37 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_commande(char *command)
 char	**get_cmd(char *command, char **split_paths)
 {
 	if ((command && command[0] == '/')
-		|| (command[0] == '.' && command[1] == '/'))
+		|| (command && command[0] == '.' && command[1] == '/'))
 	{
 		if (access(command, F_OK | X_OK) != 0)
 		{
