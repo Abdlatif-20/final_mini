@@ -5,21 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 15:08:36 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 01:07:20 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/16 01:51:18 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/16 03:56:50 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void unlink_heredoc(char **file_names)
+void	unlink_heredoc(char **file_names, int size)
 {
-	int i;
+	int	i;
 
+	if (!file_names)
+		return ;
 	i = 0;
-	while (file_names[i])
+	while (i < size)
 	{
-		printf("unlinking %s\n", file_names[i]);
 		unlink(file_names[i]);
 		i++;
 	}
@@ -34,8 +35,8 @@ void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	// print_list11(*cmd);
 	if ((*cmd) && (*cmd)->data)
 		choose_command((*cmd), info, var);
-	unlink_heredoc(var->heredoc_names);
-	free_array(var->heredoc_names);
+	unlink_heredoc(var->heredoc_names, var->len);
+	free_heredocs(var->heredoc_names, var->len);
 	free_token_list(args);
 	free_list_cmd(cmd);
 }
@@ -56,7 +57,7 @@ int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	if (check_quotes(var->input))
 	{
 		free(var->input);
-		printf("minishell: quotes not closed\n");
+		ft_putstr_fd("minishell: quotes not closed\n", 2);
 		return (2);
 	}
 	get_token(var->input, args);
@@ -73,7 +74,7 @@ int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)
 
 void	break_while(t_list *args, t_list *cmd, t_var *var)
 {
-	printf(" exit\n");
+	ft_putstr_fd("exit\n", 2);
 	free_token_list(&args);
 	free_list_cmd(&cmd);
 	free(var->input);

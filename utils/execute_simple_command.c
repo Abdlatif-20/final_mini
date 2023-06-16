@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 01:29:54 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 01:37:41 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/16 01:51:53 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/16 01:51:56 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	if_input_output_file(t_cmd *commands)
 	{
 		if (commands->fd_out == 101)
 		{
-			printf ("bash: outfile: Permission denie\n");
+			ft_putstr_fd("bash: outfile: Permission denie\n", 2);
 			g_shell.exit_status = 1;
 			exit(g_shell.exit_status);
 		}
@@ -128,10 +128,16 @@ int	execute_commande(t_cmd *commands, t_info *info,
 {
 	pid_t	pid;
 
+	if (commands->fd_in == -1)
+	{
+		print_error_file(commands->file_name);
+		g_shell.exit_status = 1;
+		return (0);
+	}
 	if (is_builin(commands) == 1)
 		return (builtin_execution(shell, info, 1, var), 0);
-	// else if (commands->main_cmd)
-	// {
+	else if (commands->main_cmd)
+	{
 		pid = fork();
 		if (pid == -1)
 			print_error_fork();
@@ -147,6 +153,6 @@ int	execute_commande(t_cmd *commands, t_info *info,
 			display_status_code(g_shell.exit_status);
 			signal(SIGINT, signal_handler);
 		}
-	// }
+	}
 	return (0);
 }

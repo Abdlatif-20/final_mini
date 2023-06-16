@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:59:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 02:11:13 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 03:58:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_cmd
 	char		*main_cmd;
 	char		**cmds;
 	int			fd_in;
+	int			fd_in_flag;
 	int			fd_out;
 	char		*file_name;
 	int			heredoc;
@@ -120,6 +121,7 @@ typedef struct s_export
 typedef struct t_var
 {
 	char	**heredoc_names;
+	int		len;
 	int		i;
 	int		j;
 	int		flag;
@@ -128,7 +130,6 @@ typedef struct t_var
 	int		heredoc;
 	char	*file_name;
 	char	*file_name_herdoc;
-	int		len;
 	char	*str;
 	char	**cmd;
 	int		is_empty_str;
@@ -161,7 +162,7 @@ typedef struct s_info
 	t_var		*var;
 }			t_info;
 
-void 		unlink_heredoc(char **file_names);
+void	unlink_heredoc(char **file_names, int size);
 //------------------------------- main -----------------------------------//
 
 void		init_main(t_list **args, t_list **cmd, t_info *info, t_var *var);
@@ -320,6 +321,7 @@ void		ft_remove_node(t_list **head, t_list *node);
 void		free_export(t_export **head_ex);
 void		free_env(t_env **head_en);
 void		free_pipefd(int **pipefd, int nb_pipes);
+void		free_heredocs(char **array, int size);
 
 /*---------------------------------------------*/
 

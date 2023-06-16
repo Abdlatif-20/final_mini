@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 13:35:00 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 02:16:30 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/16 02:20:34 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/16 02:29:37 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,18 @@ char	*get_commande(char *command)
 
 char	**get_cmd(char *command, char **split_paths)
 {
-	if (!command || command[0] == '/'
-		|| (command[0] == '.' && command[1] == '/'))
+	if ((command && command[0] == '/')
+		|| (command && command[0] == '.' && command[1] == '/'))
 	{
-		if (access(command, F_OK | X_OK) != 0 && command[0] != '.')
+		if (access(command, F_OK | X_OK) != 0)
 		{
-			printf("minishell: %s no such file or directory\n", command);
-			exit(0);
+			print_error_file(command);
+			exit(EXIT_FAILURE);
 		}
 		split_paths = malloc(sizeof(char *) * 2);
 		if (!split_paths)
 			return (NULL);
+		split_paths[1] = NULL;
 		split_paths[0] = ft_strdup(command);
 	}
 	return (split_paths);
@@ -77,7 +78,7 @@ char	**join_path_command(char *command, t_export **head_ex)
 	while (split_paths[++i])
 	{
 		split_paths[i] = ft_strjoin(split_paths[i], "/");
-		if (command[0] == '/')
+		if (command && command[0] == '/')
 			split_paths[i] = ft_strjoin(split_paths[i], get_commande(command));
 		else
 			split_paths[i] = ft_strjoin(split_paths[i], command);
