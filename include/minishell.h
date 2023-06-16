@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:59:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 01:15:08 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 02:23:54 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ int			is_builin(t_cmd *commands);
 void		print_error_cmd(char *command);
 void		print_error_file(char *command);
 int			print_error_fork(void);
+void		help_create_pipefd(t_var *var, int **pipefd, t_info *info);
 
 /*-------------- libft ------------------------*/
 void		ft_putchar_fd(char c, int fd);

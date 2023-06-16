@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:37:27 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 23:11:31 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 03:03:15 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,15 @@ int	print_error_fork(void)
 {
 	ft_putstr_fd("fork ", 2);
 	g_shell.exit_status = 1;
-	return (-1);
+	return (g_shell.exit_status);
+}
+
+void	help_create_pipefd(t_var *var, int **pipefd, t_info *info)
+{
+	info->i = 0;
+	while (info->i < var->nb_pipes)
+	{
+		create_pipe(pipefd[info->i]);
+		info->i++;
+	}
 }

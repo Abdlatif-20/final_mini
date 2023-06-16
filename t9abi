@@ -392,3 +392,8 @@ minishell: haha: command not found
 -> minishell$ < file >> outfile | grep hello
 minishell: file: No such file or directory ===> file gets created even if the command is not found
 signal(SIGINT, SIG_IGN) // segv);
+
+
+
+
+export > out | << end > out | cat out

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:53 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 01:51:56 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 02:34:26 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	if_herdoc1(t_cmd *commands)
 	{
 		if (commands->fd_out == 101)
 		{
-			printf ("bash: outfile: Permission denie\n");
+			ft_putstr_fd("bash: outfile: Permission denie\n", 2);
 			g_shell.exit_status = 1;
 			exit(g_shell.exit_status);
 		}
@@ -70,28 +70,6 @@ void	if_input_output_file(t_cmd *commands)
 	}
 }
 
-// int	ft_strchar(char *string, char c)
-// {
-// 	if (c == *string)
-// 		return (0);
-// 	else
-// 		return (1);
-// }
-
-// void	execlhal(char *executable, t_info *info)
-// {
-// 	char	**strs;
-// 	char	**envp;
-
-// 	executable = ft_strjoin("bash ", executable);
-// 	strs = ft_split(executable, ' ');
-// 	free(executable);
-// 	execve("/bin/bash", strs, create_env(info));
-// 	// free_all(strs);
-// 	// ft_free_envp_array(envp);
-// 	exit(127);
-// }
-
 void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 {
 	char		*path;
@@ -103,7 +81,6 @@ void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 		if_herdoc1(commands);
 	else
 		if_input_output_file(commands);
-		
 	if (!ft_strcmp(commands->main_cmd, "minishell")
 		|| !ft_strcmp(commands->main_cmd, "./minishell"))
 	{
@@ -113,8 +90,6 @@ void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 	}
 	else
 		path = check_if_command_found(commands->main_cmd, &info->head_ex);
-	// if (ft_strchar(commands->main_cmd, '/'))
-	// 	execlhal(commands->main_cmd, info);
 	if (execve(path, commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(commands->main_cmd);
@@ -123,19 +98,15 @@ void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 	}
 }
 
-int	execute_commande(t_cmd *commands, t_info *info,
-	t_list *shell, t_var *var)
+int	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 {
 	pid_t	pid;
 
 	if (commands->fd_in == -1)
-	{
-		print_error_file(commands->file_name);
-		g_shell.exit_status = 1;
-		return (0);
-	}
+		return (print_error_file(commands->file_name),
+			g_shell.exit_status = 1, EXIT_FAILURE);
 	if (is_builin(commands) == 1)
-		return (builtin_execution(shell, info, 1, var), 0);
+		return (builtin_execution(shell, info, 1, var), EXIT_SUCCESS);
 	else if (commands->main_cmd)
 	{
 		pid = fork();
@@ -143,10 +114,8 @@ int	execute_commande(t_cmd *commands, t_info *info,
 			print_error_fork();
 		signal(SIGINT, SIG_IGN);
 		if (pid == 0)
-		{
 			if (commands->fd_in != 404 && commands->fd_out != 404)
 				execute_child_process(commands, info, var);
-		}
 		if (pid != 0)
 		{
 			waitpid(pid, &g_shell.exit_status, 0);
@@ -154,5 +123,5 @@ int	execute_commande(t_cmd *commands, t_info *info,
 			signal(SIGINT, signal_handler);
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

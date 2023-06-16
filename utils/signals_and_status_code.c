@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:44:25 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 15:44:30 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 02:59:00 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	handle_exit_status(int status)
 {
 	if (WIFEXITED(status))
 		g_shell.exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_shell.exit_status = WTERMSIG(status) + 128;
 }
 
 void	display_status_code(int status)

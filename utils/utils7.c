@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:01:01 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 15:43:26 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 03:02:28 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	wait_for_child(int nb_pipes)
 	i = 0;
 	while (i < nb_pipes + 1)
 	{
-		wait(NULL);
+		waitpid(-1, &g_shell.exit_status, 0);
+		display_status_code(g_shell.exit_status);
 		i++;
 	}
 }
