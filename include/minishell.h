@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:59:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 01:15:08 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 02:11:13 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct t_var
 	int		fd_out;
 	int		heredoc;
 	char	*file_name;
+	char	*file_name_herdoc;
 	int		len;
 	char	*str;
 	char	**cmd;
