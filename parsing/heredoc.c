@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 03:21:58 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 00:05:13 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 	char	*name;
 
 	name = NULL;
-	if (g_shell.signel_hedoc)
-		return ;
+
 	if (((t_token *)args->data)->key == HEREDOC)
 	{
 		name = generate_name();

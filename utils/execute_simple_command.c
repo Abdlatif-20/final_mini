@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:53 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 02:34:26 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 23:46:58 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	if_herdoc1(t_cmd *commands)
 	{
 		if (commands->fd_out == 101)
 		{
-			ft_putstr_fd("bash: outfile: Permission denie\n", 2);
+			ft_putstr_fd("minishell: outfile: Permission denie\n", 2);
 			g_shell.exit_status = 1;
 			exit(g_shell.exit_status);
 		}
@@ -102,12 +102,13 @@ int	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 {
 	pid_t	pid;
 
+	g_shell.signel_cat = 1;
 	if (commands->fd_in == -1)
 		return (print_error_file(commands->file_name),
 			g_shell.exit_status = 1, EXIT_FAILURE);
 	if (is_builin(commands) == 1)
 		return (builtin_execution(shell, info, 1, var), EXIT_SUCCESS);
-	else if (commands->main_cmd)
+	if (commands->main_cmd)
 	{
 		pid = fork();
 		if (pid == -1)

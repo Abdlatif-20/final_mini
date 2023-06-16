@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:48:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 01:47:23 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 21:58:37 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	check_white_spaces(char *split)
 void	special_case(t_cmd *commands, int i, int flag)
 {
 	(void)flag;
+	ft_putstr_fd("exit\n", 2);
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(commands->cmds[i], 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
@@ -75,10 +76,10 @@ void	help_case(t_cmd *commands, int i, int flag, long long *status_code)
 	}
 	else if (check_is_numeric(commands->cmds[i])
 		&& check_is_numeric(commands->cmds[i + 1]))
-		case2();
+		case2(commands);
 	else if (check_is_numeric(commands->cmds[i])
 		&& !check_is_numeric(commands->cmds[i + 1]))
-		case2();
+		case2(commands);
 	else if ((!check_is_numeric(commands->cmds[i])
 			|| (*status_code == -1 && flag)))
 		special_case(commands, i, flag);
@@ -89,16 +90,19 @@ int	my_exit(t_cmd *commands)
 	int			i;
 	int			flag;
 	long long	status_code;
+	char		*str;
 
 	i = 1;
 	status_code = 0;
 	flag = 0;
-	if (check_white_spaces(commands->cmds[i]))
+	str = ft_strdup(commands->cmds[i]);
+	if (check_white_spaces(str))
 		case1(commands, i);
-	commands->cmds[i] = skip_whitespace(commands->cmds[i]);
-	if (commands->cmds[i])
+	free(str);
+	str = skip_whitespace(str);
+	if (str)
 		help_case(commands, i, flag, &status_code);
 	else
 		default_case();
-	return (free(commands->cmds[i]), 0);
+	return (free(str), 0);
 }

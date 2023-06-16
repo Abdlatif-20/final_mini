@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:44:25 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 02:59:00 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 00:08:17 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	signal_handler(int sig)
 
 void	handle_specific_signal(int signal_number)
 {
-	if (signal_number == SIGINT)
+	if (signal_number == SIGINT && g_shell.signel_cat)
 		printf("\n");
+	if (signal_number == SIGQUIT)
+		ft_putstr_fd("Quit: 3\n", 2);
 }
 
 void	handle_exit_status(int status)

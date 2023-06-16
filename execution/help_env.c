@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:25:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 01:53:05 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 21:41:56 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,21 @@ void	process_env_argument(t_env **head_en, char *arg)
 
 void	add_env(t_env **head_en, char **split)
 {
-	int	i;
+	int		i;
+	char	*arg;
 
 	i = 1;
 	while (split[i])
 	{
-		if (split[i][0] == '\0' || check_if_valid_args(split[i]) == 0)
+		arg = get_arg(split[i]);
+		if (split[i][0] == '\0' || check_if_valid_args(arg) == 0)
 		{
+			free(arg);
 			i++;
 			continue ;
 		}
 		process_env_argument(head_en, split[i]);
+		free(arg);
 		i++;
 	}
 }

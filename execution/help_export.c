@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:54:57 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 02:03:53 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 21:41:09 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,21 @@ void	process_export_argument(t_export **head_ex, char *arg)
 
 void	add_export(t_export **head_ex, char **split)
 {
-	int	i;
+	int		i;
+	char	*arg;
 
 	i = 1;
 	while (split[i])
 	{
-		if (split[i][0] == '\0' || check_if_valid_args(split[i]) == 0)
+		arg = get_arg(split[i]);
+		if (split[i][0] == '\0' || check_if_valid_args(arg) == 0)
 		{
+			free(arg);
 			i++;
 			continue ;
 		}
 		process_export_argument(head_ex, split[i]);
+		free(arg);
 		i++;
 	}
 }

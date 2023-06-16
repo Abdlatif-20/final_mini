@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:56:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 03:57:15 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 21:33:36 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_sig(t_var *var)
 {
 	if (!var->input[0] && g_shell.signel_hedoc == 1)
 	{
-		rl_done = 0;
+		// rl_done = 0;
 		free(var->input);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:36 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 01:58:35 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 00:06:55 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,15 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 	else if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
 	{
 		if (info->head_en && check_export(commands->cmds, var) == 0)
+		{
+			g_shell.exit_status = EXIT_FAILURE;
 			return ;
+		}
 		if (info->head_en && commands->cmds)
 		{
 			add_export(&info->head_ex, commands->cmds);
 			add_env(&info->head_en, commands->cmds);
-			g_shell.exit_status = 0;
+			g_shell.exit_status = EXIT_SUCCESS;
 		}
 	}
 	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env") && nb == 1)

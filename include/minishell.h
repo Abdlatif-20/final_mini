@@ -6,12 +6,9 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 04:50:33 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 04:50:34 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 21:02:30 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #ifndef MINISHELL_H
 
@@ -371,7 +368,7 @@ int			case_of_remove_directory(t_cmd *commands,
 // check_args.c
 int			check_is_contain(char *split);
 int			check_if_valid_args(char *split);
-char		*get_arg(char *arg, t_var *var);
+char		*get_arg(char *arg);
 // int  check_export(char **split);
 
 // file my_env.c
@@ -419,7 +416,7 @@ void		free_split_paths(char **split_paths);
 // help_exit.c
 void		case1(t_cmd *commands, int i);
 void		default_case(void);
-int			case2(void);
+int			case2(t_cmd *commands);
 void		case_positive(long long status_code);
 void		case_negative(long long status_code);
 #endif

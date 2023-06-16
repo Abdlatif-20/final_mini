@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 01:41:21 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 01:58:00 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 21:51:59 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void	case1(t_cmd *commands, int i)
 	exit(g_shell.exit_status);
 }
 
-int	case2(void)
+int	case2(t_cmd *commands)
 {
+	(void)commands;
 	ft_putstr_fd("exit\n", 2);
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd("too many arguments\n", 2);
