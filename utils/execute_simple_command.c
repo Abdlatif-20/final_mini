@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:53 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 23:46:58 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:13:03 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	if_input_output_file(t_cmd *commands)
 	{
 		if (commands->fd_out == 101)
 		{
-			ft_putstr_fd("bash: outfile: Permission denie\n", 2);
+			ft_putstr_fd("minishell: outfile: Permission denie\n", 2);
 			g_shell.exit_status = 1;
 			exit(g_shell.exit_status);
 		}

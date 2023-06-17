@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:37:27 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 03:03:15 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:39:23 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ int	print_error_fork(void)
 	ft_putstr_fd("fork ", 2);
 	g_shell.exit_status = 1;
 	return (g_shell.exit_status);
+}
+
+void	print_error_variable(char *variable)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(variable, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
 void	help_create_pipefd(t_var *var, int **pipefd, t_info *info)

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/04 23:51:03 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 18:27:25 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/17 18:34:16 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/17 18:34:17 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	case_of_just_cd(t_info *info, char *path_home)
 	else
 	{
 		g_shell.exit_status = 1;
-		printf("minishell$: cd: %s: No such file or directory\n", path_home);
+		ft_putstr_fd("minishell$: cd: ", 2);
+		ft_putstr_fd(path_home, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (free(path_home), 0);
 	}
 }
@@ -41,7 +43,9 @@ int	case_of_cd_tilda(t_info *info, char *path_home)
 	else
 	{
 		g_shell.exit_status = 1;
-		printf("minishell$: cd: %s: No such file or directory\n", path_home);
+		ft_putstr_fd("minishell$: cd: ", 2);
+		ft_putstr_fd(path_home, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (free(path_home), 0);
 	}
 }

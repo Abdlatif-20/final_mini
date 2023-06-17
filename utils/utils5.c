@@ -5,18 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 16:34:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 16:34:49 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/17 16:39:07 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/17 18:49:05 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../include/minishell.h"
 
+void	check_empty(t_var *var)
+{
+	if (var->is_empty_str)
+		var->flag_bultin = 1;
+}
+
 int	check_sig(t_var *var)
 {
 	if (!var->input[0] && g_shell.signel_hedoc == 1)
 	{
-		// rl_done = 0;
+		rl_done = 0;
 		free(var->input);
 		return (1);
 	}

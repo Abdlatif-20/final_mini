@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:36 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 18:19:14 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:49:57 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,20 @@ void	dup_for_builin(t_cmd *commands)
 int	builint_simple(t_cmd *commands, t_info *info, t_var *var)
 {
 	if (!ft_strcmp(commands->main_cmd, "echo"))
-	{
-		if (var->is_empty_str)
-			var->flag_bultin = 1;
-		my_echo(commands);
-	}
+		return (check_empty(var), my_echo(commands), 0);
 	else if (!ft_strcmp(commands->main_cmd, "cd"))
-	{
-		if (var->is_empty_str)
-			var->flag_bultin = 1;
-		my_cd(commands, info);
-	}
+		return (check_empty(var), my_cd(commands, info), 0);
 	else if (!ft_strcmp(commands->main_cmd, "pwd"))
-	{
-		if (var->is_empty_str)
-			var->flag_bultin = 1;
-		my_pwd(info);
-	}
+		return (check_empty(var), my_pwd(info), 0);
 	else if (!ft_strcmp(commands->main_cmd, "exit"))
-	{
-		if (var->is_empty_str)
-			var->flag_bultin = 1;
-		my_exit(commands);
-	}
+		return (check_empty(var), my_exit(commands), 0);
 	else if (info->head_en && info->head_ex
 		&& !ft_strcmp(commands->main_cmd, "unset") && commands->cmds[1])
-	{
-		if (var->is_empty_str)
-			var->flag_bultin = 1;
-		my_unset(commands, info);
-	}
+		return (check_empty(var), my_unset(commands, info), 0);
 	return (0);
 }
 
-void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
+int	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 {
 	int	nb;
 
@@ -70,17 +50,13 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 	if ((info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1)
 		|| (var->is_empty_str && nb == 2 && var->flag_bultin == 0))
 	{
-		print_list_export(info);
-		g_shell.exit_status = EXIT_SUCCESS;
 		var->flag_bultin = 0;
+		return (print_list_export(info), g_shell.exit_status = EXIT_SUCCESS);
 	}
 	else if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
 	{
 		if (info->head_en && check_export(commands->cmds, var) == 0)
-		{
-			g_shell.exit_status = EXIT_FAILURE;
-			return ;
-		}
+			return (g_shell.exit_status = EXIT_FAILURE);
 		if (info->head_en && commands->cmds)
 		{
 			add_export(&info->head_ex, commands->cmds);
@@ -90,6 +66,7 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 	}
 	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env") && nb == 1)
 		print_list_env(info);
+	return (0);
 }
 
 void	builtin_execution(t_list *shell, t_info *info, int flag, t_var *var)
@@ -103,10 +80,8 @@ void	builtin_execution(t_list *shell, t_info *info, int flag, t_var *var)
 		return ;
 	else if (is_builin(commands))
 	{
-		if (builint_simple(commands, info, var) == 505)
-			return ;
-		else
-			builint_complex(commands, info, var);
+		builint_simple(commands, info, var);
+		builint_complex(commands, info, var);
 	}
 }
 
