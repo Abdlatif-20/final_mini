@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:33:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 02:19:26 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 22:02:20 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,10 @@ int	check_if_valid_args(char *split)
 	return (1);
 }
 
-char	*get_arg(char *arg, t_var *vars)
+char	*get_arg(char *arg)
 {
 	int	i;
 
-	(void)vars;
 	if (!arg)
 		return (NULL);
 	i = 0;
@@ -85,12 +84,14 @@ int	check_export(char **split, t_var *vars)
 	i = 1;
 	while (split[i])
 	{
-		arg = get_arg(split[i], vars);
+		arg = get_arg(split[i]);
 		if (arg[0] == '\0' && !vars->is_empty_str)
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(split[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
+			g_shell.exit_status = EXIT_FAILURE;
+			free(arg);
 			i++;
 			continue ;
 		}
@@ -99,6 +100,7 @@ int	check_export(char **split, t_var *vars)
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(split[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
+			g_shell.exit_status = EXIT_FAILURE;
 		}
 		free(arg);
 		i++;

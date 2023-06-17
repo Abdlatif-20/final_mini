@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 22:56:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 16:28:22 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/17 16:34:47 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/17 16:34:49 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_sig(t_var *var)
 {
 	if (!var->input[0] && g_shell.signel_hedoc == 1)
 	{
-		rl_done = 0;
+		// rl_done = 0;
 		free(var->input);
 		return (1);
 	}
