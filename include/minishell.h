@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 04:50:33 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 16:10:32 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:22:30 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ typedef struct s_info
 	t_var		*var;
 }			t_info;
 
-void	unlink_heredoc(char **file_names, int size);
+void		unlink_heredoc(char **file_names, int size);
 //------------------------------- main -----------------------------------//
 
 void		init_main(t_list **args, t_list **cmd, t_info *info, t_var *var);
@@ -239,8 +239,6 @@ void		print_error_variable(char *command);
 void		help_create_pipefd(t_var *var, int **pipefd, t_info *info);
 
 /*-------------- libft ------------------------*/
-void		ft_putchar_fd(char c, int fd);
-void		ft_nbr(int nu, int fd);
 int			ft_isalpha(int c);
 int			ft_isdigit(int c );
 int			ft_isalnum(int c);
