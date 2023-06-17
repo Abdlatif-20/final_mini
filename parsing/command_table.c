@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 04:03:46 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:31:53 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ void	skip_pipe(t_list **args, t_list **tmp, t_token *token)
 	}
 }
 
-void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
+void	command_table_help(t_var *var, t_list *args)
 {
-	t_token	*token;
-	int		i;
-
-	i = 0;
 	var->tmp = args;
 	var->heredoc_names = NULL;
 	var->file_name_herdoc = NULL;
@@ -72,6 +68,15 @@ void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
 			return ;
 		var->heredoc_names[herdoc_count(args)] = NULL;
 	}
+}
+
+void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
+{
+	t_token	*token;
+	int		i;
+
+	i = 0;
+	command_table_help(var, args);
 	while (args)
 	{
 		init_var(var);

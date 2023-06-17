@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:57 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 15:23:09 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:43:23 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,12 @@ void	heredoc_helper(t_list **args, char *name, int *fd, t_env *env)
 			}
 			break ;
 		}
-		if (check_sig(&var))
-			break ;
+		else if (!var.input[0] && g_shell.signel_hedoc == 1)
+		{
+			rl_done = 0;
+			free(var.input);
+			break;
+		}
 		add_to_buffer(&var.buffer, var.input);
 		free(var.input);
 	}

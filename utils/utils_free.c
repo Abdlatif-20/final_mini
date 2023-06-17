@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 03:56:40 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 15:42:01 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/17 16:38:29 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/17 16:38:44 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,19 @@ void	free_list_cmd(t_list **list)
 		free((*list)->data);
 		free((*list));
 		(*list) = tmp;
+	}
+}
+
+void	unlink_heredoc(char **file_names, int size)
+{
+	int	i;
+
+	if (!file_names)
+		return ;
+	i = 0;
+	while (i < size)
+	{
+		unlink(file_names[i]);
+		i++;
 	}
 }

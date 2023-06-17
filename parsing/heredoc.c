@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 15:23:42 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/17 16:38:55 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/17 16:50:51 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 	char	*name;
 
 	name = NULL;
+	if (g_shell.signel_hedoc)
+		return ;
 	if (((t_token *)args->data)->key == HEREDOC)
 	{
 		name = generate_name();

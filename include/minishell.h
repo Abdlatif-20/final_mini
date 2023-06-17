@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 04:50:33 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 16:22:30 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/17 16:37:57 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/17 16:37:59 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,7 +295,8 @@ void		ft_join_args(t_list **args);
 
 int			ft_expand(t_list **list, t_env *env);
 int			handel_var(t_token **token, t_var *var, t_env *env, int *flag);
-int			ft_expender_help(t_token **token, t_env *env, t_var *var, int *flag);
+int			ft_expender_help(t_token **token, t_env *env, t_var *var,
+				int *flag);
 void		hold_string(t_var *var, t_token *token);
 int			help_expand(t_var *var, t_token *token);
 int			help_expand1(t_var *var, t_token *token);

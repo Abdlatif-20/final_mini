@@ -5,26 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 01:51:18 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 16:19:00 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/17 16:38:17 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/17 16:51:11 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	unlink_heredoc(char **file_names, int size)
-{
-	int	i;
-
-	if (!file_names)
-		return ;
-	i = 0;
-	while (i < size)
-	{
-		unlink(file_names[i]);
-		i++;
-	}
-}
 
 void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 23:50:59 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 21:53:06 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/17 16:34:30 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/17 16:34:32 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	free_array(char **array)
 	int	i;
 
 	i = 0;
-	if (!array || !*array)
+	if (!array)
 		return (free(array));
-	while (array[i] && *array)
+	while (array[i])
 		free(array[i++]);
 	free(array);
 }
