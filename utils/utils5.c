@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:56:46 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 21:33:36 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:45:42 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_sig(t_var *var)
 {
 	if (!var->input[0] && g_shell.signel_hedoc == 1)
 	{
-		// rl_done = 0;
+		rl_done = 0;
 		free(var->input);
 		return (1);
 	}
@@ -46,4 +46,3 @@ int	ft_whitespace(char c)
 		return (1);
 	return (0);
 }
-

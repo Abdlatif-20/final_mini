@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 04:50:33 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 21:02:30 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:10:32 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,10 +181,6 @@ char		*get_last_split(t_cmd *cmd);
 // file my_pwd.c
 int			my_pwd(t_info *info);
 
-// file my_cd.c
-char		*get_path_home(t_export **head_ex);
-int			my_cd(t_cmd *commands, t_info *info);
-
 // file my_export.c
 t_export	*ft_lst_new_export(char *export_var, char *export_value, int flag);
 void		ft_lst_add_back_export(t_export **head_ex, t_export *new);
@@ -239,6 +235,7 @@ int			is_builin(t_cmd *commands);
 void		print_error_cmd(char *command);
 void		print_error_file(char *command);
 int			print_error_fork(void);
+void		print_error_variable(char *command);
 void		help_create_pipefd(t_var *var, int **pipefd, t_info *info);
 
 /*-------------- libft ------------------------*/
@@ -348,9 +345,7 @@ void		builtin_execution(t_list *shell, t_info *info,
 				int flag, t_var *var);
 
 // signals_and_status_code.c
-void		handle_specific_signal_1(int signal_number);
 void		handle_specific_signal(int signal_number);
-void		handle_signal_status(int status);
 void		handle_exit_status(int status);
 void		display_status_code(int status);
 void		signal_handler(int sig);
@@ -405,7 +400,6 @@ int			get_nbr_node(t_list *shell);
 // execute_multi_command.c
 void		merge_dup_pipe_herdoc(int **pipefd,
 				int i, int nb_pipes, t_cmd *commands);
-
 void		print_list11(t_list *cmd);
 
 // utils8.c
@@ -419,4 +413,13 @@ void		default_case(void);
 int			case2(t_cmd *commands);
 void		case_positive(long long status_code);
 void		case_negative(long long status_code);
+
+//my_cd.c
+int			case_of_just_cd(t_info *info, char *path_home);
+int			case_of_cd_tilda(t_info *info, char *path_home);
+int			help_case_1(char *path_home, t_info *info);
+int			help_case_2(t_cmd *commands, t_info *info, char *path_home);
+int			my_cd(t_cmd *commands, t_info *info);
+char		*get_path_home(t_export **head_ex);
+
 #endif

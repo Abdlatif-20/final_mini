@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:18 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 22:05:01 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:19:00 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	var->is_empty_str = ft_expand(args, (*info).head_en);
 	ft_join_args(args);
 	command_table(*args, cmd, (*info).head_en, var);
-	// print_list11(*cmd);
 	if ((*cmd) && (*cmd)->data)
 		choose_command((*cmd), info, var);
 	unlink_heredoc(var->heredoc_names, var->len);

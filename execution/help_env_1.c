@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_env_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:39:17 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 15:33:01 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:34:31 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,31 @@ void	ft_lst_add_back_env(t_env **head_en, t_env *new)
 
 void	remove_env_element(t_env **head_en, char *env_var)
 {
-	t_env	*tmp;
 	t_env	*prev;
+	t_env	*suivant;
 
-	tmp = *head_en;
-	if (tmp != NULL && !ft_strcmp(tmp->env_var, env_var))
+	prev = *head_en;
+	if (!ft_strcmp(prev->env_var, env_var))
 	{
-		*head_en = tmp->next;
-		free(tmp->env_value);
-		free(tmp->env_var);
-		free(tmp);
+		*head_en = prev->next;
+		free(prev->env_value);
+		free(prev->env_var);
+		free(prev);
 		return ;
 	}
-	while (tmp != NULL && ft_strcmp(tmp->env_var, env_var) != 0)
+	while (prev)
 	{
-		prev = tmp;
-		tmp = tmp->next;
+		suivant = prev->next;
+		if (suivant && !ft_strcmp(suivant->env_var, env_var))
+		{
+			prev->next = suivant->next;
+			free(suivant->env_value);
+			free(suivant->env_var);
+			free(suivant);
+			return ;
+		}
+		prev = prev->next;
 	}
-	if (tmp == NULL)
-		return ;
-	prev->next = tmp->next;
-	free(tmp->env_value);
-	free(tmp->env_var);
-	free(tmp);
 }
 
 void	add_env_element(char *env_var, char *env_value, t_env **head_en)
@@ -94,7 +96,12 @@ void	print_list_env(t_info *info)
 	while (head_en != NULL)
 	{
 		if (head_en->env_value != NULL)
-			printf("%s=%s\n", head_en->env_var, head_en->env_value);
+		{
+			ft_putstr_fd(head_en->env_var, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(head_en->env_value, 1);
+			ft_putstr_fd("\n", 1);
+		}
 		head_en = head_en->next;
 	}
 }

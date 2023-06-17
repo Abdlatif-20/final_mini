@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:33:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 22:02:20 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:41:18 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ int	check_export(char **split, t_var *vars)
 		arg = get_arg(split[i]);
 		if (arg[0] == '\0' && !vars->is_empty_str)
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(split[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			print_error_variable(split[i]);
 			g_shell.exit_status = EXIT_FAILURE;
 			free(arg);
 			i++;
@@ -97,9 +95,7 @@ int	check_export(char **split, t_var *vars)
 		}
 		if (split[i] && check_if_valid_args(arg) == 0)
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(split[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			print_error_variable(split[i]);
 			g_shell.exit_status = EXIT_FAILURE;
 		}
 		free(arg);

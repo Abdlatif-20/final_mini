@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:40:52 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/14 00:01:30 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:29:11 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,30 @@ int	check_if_export_var_exist(t_export *head_ex, char *export_var)
 
 void	remove_export_element(t_export **head_ex, char *export_var)
 {
-	t_export	*tmp;
-	t_export	*tmp2;
+	t_export	*prev;
+	t_export	*suivant;
 
-	tmp = *head_ex;
-	if (!ft_strcmp(tmp->export_var, export_var))
+	prev = *head_ex;
+	if (!ft_strcmp(prev->export_var, export_var))
 	{
-		*head_ex = tmp->next;
-		free(tmp->export_value);
-		free(tmp->export_var);
-		free(tmp);
+		*head_ex = prev->next;
+		free(prev->export_value);
+		free(prev->export_var);
+		free(prev);
 		return ;
 	}
-	while (tmp)
+	while (prev)
 	{
-		tmp2 = tmp->next;
-		if (tmp2 && !ft_strcmp(tmp2->export_var, export_var))
+		suivant = prev->next;
+		if (suivant && !ft_strcmp(suivant->export_var, export_var))
 		{
-			tmp->next = tmp2->next;
-			free(tmp2->export_value);
-			free(tmp2->export_var);
-			free(tmp2);
+			prev->next = suivant->next;
+			free(suivant->export_value);
+			free(suivant->export_var);
+			free(suivant);
 			return ;
 		}
-		tmp = tmp->next;
+		prev = prev->next;
 	}
 }
 
