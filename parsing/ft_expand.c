@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:50:59 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 03:11:45 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 20:54:49 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	free_array(char **array)
 	int	i;
 
 	i = 0;
-	if (!array || !*array)
+	if (!array)
 		return (free(array));
-	while (array[i] && *array)
+	while (array[i])
 		free(array[i++]);
 	free(array);
 }

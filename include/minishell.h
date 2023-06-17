@@ -3,15 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 04:50:33 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 04:50:34 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:28:51 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #ifndef MINISHELL_H
 
@@ -165,7 +162,7 @@ typedef struct s_info
 	t_var		*var;
 }			t_info;
 
-void	unlink_heredoc(char **file_names, int size);
+void		unlink_heredoc(char **file_names, int size);
 //------------------------------- main -----------------------------------//
 
 void		init_main(t_list **args, t_list **cmd, t_info *info, t_var *var);
@@ -245,8 +242,6 @@ int			print_error_fork(void);
 void		help_create_pipefd(t_var *var, int **pipefd, t_info *info);
 
 /*-------------- libft ------------------------*/
-void		ft_putchar_fd(char c, int fd);
-void		ft_nbr(int nu, int fd);
 int			ft_isalpha(int c);
 int			ft_isdigit(int c );
 int			ft_isalnum(int c);
@@ -303,7 +298,8 @@ void		ft_join_args(t_list **args);
 
 int			ft_expand(t_list **list, t_env *env);
 int			handel_var(t_token **token, t_var *var, t_env *env, int *flag);
-int			ft_expender_help(t_token **token, t_env *env, t_var *var, int *flag);
+int			ft_expender_help(t_token **token, t_env *env, t_var *var,
+				int *flag);
 void		hold_string(t_var *var, t_token *token);
 int			help_expand(t_var *var, t_token *token);
 int			help_expand1(t_var *var, t_token *token);

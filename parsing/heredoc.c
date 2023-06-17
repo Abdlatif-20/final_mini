@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:00:30 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 03:21:58 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:30:13 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 	{
 		name = generate_name();
 		if ((*fd) == -1)
-		{
 			return (free(name));
-		}
 		(*fd) = open(name, O_RDWR | O_CREAT | O_TRUNC, 0666);
 		ft_free(*file);
 		*file = ft_strdup(name);

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 03:56:40 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 04:06:22 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:29:32 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,19 @@ void	free_list_cmd(t_list **list)
 		free((*list)->data);
 		free((*list));
 		(*list) = tmp;
+	}
+}
+
+void	unlink_heredoc(char **file_names, int size)
+{
+	int	i;
+
+	if (!file_names)
+		return ;
+	i = 0;
+	while (i < size)
+	{
+		unlink(file_names[i]);
+		i++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 23:48:01 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 01:47:23 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/16 20:55:00 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ int	my_exit(t_cmd *commands)
 		help_case(commands, i, flag, &status_code);
 	else
 		default_case();
-	return (free(commands->cmds[i]), 0);
+	return (0);
 }

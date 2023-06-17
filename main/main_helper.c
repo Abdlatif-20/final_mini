@@ -6,25 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:18 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 03:56:50 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:29:24 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	unlink_heredoc(char **file_names, int size)
-{
-	int	i;
-
-	if (!file_names)
-		return ;
-	i = 0;
-	while (i < size)
-	{
-		unlink(file_names[i]);
-		i++;
-	}
-}
 
 void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 {
@@ -32,7 +18,6 @@ void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	var->is_empty_str = ft_expand(args, (*info).head_en);
 	ft_join_args(args);
 	command_table(*args, cmd, (*info).head_en, var);
-	// print_list11(*cmd);
 	if ((*cmd) && (*cmd)->data)
 		choose_command((*cmd), info, var);
 	unlink_heredoc(var->heredoc_names, var->len);
