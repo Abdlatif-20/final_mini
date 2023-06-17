@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:34:23 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 16:34:24 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:09:28 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	init_main(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	(*info).head_en = NULL;
 	var->input = NULL;
 	var->is_empty_str = 0;
+	var->flag_bultin = 0;
 }
 
 int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)

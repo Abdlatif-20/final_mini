@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:36 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 00:06:55 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 18:19:14 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,35 @@ void	dup_for_builin(t_cmd *commands)
 int	builint_simple(t_cmd *commands, t_info *info, t_var *var)
 {
 	if (!ft_strcmp(commands->main_cmd, "echo"))
+	{
+		if (var->is_empty_str)
+			var->flag_bultin = 1;
 		my_echo(commands);
+	}
 	else if (!ft_strcmp(commands->main_cmd, "cd"))
+	{
+		if (var->is_empty_str)
+			var->flag_bultin = 1;
 		my_cd(commands, info);
+	}
 	else if (!ft_strcmp(commands->main_cmd, "pwd"))
+	{
+		if (var->is_empty_str)
+			var->flag_bultin = 1;
 		my_pwd(info);
+	}
 	else if (!ft_strcmp(commands->main_cmd, "exit"))
+	{
+		if (var->is_empty_str)
+			var->flag_bultin = 1;
 		my_exit(commands);
+	}
 	else if (info->head_en && info->head_ex
 		&& !ft_strcmp(commands->main_cmd, "unset") && commands->cmds[1])
 	{
 		if (var->is_empty_str)
-			return (505);
-		else
-			my_unset(commands, info);
+			var->flag_bultin = 1;
+		my_unset(commands, info);
 	}
 	return (0);
 }
@@ -53,8 +68,12 @@ void	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 
 	nb = count_str(commands->cmds);
 	if ((info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1)
-		|| (var->is_empty_str && nb == 2))
+		|| (var->is_empty_str && nb == 2 && var->flag_bultin == 0))
+	{
 		print_list_export(info);
+		g_shell.exit_status = EXIT_SUCCESS;
+		var->flag_bultin = 0;
+	}
 	else if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
 	{
 		if (info->head_en && check_export(commands->cmds, var) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 01:41:21 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 21:51:59 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 17:59:22 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ void	case_negative(long long status_code)
 void	default_case(void)
 {
 	printf("exit\n");
-	g_shell.exit_status = 127;
+	g_shell.exit_status = 0;
 	exit(g_shell.exit_status);
 }

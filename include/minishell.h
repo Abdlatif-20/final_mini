@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:34:14 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 16:34:16 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:09:06 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_export
 typedef struct t_var
 {
 	char	**heredoc_names;
+	int		flag_bultin;
 	int		len;
 	int		i;
 	int		j;
