@@ -3,42 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 22:46:09 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 13:00:58 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/16 01:51:53 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/17 15:13:03 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-void if_herdoc1(t_cmd *commands)
+void	if_herdoc1(t_cmd *commands)
 {
 	commands->fd_in = open(commands->file_name, O_RDONLY);
 	if (commands->fd_in == -1)
 	{
 		perror("open");
-		exit(EXIT_FAILURE);
+		g_shell.exit_status = 1;
+		exit(g_shell.exit_status);
 	}
 	if (dup2(commands->fd_in, STDIN_FILENO) == -1)
 	{
 		perror("dup");
-		exit(EXIT_FAILURE);
+		g_shell.exit_status = 1;
+		exit(g_shell.exit_status);
+	}
+	if (commands->fd_out != 1)
+	{
+		if (commands->fd_out == 101)
+		{
+			ft_putstr_fd("minishell: outfile: Permission denie\n", 2);
+			g_shell.exit_status = 1;
+			exit(g_shell.exit_status);
+		}
+		dup2(commands->fd_out, 1);
+		close(commands->fd_out);
 	}
 	close(commands->fd_in);
 }
 
-void if_input_output_file(t_cmd *commands)
+void	if_input_output_file(t_cmd *commands)
 {
-	if (commands->fd_in != 0) 
+	if (commands->fd_in != 0)
 	{
 		if (commands->fd_in == -1)
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(commands->file_name, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-			exit(EXIT_FAILURE);
+			print_error_file(commands->file_name);
+			g_shell.exit_status = 1;
+			exit(g_shell.exit_status);
 		}
 		else
 		{
@@ -48,67 +59,70 @@ void if_input_output_file(t_cmd *commands)
 	}
 	if (commands->fd_out != 1)
 	{
+		if (commands->fd_out == 101)
+		{
+			ft_putstr_fd("minishell: outfile: Permission denie\n", 2);
+			g_shell.exit_status = 1;
+			exit(g_shell.exit_status);
+		}
 		dup2(commands->fd_out, 1);
 		close(commands->fd_out);
 	}
 }
 
-
-void	execute_child_process(t_cmd *commands, t_info *info)
+void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 {
-	char	*path;
+	char		*path;
+	long long	nb;
 
+	(void)var;
+	signal(SIGINT, signal_handler);
 	if (commands->heredoc)
 		if_herdoc1(commands);
 	else
 		if_input_output_file(commands);
-	path = check_if_command_found(commands->main_cmd, &info->head_ex);
-	if (!path)
-		return ;
-	if (execve(path, commands->cmds, NULL) == -1)
+	if (!ft_strcmp(commands->main_cmd, "minishell")
+		|| !ft_strcmp(commands->main_cmd, "./minishell"))
+	{
+		path = ft_strdup("minishell");
+		nb = ft_atoi(get_value2(info, "SHLVL"));
+		set_value1(info, "SHLVL", ft_itoa(++nb));
+	}
+	else
+		path = check_if_command_found(commands->main_cmd, &info->head_ex);
+	if (execve(path, commands->cmds, create_env(info)) == -1)
 	{
 		print_error_cmd(commands->main_cmd);
-		exit(EXIT_FAILURE);
+		g_shell.exit_status = 127;
+		exit(g_shell.exit_status);
 	}
 }
 
-void execute_commande(t_cmd *commands, t_info *info, t_list *shell)
+int	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 {
-	pid_t pid;
-	int status;
+	pid_t	pid;
 
+	g_shell.signel_cat = 1;
+	if (commands->fd_in == -1)
+		return (print_error_file(commands->file_name),
+			g_shell.exit_status = 1, EXIT_FAILURE);
 	if (is_builin(commands) == 1)
-	{
-		builtin_execution(shell, info, 1);
-		// if (g_exit_status != EXIT_FAILURE)
-		// {
-		// 	g_exit_status = EXIT_SUCCESS;
-		// 	// printf("exit status = %d\n", g_exit_status);
-		// }
-	}
+		return (builtin_execution(shell, info, 1, var), EXIT_SUCCESS);
 	if (commands->main_cmd)
 	{
-		if (check_if_command_found(commands->main_cmd, &info->head_ex))
+		pid = fork();
+		if (pid == -1)
+			print_error_fork();
+		signal(SIGINT, SIG_IGN);
+		if (pid == 0)
+			if (commands->fd_in != 404 && commands->fd_out != 404)
+				execute_child_process(commands, info, var);
+		if (pid != 0)
 		{
-			pid = fork();
-			if (pid == -1) 
-			{
-				perror("fork");
-				exit(EXIT_FAILURE);
-			} 
-			else if (pid == 0)
-				execute_child_process(commands, info);
-			else
-				waitpid(pid, &status, 0);
-			// if (WIFEXITED(g_exit_status))
-			// {
-			// 	g_exit_status = WEXITSTATUS(g_exit_status);
-			// 	printf("exit status = %d\n", g_exit_status);
-			// }
+			waitpid(pid, &g_shell.exit_status, 0);
+			display_status_code(g_shell.exit_status);
+			signal(SIGINT, signal_handler);
 		}
-		else
-			print_error_cmd(commands->main_cmd);
 	}
+	return (EXIT_SUCCESS);
 }
-
-

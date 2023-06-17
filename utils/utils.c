@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 11:19:32 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/14 23:10:24 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,26 @@ void	commands_helper(t_list **args, t_token *token, t_var *var)
 			token = (*args)->data;
 		var->flag = 0;
 	}
+	var->cmd[var->i] = NULL;
 }
 
-char	**get_command1(t_list *args)
+char	**get_command1(t_list *args, t_var *var)
 {
 	t_token	*token;
-	t_var	var;
 
-	initiali_var(&var, args);
-	var.cmd = (char **)malloc(sizeof(char *) * (var.number_of_commands + 1));
-	if (!var.cmd)
+	initiali_var(var, args);
+	var->cmd = (char **)malloc(sizeof(char *)
+			* (var->number_of_commands + 1));
+	if (!var->cmd)
 		return (NULL);
-	var.cmd[var.number_of_commands] = NULL;
 	while (args)
 	{
 		token = args->data;
-		check_red(&args, token, &var);
+		check_red(&args, token, var);
 		if (token->key == PIPE)
 			break ;
 		skip_spaces(&args, token);
-		commands_helper(&args, token, &var);
+		commands_helper(&args, token, var);
 	}
-	return (var.cmd);
+	return (var->cmd);
 }

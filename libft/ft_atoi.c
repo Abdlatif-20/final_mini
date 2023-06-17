@@ -5,18 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 17:35:21 by aben-nei          #+#    #+#             */
-/*   Updated: 2022/10/30 19:49:07 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/04 23:47:52 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/14 15:17:54 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../include/minishell.h"
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(char *str)
 {
-	int		res;
-	int		sign;
+	long long		res;
+	long long		sign;
 
+	if (!str)
+		return (0);
 	res = 0;
 	sign = 1;
 	while ((*str >= 9 && *str <= 13) || *str == 32)
@@ -33,4 +35,32 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return (sign * res);
+}
+
+long long	ft_atoi1(char *str, int *flag)
+{
+	long long			i;
+	int					signe;
+	long long			result;
+
+	i = 0;
+	result = 0;
+	signe = 1;
+	while (ft_whitespace(str[i]))
+		i++;
+	if (str[i] == '-')
+		signe = -1;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		result = (str[i] - '0') + (result * 10);
+		i++;
+	}
+	if ((result < 0 && signe > 0) || ((result * signe) > 0 && signe < 0))
+	{
+		*flag = 1;
+		return (-1);
+	}
+	return (result * signe);
 }

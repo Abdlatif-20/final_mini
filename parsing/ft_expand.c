@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 12:45:25 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 12:42:21 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/17 16:34:30 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/17 16:34:32 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@ char	*get_variable_name(char *name)
 	init_variable(&var, name);
 	if (!var.str)
 		return (NULL);
-	while (name[var.i] && (name[var.i] == '\''
-			|| name[var.i] == '\"' || name[var.i] == '|'))
-		var.i++;
-	while (name[var.end] && (name[var.end] == '\''
-			|| name[var.end] == '\"' || name[var.end] == '|'))
-		var.end--;
 	if (name[var.i] == '$')
 		var.i++;
 	while (name[var.i] && name[var.i] != '$'
@@ -52,130 +46,42 @@ void	free_array(char **array)
 	int	i;
 
 	i = 0;
+	if (!array)
+		return (free(array));
 	while (array[i])
 		free(array[i++]);
 	free(array);
 }
 
-void	ft_expand(t_list **list, t_env *env)
+void	init_variable1(t_env **env_tmp, t_env *env, t_var *var)
 {
-	t_list		*tmp;
-	t_env		*tmp_env;
-	t_token		*token;
-	t_var		var;
+	*env_tmp = env;
+	var->i = 0;
+	var->string = NULL;
+	var->str = NULL;
+	var->temp = NULL;
+	var->env = env;
+}
 
-	tmp = *list;
-	tmp_env = env;
-	while (tmp)
+int	ft_expand(t_list **list, t_env *env)
+{
+	t_var		var;
+	int			flag;
+
+	flag = 0;
+	var.tmp = *list;
+	init_variable1(&var.tmp_env, env, &var);
+	while (var.tmp)
 	{
-		token = tmp->data;
-		if (tmp && token->key == VAR)
+		var.token = var.tmp->data;
+		if (var.tmp && var.token->key == VAR && var.token->is_herdoc == 0)
 		{
-			while (env)
-			{
-				if (tmp && !ft_strcmp(env->env_var,
-						get_variable_name(token->value)))
-				{
-					token->value = ft_strdup(env->env_value);
-					/*
-					temp = ft_split(token->value, ' ');
-						token->value = ft_strdup(temp[0]);
-						tmp = tmp->next;
-					fill_token(&tmp, VAR, ft_strdup(temp[1]));
-						token = tmp->next->data;
-					printf("token->value = %s\n", token->value);
-					free_array(temp);
-					*/
-					break ;
-				}
-				env = env->next;
-			}
-			if (ft_strlen(token->value) == 1)
-			{
-				token->value = ft_strdup("$");
-			}
-			else if (!env)
-				token->value = ft_strdup("");
-			env = tmp_env;
+			if (handel_var(&var.token, &var, var.env, &flag) == 2)
+				continue ;
 		}
-		else if (tmp && token->key == DQUATES)
-		{
-			var.i = 0;
-			var.string = NULL;
-			while (token->value[var.i])
-			{
-				var.len = 0;
-				while (token->value[var.i + var.len]
-					&& token->value[var.i + var.len] != '$')
-					var.len++;
-				if (var.len > 0)
-					var.string = ft_strjoin(var.string,
-							ft_substr(token->value, var.i, var.len));
-				var.i += var.len;
-				if (token->value[var.i] == '$')
-				{
-					if (token->value[var.i + 1] == '\0'
-						|| !ft_isalnum(token->value[var.i + 1]))
-					{
-						var.len = 1;
-						while (token->value[var.i + var.len]
-							&& !ft_isalnum(token->value[var.i + var.len]))
-							var.len++;
-						if (var.len > 0)
-							var.string = ft_strjoin(var.string,
-									ft_substr(token->value,
-										var.i, var.len));
-						var.i += var.len;
-					}
-					else if (token->value[var.i] == '$')
-					{
-						var.i++;
-						if (ft_isdigit(token->value[var.i]))
-						{
-							var.i++;
-							continue ;
-						}
-					}
-					else if (token->value[var.i + 1]
-						&& !ft_isalpha(token->value[var.i + 1])
-						&& token->value[var.i + 1] != '_')
-					{
-						var.len = 0;
-						while (token->value[var.i + var.len]
-							&& !ft_isalpha(token->value[var.i + var.len])
-							&& token->value[var.i + var.len] != '_')
-								var.len++;
-						if (var.len > 0)
-							var.string = ft_strjoin(var.string,
-									ft_substr(token->value, var.i, var.len));
-						var.i += var.len;
-					}
-				var.len = 0;
-					while (token->value[var.i + var.len]
-						&& token->value[var.i + var.len] != '$'
-						&& token->value[var.i + var.len] != ' '
-						&& (ft_isalpha(token->value[var.i + var.len])
-							|| token->value[var.i + var.len] == '_'))
-							var.len++;
-					var.str = ft_substr(token->value, var.i, var.len);
-					var.i += var.len;
-					while (env)
-					{
-						if (tmp && !ft_strcmp(env->env_var, var.str))
-						{
-							if (var.len > 0)
-								var.string = ft_strjoin(var.string,
-										env->env_value);
-							break ;
-						}
-						env = env->next;
-					}
-					env = tmp_env;
-				}
-			}
-			if (var.string)
-				((t_token *)tmp->data)->value = var.string;
-		}
-		tmp = tmp->next;
+		else if (var.tmp && var.token->key == DQUATES && !var.token->is_herdoc)
+			handl_expand_dquotes(&var);
+		var.tmp = var.tmp->next;
 	}
+	return (flag);
 }

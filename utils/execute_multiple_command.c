@@ -3,54 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_multiple_command.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 16:15:49 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/01 13:26:41 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/14 01:29:24 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/16 23:57:05 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void create_pipe(int pipefd[2])
-{
-	if (pipe(pipefd) == -1)
-	{
-		ft_putstr_fd("Error: pipe failed\n", 2);
-		exit(1);
-	}
-}
-
-void close_pipe(int pipefd[][2], int nb_pipes)
-{
-	int i;
-
-	i = 0;
-	while (i < nb_pipes)
-	{
-		close(pipefd[i][0]);
-		close(pipefd[i][1]);
-		i++;
-	}
-}
-
-void if_herdoc(t_cmd *commands)
-{
-	commands->fd_in = open(commands->file_name, O_RDONLY);
-	if (commands->fd_in == 0)
-	{
-		perror("open");
-		exit(EXIT_FAILURE);
-	}
-	if (dup2(commands->fd_in, STDIN_FILENO) == -1)
-	{
-		perror("dup");
-		exit(EXIT_FAILURE);
-	}
-	close(commands->fd_in);
-}
-
-void if_input_file(t_cmd *commands)
+void	if_input_file(t_cmd *commands)
 {
 	if (commands->fd_in != 0)
 	{
@@ -59,7 +21,8 @@ void if_input_file(t_cmd *commands)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(commands->file_name, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
-			exit(EXIT_FAILURE);
+			g_shell.exit_status = 1;
+			exit(g_shell.exit_status);
 		}
 		else
 		{
@@ -69,7 +32,7 @@ void if_input_file(t_cmd *commands)
 	}
 }
 
-void if_herdoc_or_inputfile(t_cmd *commands)
+void	if_herdoc_or_inputfile(t_cmd *commands)
 {
 	if (commands->heredoc)
 		if_herdoc(commands);
@@ -77,7 +40,7 @@ void if_herdoc_or_inputfile(t_cmd *commands)
 		if_input_file(commands);
 }
 
-void	dup_for_pipes(int pipefd[][2], int i, int nb_pipes)
+void	dup_for_pipes(int **pipefd, int i, int nb_pipes)
 {
 	if (i == 0)
 		dup2(pipefd[i][1], STDOUT_FILENO);
@@ -90,7 +53,8 @@ void	dup_for_pipes(int pipefd[][2], int i, int nb_pipes)
 	}
 }
 
-void merge_dup_pipe_herdoc(int pipefd[][2], int i, int nb_pipes, t_cmd *commands)
+void	merge_dup_pipe_herdoc(int **pipefd, int i,
+	int nb_pipes, t_cmd *commands)
 {
 	dup_for_pipes(pipefd, i, nb_pipes);
 	close_pipe(pipefd, nb_pipes);
@@ -102,64 +66,30 @@ void merge_dup_pipe_herdoc(int pipefd[][2], int i, int nb_pipes, t_cmd *commands
 	}
 }
 
-void wait_for_child(int nb_pipes)
+void	execute_commands_with_pipe(t_list *cmd, t_info *info,
+	int nb_pipes, t_var *var)
 {
-	int i;
+	int	**pipefd;
 
-	i = 0;
-	while (i < nb_pipes + 1)
-	{
-		wait(NULL);
-		i++;
-	}
-}
-
-
-void execute_commands_with_pipe(t_list *cmd, t_info *info, int nb_pipes)
-{
-	int	pipefd[nb_pipes][2];
-
-	info->i = 0;
-	while (info->i < nb_pipes)
-	{
-		create_pipe(pipefd[info->i]);
-		info->i++;
-	}
+	var->nb_pipes = nb_pipes;
+	pipefd = create_pipefd(var->nb_pipes);
+	help_create_pipefd(var, pipefd, info);
 	info->commands = cmd->data;
 	info->i = 0;
-	while (info->i < nb_pipes + 1)
+	while (info->i < var->nb_pipes + 1)
 	{
 		info->pid = fork();
 		if (info->pid == -1)
-		{
-			perror("fork");
-			exit(1);
-		}
-		else if (info->pid == 0)
-		{
-			merge_dup_pipe_herdoc(pipefd, info->i, nb_pipes, info->commands);
-			info->temp = check_if_command_found (info->commands->main_cmd,
-					&info->head_ex);
-			if (is_builin(info->commands) == 1)
-			{
-				builtin_execution(cmd, info, 0);
-				exit(EXIT_SUCCESS);
-			}
-			if (info->commands->main_cmd)
-			{
-				if (execve(info->temp, info->commands->cmds, NULL) == -1)
-				{
-					print_error_cmd(info->commands->main_cmd);
-					exit(EXIT_FAILURE);
-				}
-			}
-			exit(EXIT_SUCCESS);
-		}
+			if (print_error_fork() == -1)
+				return ;
+		if (info->pid == 0)
+			execute3(info, cmd, pipefd, var);
 		info->i++;
 		cmd = cmd->next;
 		if (cmd)
 			info->commands = cmd->data;
 	}
-	close_pipe(pipefd, nb_pipes);
-	wait_for_child(nb_pipes);
+	close_pipe(pipefd, var->nb_pipes);
+	wait_for_child(var->nb_pipes);
+	free_pipefd(pipefd, var->nb_pipes);
 }

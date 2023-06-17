@@ -5,51 +5,57 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/07 19:31:00 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/01 10:43:51 by aben-nei         ###   ########.fr        #
+#    Created: 2023/06/17 16:34:06 by aben-nei          #+#    #+#              #
+#    Updated: 2023/06/17 16:34:08 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 BOLDMAGENTA=\033[1;35m
 BOLDYELLOW=\033[1;33m
 RESET=\033[0m
 YEAR=$(shell date +'%Y')
+# Color definitions
+GREEN = \033[0;32m
+NC = \033[0m
 
 NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Wno-misleading-indentation #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 #  -Wno-misleading-indentation
-# flag sanitiz 
-# -fsanitize=address -g3 -fno-omit-frame-pointer
+# -fsanitize=address
+
 RFLAGS = -lreadline
 
+# SRC built_in
 SOURCE_BUILT_IN = execution/built_in_functions/my_export.c execution/built_in_functions/my_env.c execution/built_in_functions/my_unset.c \
 				execution/built_in_functions/my_pwd.c execution/built_in_functions/my_cd.c execution/built_in_functions/my_echo.c execution/built_in_functions/my_exit.c
 
 # source files
-SRC_DYALI = utils/execution.c utils/utils5.c utils/utils1.c utils/utils_error.c utils/help_cmd_simple.c utils/execute_simple_command.c utils/execute_multiple_command.c execution/help_export.c execution/help_env.c $(SOURCE_BUILT_IN)
-
-
-SRCS = main/main.c parsing/ft_trim_quotes.c parsing/join_args.c utils/help_command_table.c parsing/ft_expand.c parsing/token.c utils/utils.c parsing/ft_token.c parsing/syntex_error.c\
-	parsing/check_quotes.c parsing/rederection.c parsing/heredoc.c parsing/command_table.c $(SRC_DYALI)
+SRC_EXEC = utils/execution.c utils/signals_and_status_code.c utils/utils5.c utils/utils1.c utils/utils_error.c utils/utils6.c utils/utils7.c utils/utils8.c \
+			utils/help_cmd_simple.c utils/execute_simple_command.c utils/execute_multiple_command.c \
+			execution/help_export.c execution/help_exit.c execution/help_env.c execution/help_cd.c execution/check_args.c execution/help_env_1.c execution/help_export_1.c $(SOURCE_BUILT_IN)
+# libft
+LIB = libft/ft_isalpha.c libft/ft_isdigit.c libft/ft_isalnum.c libft/ft_strlen.c \
+	libft/ft_strchr.c libft/ft_atoi.c libft/ft_strdup.c libft/ft_substr.c libft/ft_strjoin.c libft/ft_split.c\
+	libft/ft_itoa.c libft/ft_putstr_fd.c libft/ft_lstnew.c libft/ft_lstadd_front.c libft/ft_lstsize.c\
+	libft/ft_lstlast.c libft/ft_lstadd_back.c libft/ft_lstclear.c libft/ft_strlcpy.c libft/ft_bzero.c libft/ft_memset.c
+# SRC parsing
+SRCS = main/minishell.c main/main_helper.c parsing/ft_trim_quotes.c utils/utils_free.c parsing/join_args.c utils/help_command_table.c parsing/ft_expand.c parsing/token.c utils/utils.c parsing/ft_token.c parsing/syntex_error.c\
+	parsing/check_quotes.c parsing/rederection.c parsing/heredoc.c parsing/command_table.c utils/utils4.c parsing/herdedoc_helper.c parsing/expand_helper.c utils/ft_fill.c parsing/expand_dquotes.c parsing/expand_help.c $(SRC_EXEC) $(LIB)
 
 OBJS = $(SRCS:.c=.o)
 
-LIB = libft/libft.a
-
-# RL_INC = -I $(shell brew --prefix readline)/include
-# RL_LIB = -L $(shell brew --prefix readline)/lib
+RL_INC = -I $(shell brew --prefix readline)/include
+RL_LIB = -L $(shell brew --prefix readline)/lib
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@make -C libft
-	$(CC) $(CFLAGS) $(RFLAGS) $(OBJS) $(LIB) -o $(NAME)
-	@echo -e "\033[32m[OK] \033[0mCompilation done"
+	@$(CC) $(CFLAGS) $(RFLAGS) $(RL_LIB) $(OBJS) -o $(NAME)
 	@clear
+	@echo "\033[32m[OK] \033[0mCompilation done"
 	@printf "$(BOLDMAGENTA)"
 	@printf " __  __ _____ _   _ _____  _____ _    _ ______ _      _      \n"
 	@printf "|  \/  |_   _| \ | |_   _|/ ____| |  | |  ____| |    | |     \n"
@@ -64,32 +70,16 @@ $(NAME): $(OBJS)
 	@echo
 
 %.o: %.c include/minishell.h
-	$(CC) $(CFLAGS) -c $< -o $@
-	@clear	
-	@printf "$(BOLDMAGENTA)"
-	@printf " __  __ _____ _   _ _____  _____ _    _ ______ _      _      \n"
-	@printf "|  \/  |_   _| \ | |_   _|/ ____| |  | |  ____| |    | |     \n"
-	@printf "| \  / | | | |  \| | | | | (___ | |__| | |__  | |    | |     \n"
-	@printf "| |\/| | | | | . \` | | |  \___ \|  __  |  __| | |    | |     \n"
-	@printf "| |  | |_| |_| |\  |_| |_ ____) | |  | | |____| |____| |____ \n"
-	@printf "|_|  |_|_____|_| \_|_____|_____/|_|  |_|______|______|______|\n$(RESET)"
-	@echo
-	@printf "$(BOLDYELLOW)"
-	@printf "                          Copyright (c) $(YEAR) NO_NAME, ahaloui\n"
-	@printf "$(RESET)"
-	@echo
+	@$(CC) $(CFLAGS) $(RL_INC) -c $< -o $@
+	@clear
+	@echo "$(GREEN)Compiled $<$(NC)"
 
 clean:
 	rm -f $(OBJS)
-	make clean -C libft
 
-fclean: clean
+fclean: clean 
 	rm -f $(NAME)
-	make fclean -C libft
 	@clear
-	@echo -e "\033[32m[OK] \033[0mCleaning done"
+	@echo "\033[32m[OK] \033[0mCleaning done"
 
 re: fclean all
-
-
-# banner:

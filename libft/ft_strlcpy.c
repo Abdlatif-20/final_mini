@@ -6,11 +6,11 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 22:34:50 by aben-nei          #+#    #+#             */
-/*   Updated: 2022/10/28 16:27:14 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:55:46 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../include/minishell.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {

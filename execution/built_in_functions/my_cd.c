@@ -3,171 +3,114 @@
 /*                                                        :::      ::::::::   */
 /*   my_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 23:04:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/05/28 02:58:12 by ahaloui          ###   ########.fr       */
+/*   Created: 2023/06/17 18:34:16 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/17 18:34:17 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char *get_path_home(t_export **head_x)
+int	case_of_just_cd(t_info *info, char *path_home)
 {
-	t_export *temp;
-
-	temp = *head_x;
-	while (temp)
+	set_value1(info, "OLDPWD", getcwd(NULL, 0));
+	if (!chdir(path_home))
 	{
-		if (!ft_strcmp(temp->export_var, "HOME"))
-			return (temp->export_value);
-		temp = temp->next;
+		set_value1(info, "PWD", getcwd(NULL, 0));
+		free(path_home);
+		return (1);
 	}
-	return (NULL);
-}
-
-char *get_old_path(t_export **head_x)
-{
-	t_export *temp;
-
-	temp = *head_x;
-	while (temp)
+	else
 	{
-		if (!ft_strcmp(temp->export_var, "OLDPWD"))
-			return (temp->export_value);
-		temp = temp->next;
-	}
-	return (NULL);
-}
-
-char *get_path(t_export **head_x)
-{
-	t_export *temp;
-
-	temp = *head_x;
-	while (temp)
-	{
-		if (!ft_strcmp(temp->export_var, "PWD"))
-			return (temp->export_value);
-		temp = temp->next;
-	}
-	return (NULL);
-}
-void set_value(t_export **head_ex, char *export_var, char *new_value)
-{
-	t_export *temp;
-	
-	temp = *head_ex;
-	while (temp)
-	{
-		if (!ft_strcmp(temp->export_var, export_var))
-			temp->export_value = new_value;
-		temp = temp->next;
+		g_shell.exit_status = 1;
+		ft_putstr_fd("minishell$: cd: ", 2);
+		ft_putstr_fd(path_home, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (free(path_home), 0);
 	}
 }
 
-void init_pwd(t_export **head_ex)
+int	case_of_cd_tilda(t_info *info, char *path_home)
 {
-	t_export *temp;
-
-	temp = *head_ex;
-	while (temp)
+	set_value1(info, "OLDPWD", getcwd(NULL, 0));
+	if (!chdir(path_home))
 	{
-		if (!ft_strcmp(temp->export_var, "PWD"))
-			temp->export_value = NULL;
-		temp = temp->next;
+		set_value1(info, "PWD", getcwd(NULL, 0));
+		free(path_home);
+		return (1);
+	}
+	else
+	{
+		g_shell.exit_status = 1;
+		ft_putstr_fd("minishell$: cd: ", 2);
+		ft_putstr_fd(path_home, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (free(path_home), 0);
 	}
 }
 
-int get_pos(char *str, char c)
+int	help_case_1(char *path_home, t_info *info)
 {
-	int i = 0;
-	while (str[i])
+	if (!path_home)
 	{
-		if (str[i] == c)
-			return (i);
-		i++;
+		printf("minishell$: cd: HOME not set\n");
+		return (free(path_home), 0);
 	}
-	return (i);
+	if (case_of_just_cd(info, path_home))
+		return (1);
+	else
+		return (0);
 }
 
-int my_cd(t_cmd *commands, t_info *info)
+int	help_case_2(t_cmd *commands, t_info *info, char *path_home)
 {
-	int i = 1;
-	static int flag = 1;
-	char *path = commands->cmds[i];
-	char *old_path;
-	
-	if (getcwd(NULL, 0))
-		set_value(&info->head_ex, "PWD", getcwd(NULL, 0));
-	if (commands->main_cmd && !ft_strcmp(commands->main_cmd, "cd") 
-		&& !commands->cmds[1])
+	char	*tmp2;
+	char	*tmp;
+
+	tmp = NULL;
+	tmp2 = NULL;
+	if (if_there_is_tilda(commands->cmds[1]))
 	{
-		path = get_path_home(&info->head_ex);
-		if(!path)
-			return (0);
-		if (chdir(path))
-			return(1);
-			flag = 0;
-	}
-	if (commands->cmds[i] && !ft_strcmp(commands->cmds[i], "~"))
-	{
-		path = get_path_home(&info->head_ex);
-		if(!path)
-			return (0);
-		if (chdir(path))
-			return(1);
-	}
-	else if (commands->cmds[i] && !ft_strcmp(commands->cmds[i], "-"))
-	{
-		if (flag)
-		{
-			printf("minishell$: cd: OLDPWD not set\n");
-		}
+		tmp2 = ft_substr(commands->cmds[1], 1, ft_strlen(commands->cmds[1]));
+		if (case_of_tilda_in_path(info, ft_strjoin(path_home, tmp2)))
+			return (free(tmp2), 1);
 		else
-		{
-			old_path = get_old_path(&info->head_ex);
-			if (!old_path)
-				return (0);
-			if (chdir(old_path))
-				return (1);
-			printf("%s\n", old_path);
-		flag = 0;
-		}
+			return (free(tmp2), 0);
 	}
-	else if (commands->cmds[i])
+	else if (!chdir(commands->cmds[1]))
 	{
-		char *str = ft_substr(path, 0, get_pos(path, '/'));
-		char *temp = ft_substr(path, get_pos(path, '/') + 1, ft_strlen(path) - 1); 
-		if (!ft_strcmp(str, "~"))
-		{
-			path = get_path_home(&info->head_ex);
-			if(!str)
-				return (0);
-			if (chdir(path) || chdir(temp))
-			{
-				printf("minishell$: cd: %s/%s: No such file or directory\n", path, temp);	
-				return (1);
-			}
-			flag = 0;
-		}
-		else if (commands->cmds[i])
-		{ 
-			if (!path)
-				return (0); 
-			else if (chdir(path))
-			{
-				printf("minishell$: cd: %s: No such file or directory\n", path);	
-				return (1);
-			}
-			path = ft_strjoin(get_value(&info->head_ex, "PWD"), "/");
-			// path = ft_strjoin(path, "/");
-			path = ft_strjoin(get_value(&info->head_ex, "PWD"), commands->cmds[i]);
-			path = ft_strjoin(path, "/");
-			set_value(&info->head_ex, "PWD", path);
-			flag = 0;
-		}
+		if (!case_of_remove_directory(commands, info, &tmp, 1))
+			return (free(path_home), 0);
+		return (free(tmp), free(path_home), 1);
 	}
-	set_value(&info->head_ex, "OLDPWD", get_path(&info->head_ex));
-	return (0);
+	else
+	{
+		printf("minishell$: cd: %s: No such file or directory\n",
+			commands->cmds[1]);
+		return (free(path_home), g_shell.exit_status = 1, 0);
+	}	
+}
+
+int	my_cd(t_cmd *commands, t_info *info)
+{
+	char	*path_home;
+
+	path_home = get_path_home(&info->head_ex);
+	if (!ft_strcmp(commands->main_cmd, "cd") && !commands->cmds[1])
+		return (help_case_1(path_home, info));
+	else if (!ft_strcmp(commands->main_cmd, "cd")
+		&& !ft_strcmp(commands->cmds[1], "~"))
+	{
+		if (case_of_cd_tilda(info, path_home))
+			return (1);
+		else
+			return (0);
+	}
+	else if (!ft_strcmp(commands->main_cmd, "cd") && commands->cmds[1])
+	{
+		set_value1(info, "OLDPWD", getcwd(NULL, 0));
+		return (help_case_2(commands, info, path_home));
+	}
+	return (free(path_home), 1);
 }

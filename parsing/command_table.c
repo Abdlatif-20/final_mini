@@ -6,41 +6,42 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/01 07:46:55 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:31:53 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	increment_args(t_list ***args, t_token **token)
+void	increment_args(t_list **args, t_token **token)
 {
-	(**args) = (**args)->next;
-	if (**args)
-		*token = (**args)->data;
+	(*args) = (*args)->next;
+	if (*args)
+		*token = (*args)->data;
 }
 
-void	handel_rederections(t_list **args, t_var *var, t_token **token)
+void	handel_redere(t_list **args, t_var *var, t_token **token, t_env *env)
 {
 	if (*token && (*token)->key == RED_OUT)
 	{
 		rederection_out(*args, &var->fd_out);
-		increment_args(&args, token);
+		increment_args(args, token);
 	}
 	if (*token && (*token)->key == RED_INP)
 	{
 		rederection_in((*args), &var->fd_in, &var->file_name);
-		increment_args(&args, token);
+		increment_args(args, token);
 	}
 	else if (*token && (*token)->key == RED_APP)
 	{
 		rederection_app((*args), &var->fd_out);
-		increment_args(&args, token);
+		increment_args(args, token);
 	}
 	else if (*token && (*token)->key == HEREDOC)
 	{
 		var->heredoc = 1;
-		ft_heredoc((*args), &var->fd_in, &var->file_name);
-		increment_args(&args, token);
+		ft_heredoc((*args), &var->fd_in, &var->file_name, env);
+		var->file_name_herdoc = var->file_name;
+		increment_args(args, token);
 	}
 }
 
@@ -54,38 +55,46 @@ void	skip_pipe(t_list **args, t_list **tmp, t_token *token)
 	}
 }
 
-void	init_var(t_var *var)
+void	command_table_help(t_var *var, t_list *args)
 {
-	var->heredoc = 0;
-	var->fd_in = 0;
-	var->fd_out = 1;
+	var->tmp = args;
+	var->heredoc_names = NULL;
+	var->file_name_herdoc = NULL;
+	var->len = herdoc_count(args);
+	if (var->len > 0)
+	{
+		var->heredoc_names = malloc((herdoc_count(args) + 1) * sizeof(char *));
+		if (!var->heredoc_names)
+			return ;
+		var->heredoc_names[herdoc_count(args)] = NULL;
+	}
 }
 
-void	command_table(t_list *args, t_list **cmd)
+void	command_table(t_list *args, t_list **cmd, t_env *env, t_var	*var)
 {
 	t_token	*token;
-	t_var	var;
+	int		i;
 
-	var.tmp = args;
+	i = 0;
+	command_table_help(var, args);
 	while (args)
 	{
-		init_var(&var);
+		init_var(var);
 		token = args->data;
 		while (args && token->key != PIPE)
 		{
 			if (args && (token->key == RED_OUT || token->key == RED_INP
 					|| token->key == RED_APP || token->key == HEREDOC))
-				handel_rederections(&args, &var, &token);
-			else
 			{
-				args = args->next;
-				if (!args)
-					break ;
-				token = args->data;
+				handel_redere(&args, var, &token, env);
+				if (var->heredoc && var->len > 0)
+					var->heredoc_names[i++] = ft_strdup(var->file_name_herdoc);
 			}
+			else
+				increment_args(&args, &token);
 		}
-		fill_cmd(cmd, var, get_command1(var.tmp), var.heredoc);
+		fill_cmd(cmd, *var, get_command1((*var).tmp, var), (*var).heredoc);
 		if (args)
-			skip_pipe(&args, &var.tmp, token);
+			skip_pipe(&args, &(*var).tmp, token);
 	}
 }

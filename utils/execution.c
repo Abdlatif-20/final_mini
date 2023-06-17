@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/16 01:51:36 by ahaloui           #+#    #+#             */
+/*   Updated: 2023/06/17 18:49:57 by aben-nei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
 
@@ -16,44 +26,50 @@ void	dup_for_builin(t_cmd *commands)
 	}
 }
 
-void	builint_simple(t_cmd *commands, t_info *info)
+int	builint_simple(t_cmd *commands, t_info *info, t_var *var)
 {
 	if (!ft_strcmp(commands->main_cmd, "echo"))
-		my_echo(commands, commands->fd_out);
+		return (check_empty(var), my_echo(commands), 0);
 	else if (!ft_strcmp(commands->main_cmd, "cd"))
-		my_cd(commands, info);
+		return (check_empty(var), my_cd(commands, info), 0);
 	else if (!ft_strcmp(commands->main_cmd, "pwd"))
-		my_pwd(info);
+		return (check_empty(var), my_pwd(info), 0);
 	else if (!ft_strcmp(commands->main_cmd, "exit"))
-		my_exit();
+		return (check_empty(var), my_exit(commands), 0);
 	else if (info->head_en && info->head_ex
-		&& !ft_strcmp(commands->main_cmd, "unset"))
-		my_unset(commands, info);
+		&& !ft_strcmp(commands->main_cmd, "unset") && commands->cmds[1])
+		return (check_empty(var), my_unset(commands, info), 0);
+	return (0);
 }
 
-void	builint_complex(t_cmd *commands, t_info *info)
+int	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 {
-	if ((!ft_strcmp(commands->main_cmd, "export")
-			&& !commands->cmds[1]) || (commands->cmds[1]
-			&& commands->cmds[1][0] == '\0' && !commands->cmds[2]))
-		print_list_export(info);
-	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env")
-		&& !(commands->cmds[1]))
-		print_list_env(info);
-	else if (!ft_strcmp(commands->main_cmd, "export")
-		&& commands->cmds[1])
+	int	nb;
+
+	nb = count_str(commands->cmds);
+	if ((info->head_ex && !ft_strcmp(commands->main_cmd, "export") && nb == 1)
+		|| (var->is_empty_str && nb == 2 && var->flag_bultin == 0))
 	{
-		if (info->head_en && check_export(commands->cmds) == 0)
-			return ;
+		var->flag_bultin = 0;
+		return (print_list_export(info), g_shell.exit_status = EXIT_SUCCESS);
+	}
+	else if (!ft_strcmp(commands->main_cmd, "export") && nb > 1)
+	{
+		if (info->head_en && check_export(commands->cmds, var) == 0)
+			return (g_shell.exit_status = EXIT_FAILURE);
 		if (info->head_en && commands->cmds)
 		{
 			add_export(&info->head_ex, commands->cmds);
 			add_env(&info->head_en, commands->cmds);
+			g_shell.exit_status = EXIT_SUCCESS;
 		}
 	}
+	else if (info->head_en && !ft_strcmp(commands->main_cmd, "env") && nb == 1)
+		print_list_env(info);
+	return (0);
 }
 
-void	builtin_execution(t_list *shell, t_info *info, int flag)
+void	builtin_execution(t_list *shell, t_info *info, int flag, t_var *var)
 {
 	t_cmd	*commands;
 
@@ -64,41 +80,34 @@ void	builtin_execution(t_list *shell, t_info *info, int flag)
 		return ;
 	else if (is_builin(commands))
 	{
-		builint_simple(commands, info);
-		builint_complex(commands, info);
+		builint_simple(commands, info, var);
+		builint_complex(commands, info, var);
 	}
 }
 
-int get_nbr_node(t_list *shell)
-{
-	int i;
-
-	i = 0;
-	while (shell)
-	{
-		i++;
-		shell = shell->next;
-	}
-	return (i);
-}
-
-void	choose_command(t_list *shell, t_info *info)
+void	choose_command(t_list *shell, t_info *info, t_var *var)
 {
 	t_cmd	*commands;
 	int		nb_cmd;
 	int		nb_node;
 
+	if (g_shell.signel_hedoc)
+		return ;
+	info->in = dup(STDIN_FILENO);
+	info->out = dup(STDOUT_FILENO);
 	if (!shell || !shell->data || !info)
 		return ;
 	commands = shell->data;
 	nb_cmd = ft_lstsize(shell);
 	nb_node = get_nbr_node(shell);
 	if (nb_node == 1)
-		execute_commande(commands, info, shell);
-	if (nb_node > 1)
-		execute_commands_with_pipe(shell, info, --nb_cmd);
-	info->in = dup(STDIN_FILENO);
-	info->out = dup(STDOUT_FILENO);
+	{
+		execute_commande(commands, info, shell, var);
+		close(commands->fd_in);
+		close(commands->fd_out);
+	}
+	else if (nb_node > 1)
+		execute_commands_with_pipe(shell, info, --nb_cmd, var);
 	dup2(info->in, STDIN_FILENO);
 	dup2(info->out, STDOUT_FILENO);
 	close(info->in);

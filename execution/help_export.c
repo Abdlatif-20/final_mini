@@ -3,70 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   help_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 19:07:13 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/05/26 01:59:13 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/09 23:54:57 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/16 21:41:09 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int  check_export(char **split)
+void	concatenation_export(t_export **head_ex,
+	char *export_variable, char *new_value)
 {
-	int i;
-	int valid;
+	t_export	*tmp;
 
-	i = 1;
-	valid = 1;
-	
-	
-	while (split[i])
-	{
-		if (split[i][0] == '\0')
-		{
-			i++;
-			continue;
-		}
-		if (check_if_valid_args(split[i]) == false)
-			printf("minishell: export: `%s': not a valid identifier\n", split[i]);
-		i++;
-	}
-	return (valid);
-}
-int check_if_valid_args(char *split)
-{
-	int i = 0;
-	int b = 1;
-
-	if (split[i] && split[i] == '\0')
-		return (1);
-	if (split[i] && !ft_isalpha(split[i]) && split[i] != '_')
-	   return (0);
-	i = i + 1;
-	while (split[i])
-	{
-		if (!ft_isalnum(split[i]))
-		{
-			if (split[i] == '+' && split[i + 1] == '\0' )
-				b = 0;
-			else
-			{
-				if (split[i] == '\0')
-					break;
-				b = 1;
-				break ;
-			}
-		}
-		i++;
-	}  
-	return (b);
-}
-
-void    concatenation_export(t_export **head_ex,char *export_variable, char *new_value)
-{
-   t_export *tmp;
-   
 	tmp = *head_ex;
 	while (tmp)
 	{
@@ -76,41 +26,82 @@ void    concatenation_export(t_export **head_ex,char *export_variable, char *new
 	}
 }
 
-void add_export(t_export **head_ex, char **split)
+int	help_export1(t_export **head_ex, char *export_variable,
+	char *export_value, int concatenate)
 {
-	int i;
-	char *export_variable;
-	char *export_value;
-	int concatenate;
- 
+	if (check_if_export_var_exist(*head_ex, export_variable))
+	{
+		if (concatenate == 1)
+		{
+			concatenation_export(head_ex, export_variable, export_value);
+			return (1);
+		}
+		else
+			remove_export_element(head_ex, export_variable);
+	}
+	return (0);
+}
+
+void	process_export_argument(t_export **head_ex, char *arg)
+{
+	char	*export_variable;
+	char	*export_value;
+	int		concatenate;
+
+	export_variable = get_export_variable(arg);
+	export_value = get_export_value(arg);
+	concatenate = 0;
+	if (export_variable[ft_strlen(export_variable) - 1] == '+')
+	{
+		if (export_variable[ft_strlen(export_variable) - 2] == '+')
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(arg, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			g_shell.exit_status = EXIT_FAILURE;
+			return (free(export_variable), free(export_value));
+		}
+		concatenate = 1;
+		export_variable[ft_strlen(export_variable) - 1] = '\0';
+	}
+	if (help_export1(head_ex, export_variable, export_value, concatenate))
+		return (free(export_variable), free(export_value));
+	add_export_element(export_variable, export_value, head_ex);
+	free(export_variable);
+	free(export_value);
+}
+
+void	add_export(t_export **head_ex, char **split)
+{
+	int		i;
+	char	*arg;
+
 	i = 1;
 	while (split[i])
 	{
-		concatenate = 0;
-		if (split[i][0] == '\0' || (check_if_valid_args(split[i]) == false))
+		arg = get_arg(split[i]);
+		if (split[i][0] == '\0' || check_if_valid_args(arg) == 0)
 		{
+			free(arg);
 			i++;
-			continue;        
+			continue ;
 		}
-		export_value = get_export_value(split[i]);
-		export_variable = get_export_variable(split[i]);
-		if (export_variable[ft_strlen(export_variable) - 1] == '+')
-		{
-			concatenate = 1;
-			export_variable[ft_strlen(export_variable) - 1] = '\0';
-		}
-		if (check_if_export_var_exist(*head_ex, export_variable))
-		{
-			if (concatenate == 1)
-			{
-				concatenation_export(head_ex, export_variable, export_value);
-				i++;
-				continue;
-			}
-			else
-				remove_export_element(head_ex, export_variable);
-		}
-		add_export_element(export_variable, export_value, head_ex);
+		process_export_argument(head_ex, split[i]);
+		free(arg);
 		i++;
+	}
+}
+
+void	free_export(t_export **head_ex)
+{
+	t_export	*tmp;
+
+	while (*head_ex)
+	{
+		tmp = *head_ex;
+		*head_ex = (*head_ex)->next;
+		free(tmp->export_var);
+		free(tmp->export_value);
+		free(tmp);
 	}
 }

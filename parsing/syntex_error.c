@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:47:32 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/05/31 11:44:19 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:36:48 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	check_rederection(t_list **list, t_token *token, int *flag)
 		if (!(*list))
 			return (printf(ERR_NL), 1);
 		if ((*list) && token->key == PIPE)
-			return (printf(ERR_TNKN, token->value), 1);
+			return (printf(ERR_TK, token->value), 1);
 		if ((*list) && token->key != EOFILE && token->key != RED_APP_FILE
 			&& token->key != FILE_INP && token->key != RED_FILE
 			&& token->key != SQUATES && token->key != DQUATES
 			&& token->key != VAR)
-			return (printf(ERR_TNKN, token->value), 1);
+			return (g_shell.exit_status = 258, printf(ERR_TK, token->value), 1);
 			*flag = 1;
 	}
 	return (0);
@@ -55,7 +55,7 @@ int	check_pipes(t_list **list, t_token *token, int *flag)
 		}
 		if (!(*list) || token->key == PIPE)
 		{
-			return (printf(ERR_UNX_TNKN), 1);
+			return (g_shell.exit_status = 258, printf(ERR_UNX_TNKN), 1);
 		}
 		else
 			return (2);
@@ -76,7 +76,7 @@ int	syntex_error(t_list *list)
 	{
 		token = list->data;
 		if (list && token->key == PIPE && !flag)
-			return (printf(ERR_UNX_TNKN), 1);
+			return (g_shell.exit_status = 258, printf(ERR_UNX_TNKN), 1);
 		if (list && check_rederection(&list, token, &flag))
 			return (1);
 		pipe_error = check_pipes(&list, token, &flag);

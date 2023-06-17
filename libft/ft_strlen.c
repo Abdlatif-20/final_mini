@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:59:43 by aben-nei          #+#    #+#             */
-/*   Updated: 2022/10/09 21:23:54 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/16 03:35:23 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../include/minishell.h"
 
 size_t	ft_strlen(const char *str)
 {
