@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:39:07 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 18:49:05 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/17 22:03:02 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_dquotes(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\"')
+		if (str[i] == '\"' || str[i] == '\'')
 			return (1);
 		i++;
 	}
