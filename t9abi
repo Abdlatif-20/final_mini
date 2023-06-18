@@ -397,3 +397,5 @@ signal(SIGINT, SIG_IGN) // segv);
 
 
 export > out | << end > out | cat out
+
+ unset ++++++
