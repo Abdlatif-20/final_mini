@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:01:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 21:11:38 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/18 20:46:17 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ void	print_list_export(t_info *info)
 	tmp = info->head_ex;
 	while (tmp)
 	{
+		if (!ft_strcmp("HOME", tmp->export_var) && info->var->flag_home)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		if (!tmp->export_value)
 		{
 			ft_putstr_fd("declare -x ", 1);

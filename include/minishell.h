@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:53 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 18:49:42 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:53:53 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ typedef struct t_var
 	char	*buffer;
 	int		**pipefd;
 	int		nb_pipes;
+	int		flag_home;
 }				t_var;
 
 typedef struct s_info
@@ -218,11 +219,11 @@ void		execute_commands_with_pipe(t_list *cmd,
 int			check_export(char **split, t_var *var);
 void		concatenation_export(t_export **head_ex, char *export_variable,
 				char *new_value);
-void		add_export(t_export **head_ex, char **split);
+void		add_export(t_export **head_ex, char **split, t_info *info);
 int			check_if_valid_args(char *split);
 
 // file help_env.c
-void		add_env(t_env **head, char **split);
+void		add_env(t_env **head, char **split, t_info *info);
 void		concatenation_env(t_env **head_en, char *env_var, char *new_value);
 //
 

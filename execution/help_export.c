@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:54:57 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 21:41:09 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/18 21:01:13 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	process_export_argument(t_export **head_ex, char *arg)
 	free(export_value);
 }
 
-void	add_export(t_export **head_ex, char **split)
+void	add_export(t_export **head_ex, char **split, t_info *info)
 {
 	int		i;
 	char	*arg;
@@ -80,6 +80,8 @@ void	add_export(t_export **head_ex, char **split)
 	while (split[i])
 	{
 		arg = get_arg(split[i]);
+		if (!ft_strcmp("HOME=", arg) && info->var->flag_home == 1)
+			info->var->flag_home = 0;
 		if (split[i][0] == '\0' || check_if_valid_args(arg) == 0)
 		{
 			free(arg);

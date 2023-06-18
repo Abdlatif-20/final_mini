@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:16 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 18:34:17 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:47:18 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	case_of_cd_tilda(t_info *info, char *path_home)
 
 int	help_case_1(char *path_home, t_info *info)
 {
-	if (!path_home)
+	if (info->var->flag_home == 1)
 	{
 		printf("minishell$: cd: HOME not set\n");
 		return (free(path_home), 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 17:24:38 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/18 19:31:15 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:40:09 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ void	my_unset(t_cmd *cmd, t_info *info)
 			i++;
 			continue ;
 		}
-		remove_env_element(&info->head_en, variable);
-		remove_export_element(&info->head_ex, variable);
-		free(variable);
+		if (ft_strcmp(variable, "HOME") == 0)
+			info->var->flag_home = 1;
+		else
+		{
+			remove_env_element(&info->head_en, variable);
+			remove_export_element(&info->head_ex, variable);
+			free(variable);
+		}
 		i++;
 	}
 }
