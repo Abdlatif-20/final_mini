@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:39:07 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 22:03:02 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:24:29 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,13 @@ int	ft_whitespace(char c)
 		|| c == '\r' || c == '\f' || c == '\v')
 		return (1);
 	return (0);
+}
+
+void	print(t_export *tmp)
+{
+	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd(tmp->export_var, 1);
+	ft_putstr_fd("=\"", 1);
+	ft_putstr_fd(tmp->export_value, 1);
+	ft_putstr_fd("\"\n", 1);
 }

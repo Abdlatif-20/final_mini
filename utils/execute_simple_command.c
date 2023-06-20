@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:53 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/20 17:59:09 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:57:53 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ int	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 	pid_t	pid;
 
 	g_shell.signel_cat = 1;
-	// if (commands->fd_in == -1)
-	// 	return (print_error_file(commands->file_name),
-	// 		g_shell.exit_status = 1, EXIT_FAILURE);
+	if (commands->fd_in == -1)
+		return (print_error_file(commands->file_name),
+			g_shell.exit_status = 1, EXIT_FAILURE);
 	if (is_builin(commands) == 1)
 		return (builtin_execution(shell, info, 1, var), EXIT_SUCCESS);
 	if (commands->main_cmd)

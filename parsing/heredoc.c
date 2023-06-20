@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:38:55 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 16:50:51 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/17 19:22:32 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 	if (((t_token *)args->data)->key == HEREDOC)
 	{
 		name = generate_name();
-		if ((*fd) == -1)
-			return (free(name));
 		(*fd) = open(name, O_RDWR | O_CREAT | O_TRUNC, 0666);
 		ft_free(*file);
 		*file = ft_strdup(name);

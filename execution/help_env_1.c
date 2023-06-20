@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:39:17 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/20 04:30:45 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:49:59 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,13 @@ void	print_list_env(t_info *info)
 	head_en = info->head_en;
 	while (head_en != NULL)
 	{
-		if (!ft_strcmp("HOME", head_en->env_var) && info->var->flag_home)
+		if ((!ft_strcmp("HOME", head_en->env_var) && info->var->flag_home)
+			|| (!ft_strcmp("PATH", head_en->env_var) && info->var->flag_path))
 		{
 			head_en = head_en->next;
 			continue ;
 		}
-		if ((!ft_strcmp("PATH", head_en->env_var)
-				&& info->var->flag_path_ignored)
-			|| (!ft_strcmp("OLDPWD", head_en->env_var)
-				&& info->var->flag_oldpwd))
-		{
-			head_en = head_en->next;
-			continue ;
-		}
-		if (head_en->env_value != NULL)
+		else if (head_en->env_value != NULL)
 		{
 			ft_putstr_fd(head_en->env_var, 1);
 			ft_putstr_fd("=", 1);

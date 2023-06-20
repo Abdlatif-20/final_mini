@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:05 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/20 04:06:39 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:40:17 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_main(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	var->is_empty_str = 0;
 	var->flag_bultin = 0;
 	var->flag_home = 0;
-	var->flag_path_ignored = 0;
+	var->flag_path = 0;
 }
 
 int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)

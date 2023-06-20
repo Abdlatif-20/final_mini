@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:53 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/20 04:13:16 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:25:14 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,7 @@ typedef struct t_var
 	int		**pipefd;
 	int		nb_pipes;
 	int		flag_home;
-	int		flag_path_ignored;
-	int		flag_oldpwd;
+	int		flag_path;
 }				t_var;
 
 typedef struct s_info
@@ -193,6 +192,7 @@ char		*get_export_value(char *value);
 void		add_export_element(char *export_var, char *export_value,
 				t_export **head_ex);
 void		print_list_export(t_info *info);
+void		print(t_export *tmp);
 void		sort_export_list(t_export **head_ex);
 int			check_is_empty_string(char *str);
 int			check_if_export_var_exist(t_export *head_ex, char *export_var);
@@ -385,7 +385,6 @@ void		ft_lst_add_back_env(t_env **head_en, t_env *new);
 void		remove_env_element(t_env **head_en, char *env_var);
 void		add_env_element(char *env_var, char *env_value, t_env **head_en);
 void		print_list_env(t_info *info);
-
 //utils6.c
 char		**create_env(t_info *info);
 void		execute1(t_list *cmd, t_info *info, t_var *var);
@@ -403,7 +402,6 @@ int			get_nbr_node(t_list *shell);
 // execute_multi_command.c
 void		merge_dup_pipe_herdoc(int **pipefd,
 				int i, int nb_pipes, t_cmd *commands);
-void		print_list11(t_list *cmd);
 
 // utils8.c
 void		add_export_ignored(t_info *info);
