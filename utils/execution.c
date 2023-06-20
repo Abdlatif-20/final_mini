@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:36 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 18:49:57 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:26:35 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int	builint_complex(t_cmd *commands, t_info *info, t_var *var)
 			return (g_shell.exit_status = EXIT_FAILURE);
 		if (info->head_en && commands->cmds)
 		{
-			add_export(&info->head_ex, commands->cmds);
-			add_env(&info->head_en, commands->cmds);
+			add_export(&info->head_ex, commands->cmds, info);
+			add_env(&info->head_en, commands->cmds, info);
 			g_shell.exit_status = EXIT_SUCCESS;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:05 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 18:34:07 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:40:17 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	var->is_empty_str = ft_expand(args, (*info).head_en);
 	ft_join_args(args);
 	command_table(*args, cmd, (*info).head_en, var);
+	info->var = var;
 	if ((*cmd) && (*cmd)->data)
 		choose_command((*cmd), info, var);
 	unlink_heredoc(var->heredoc_names, var->len);
@@ -35,6 +36,8 @@ void	init_main(t_list **args, t_list **cmd, t_info *info, t_var *var)
 	var->input = NULL;
 	var->is_empty_str = 0;
 	var->flag_bultin = 0;
+	var->flag_home = 0;
+	var->flag_path = 0;
 }
 
 int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)

@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:38:05 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 16:38:08 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:20:50 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **env)
 		return (printf(ERR_ARG, argv[1]), 0);
 	if (env == NULL || *env == NULL)
 	{
+		var.flag_path = 1;
 		add_export_ignored(&info);
 		add_env_ignored(&info);
 	}

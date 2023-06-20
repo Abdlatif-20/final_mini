@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:01:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/16 21:11:38 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:31:20 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,13 @@ void	print_list_export(t_info *info)
 	tmp = info->head_ex;
 	while (tmp)
 	{
+		if ((!ft_strcmp("HOME", tmp->export_var) && info->var->flag_home)
+			|| (!ft_strcmp("PATH", tmp->export_var) && info->var->flag_path)
+			|| (!ft_strcmp("_", tmp->export_var) && info->var->flag_path))
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		if (!tmp->export_value)
 		{
 			ft_putstr_fd("declare -x ", 1);
@@ -75,13 +82,7 @@ void	print_list_export(t_info *info)
 			ft_putstr_fd("\n", 1);
 		}
 		else
-		{
-			ft_putstr_fd("declare -x ", 1);
-			ft_putstr_fd(tmp->export_var, 1);
-			ft_putstr_fd("=\"", 1);
-			ft_putstr_fd(tmp->export_value, 1);
-			ft_putstr_fd("\"\n", 1);
-		}
+			print(tmp);
 		tmp = tmp->next;
 	}
 }

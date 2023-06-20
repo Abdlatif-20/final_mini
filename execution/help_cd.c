@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:44:31 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/15 01:51:54 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:20:34 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,22 @@
 void	set_value1(t_info *info, char *env_var, char *new_value)
 {
 	t_env	*temp;
+	int		flag;
 
 	temp = info->head_en;
+	flag = 0;
 	while (temp)
 	{
 		if (!ft_strcmp(temp->env_var, env_var))
 		{
 			free(temp->env_value);
 			temp->env_value = new_value;
+			flag = 1;
 		}
 		temp = temp->next;
 	}
+	if (!flag)
+		free(new_value);
 }
 
 char	*get_value2(t_info *info, char *env_var)
