@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:25:43 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/18 21:00:53 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 04:03:13 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	add_env(t_env **head_en, char **split, t_info *info)
 	while (split[i])
 	{
 		arg = get_arg(split[i]);
-		printf("arg = %s  | flag_home = %d\n", arg, info->var->flag_home);
 		if (!ft_strcmp("HOME=", arg) && info->var->flag_home == 1)
 			info->var->flag_home = 0;
 		if (split[i][0] == '\0' || check_if_valid_args(arg) == 0)

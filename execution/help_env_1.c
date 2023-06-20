@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:39:17 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/18 20:44:03 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 04:30:45 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,14 @@ void	print_list_env(t_info *info)
 	while (head_en != NULL)
 	{
 		if (!ft_strcmp("HOME", head_en->env_var) && info->var->flag_home)
+		{
+			head_en = head_en->next;
+			continue ;
+		}
+		if ((!ft_strcmp("PATH", head_en->env_var)
+				&& info->var->flag_path_ignored)
+			|| (!ft_strcmp("OLDPWD", head_en->env_var)
+				&& info->var->flag_oldpwd))
 		{
 			head_en = head_en->next;
 			continue ;

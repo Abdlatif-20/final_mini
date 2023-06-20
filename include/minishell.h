@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:53 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/18 20:53:53 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/20 04:13:16 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ typedef struct t_var
 	int		**pipefd;
 	int		nb_pipes;
 	int		flag_home;
+	int		flag_path_ignored;
+	int		flag_oldpwd;
 }				t_var;
 
 typedef struct s_info
