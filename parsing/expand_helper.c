@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_helper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:27:02 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 00:19:13 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:26:24 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	handel_var(t_token **token, t_var *var, t_env *env, int *flag)
 				&& (*token)->value[var->i + var->len] != '$')
 				var->len++;
 			var->str = ft_substr((*token)->value, var->i, var->len);
+			free((*token)->value);
 			(*token)->value = ft_strdup(var->str);
+			free(var->str);
 		}
 		var->i++;
 		if (ft_isdigit((*token)->value[var->i]))

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:29:42 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/11 13:30:00 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/22 04:13:05 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ void	check_red_out(char *input, t_list **token, int *i)
 			fill_token(token, W_SPACE, ft_substr(input, (*i), len), 0);
 		(*i) += len;
 		len = 0;
-		while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
-			&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
-			&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
-			&& input[(*i) + len] != '|' && input[(*i) + len] != '$')
+		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
+			len = delemeter_quotes(input, i, input[(*i) + len]);
+		else
+			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
+				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
+				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
+				&& input[(*i) + len] != '|')
 				len++;
 		if (len > 0)
 			fill_token(token, RED_FILE, ft_substr(input, (*i), len), 0);
@@ -53,11 +56,14 @@ void	check_red_in(char *input, t_list **token, int *i)
 			fill_token(token, W_SPACE, ft_substr(input, (*i), len), 0);
 		(*i) += len;
 		len = 0;
-		while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
-			&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
-			&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
-			&& input[(*i) + len] != '|' && input[(*i) + len] != '$')
-			len++;
+		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
+			len = delemeter_quotes(input, i, input[(*i) + len]);
+		else
+			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
+				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
+				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
+				&& input[(*i) + len] != '|')
+				len++;
 		if (len > 0)
 			fill_token(token, FILE_INP, ft_substr(input, (*i), len), 0);
 		(*i) += len;
@@ -79,12 +85,14 @@ void	check_red_app(char *input, t_list **token, int *i)
 			fill_token(token, W_SPACE, ft_substr(input, (*i), len), 0);
 		(*i) += len;
 		len = 0;
-		while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
-			&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
-			&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
-			&& input[(*i) + len] != '|' && input[(*i) + len] != '$'
-			&& ft_isalnum(input[(*i) + len]))
-			len++;
+		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
+			len = delemeter_quotes(input, i, input[(*i) + len]);
+		else
+			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
+				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
+				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
+				&& input[(*i) + len] != '|')
+				len++;
 		if (len > 0)
 			fill_token(token, RED_APP_FILE, ft_substr(input, (*i), len), 0);
 		(*i) += len;
@@ -106,10 +114,14 @@ void	check_red_heredoc(char *input, t_list **token, int *i)
 			fill_token(token, W_SPACE, ft_substr(input, (*i), len), 1);
 		(*i) += len;
 		len = 0;
-		while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
-			&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
-			&& input[(*i) + len] != '|')
-			len++;
+		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
+			len = delemeter_quotes(input, i, input[(*i) + len]);
+		else
+			while (input[(*i) + len] && input[(*i) + len] != '\''
+				&& input[(*i) + len] != '\"' && input[(*i) + len] != '<'
+				&& input[(*i) + len] != '>' && input[(*i) + len] != '|'
+				&& !ft_whitespace(input[(*i) + len]))
+					len++;
 		if (len > 0)
 			fill_token(token, EOFILE, ft_substr(input, (*i), len), 1);
 		(*i) += len;

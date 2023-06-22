@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rederection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/15 01:31:29 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/22 04:02:38 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	rederection_in(t_list *args, int *fd_in, char **file_name)
 	{
 		increment_args(&args, &token);
 		skip_white_spaces(&args, &token);
-		if (token && token->key == FILE_INP)
+		if (token && (token->key == FILE_INP || token->key == SQUATES
+				|| token->key == DQUATES))
 		{
 			if (*fd_in == -1)
 				return (1);

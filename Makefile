@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+         #
+#    By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 16:34:06 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/20 19:30:57 by ahaloui          ###   ########.fr        #
+#    Updated: 2023/06/21 16:56:35 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 RFLAGS = -lreadline
 

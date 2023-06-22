@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:30:35 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/12 15:20:15 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:06:19 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	ft_trim_quotes(t_list **args)
 		}
 		tmp[var.j] = '\0';
 		free(((t_token *)(current->data))->value);
-		((t_token *)(current->data))->value = tmp;
+		((t_token *)(current->data))->value = ft_strdup(tmp);
+		free(tmp);
 		current = current->next;
 	}
 }

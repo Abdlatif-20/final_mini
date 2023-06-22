@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:53 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/20 19:25:14 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/22 03:58:22 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ typedef struct s_cmd
 	char		*main_cmd;
 	char		**cmds;
 	int			fd_in;
-	int			fd_in_flag;
 	int			fd_out;
 	char		*file_name;
 	int			heredoc;
@@ -124,6 +123,7 @@ typedef struct t_var
 	int		flag_bultin;
 	int		len;
 	int		i;
+	int		flag_red;
 	int		j;
 	int		flag;
 	int		fd_in;
@@ -284,6 +284,7 @@ void		check_quote(char *input, t_list **token, t_var *var, int len);
 void		check_word(char *input, t_list **token, t_var *var, int len);
 void		check_pipe(char *input, t_list **token, int *i, int *flag);
 void		check_variable(char *input, t_list **token, int *i);
+int			delemeter_quotes(char *str, int *i, char c);
 /*-----------------------------------------------------*/
 
 /*------------------- syntex_error --------------------------*/
@@ -422,5 +423,6 @@ int			help_case_1(char *path_home, t_info *info);
 int			help_case_2(t_cmd *commands, t_info *info, char *path_home);
 int			my_cd(t_cmd *commands, t_info *info);
 char		*get_path_home(t_export **head_ex);
+void		print_list1(t_list *cmd);
 
 #endif

@@ -3,14 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   main_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:05 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/20 18:40:17 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/22 04:13:26 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// void	print_list1(t_list *cmd)
+// {
+// 	if (!cmd)
+// 		return ;
+// 	t_list *tmp = cmd;
+// 	t_token *token = cmd->data;
+// 	while (tmp)
+// 	{
+// 		token = tmp->data;
+// 		printf("key = [%d] | value = [%s]\n", token->key, token->value);
+// 		tmp = tmp->next;
+// 	}
+// }
+
+// void	print_list11(t_list *cmd)
+// {
+// 	if (!cmd)
+// 		return ;
+// 	t_list *tmp = cmd;
+// 	t_cmd *token = cmd->data;
+// 	while (tmp)
+// 	{
+// 		int	i = 0;
+// 		token = tmp->data;
+// 		while (tmp && token->cmds[i] && token->cmds)
+// 		{
+// 			printf("cmd = [%s]\n",token->cmds[i]);
+// 			i++;
+// 		}
+// 		printf ("main_cmd = [%s]\n", token->main_cmd);
+// 		printf ("fd_in = [%d]\n", token->fd_in);
+// 		printf ("fd_out = [%d]\n", token->fd_out);
+// 		printf("file_name = [%s]\n", token->file_name);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 void	main_helper(t_list **args, t_list **cmd, t_info *info, t_var *var)
 {
@@ -56,6 +93,7 @@ int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)
 		free(var->input);
 		return (3);
 	}
+	// print_list1(*args);
 	main_helper(args, cmd, info, var);
 	free (var->input);
 	return (0);

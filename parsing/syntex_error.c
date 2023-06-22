@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:47:32 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/08 18:36:48 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/22 02:18:16 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	check_pipes(t_list **list, t_token *token, int *flag)
 {
 	if ((*list) && token->key == PIPE && token->flag_quote == 0)
 	{
+		if (ft_strlen(token->value) > 1)
+			return (g_shell.exit_status = 258, printf(ERR_TK, "||"), 1);
 		(*list) = (*list)->next;
 		if ((*list))
 			token = (*list)->data;

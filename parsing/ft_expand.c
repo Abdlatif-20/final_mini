@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:34:30 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 16:34:32 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/22 03:58:43 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	init_variable(t_var *var, char *name)
 {
 	var->i = 0;
 	var->j = 0;
-	var->flag = 0;
 	var->end = ft_strlen(name) - 1;
 	var->str = (char *)malloc(ft_strlen(name) + 1);
 }
@@ -34,9 +33,7 @@ char	*get_variable_name(char *name)
 		&& name[var.i] != ' ' && var.i <= var.end)
 	{
 		var.str[var.j++] = name[var.i++];
-		var.flag = 1;
 	}
-	if (var.flag)
 		var.str[var.j] = '\0';
 	return (var.str);
 }
