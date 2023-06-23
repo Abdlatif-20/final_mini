@@ -6,7 +6,7 @@
 /*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 17:24:38 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/20 19:30:08 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/23 02:48:55 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ void	help_unset(t_info *info, char *variable)
 {
 	remove_env_element(&info->head_en, variable);
 	remove_export_element(&info->head_ex, variable);
+}
+
+void print_unset_error(char *variable)
+{
+	ft_putstr_fd("minishell: unset: `", 2);
+	ft_putstr_fd(variable, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
 void	my_unset(t_cmd *cmd, t_info *info)
@@ -30,13 +37,12 @@ void	my_unset(t_cmd *cmd, t_info *info)
 	while (cmd->cmds[++i])
 	{
 		variable = get_env_variable(cmd->cmds[i]);
-		if (check_if_valid_args(cmd->cmds[i]) == 0)
+		if (check_if_valid_args(cmd->cmds[i]) == 0 || variable[0] == '\0' )
 		{
-			ft_putstr_fd("minishell: unset: `", 2);
-			ft_putstr_fd(cmd->cmds[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			print_unset_error(cmd->cmds[i]);
 			free(variable);
-			i++;
+			if (check_if_valid_args(cmd->cmds[i]) == 0)
+				i++;
 			continue ;
 		}
 		if (ft_strcmp(variable, "HOME") == 0)
