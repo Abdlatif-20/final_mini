@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:31:15 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/17 16:31:53 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 03:48:01 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handel_redere(t_list **args, t_var *var, t_token **token, t_env *env)
 {
 	if (*token && (*token)->key == RED_OUT)
 	{
-		rederection_out(*args, &var->fd_out);
+		rederection_out(*args, &var->fd_out, var);
 		increment_args(args, token);
 	}
 	if (*token && (*token)->key == RED_INP)
@@ -39,7 +39,8 @@ void	handel_redere(t_list **args, t_var *var, t_token **token, t_env *env)
 	else if (*token && (*token)->key == HEREDOC)
 	{
 		var->heredoc = 1;
-		ft_heredoc((*args), &var->fd_in, &var->file_name, env);
+		var->env = env;
+		ft_heredoc((*args), &var->fd_in, &var->file_name, var);
 		var->file_name_herdoc = var->file_name;
 		increment_args(args, token);
 	}

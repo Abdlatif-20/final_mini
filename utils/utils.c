@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/21 16:23:19 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 03:22:04 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ void	commands_helper(t_list **args, t_token *token, t_var *var)
 			|| token->key == VAR))
 	{
 		if (!var->flag)
+		{
 			var->cmd[var->i++] = ft_strdup(token->value);
+		}
 		(*args) = (*args)->next;
 		if (*args)
 			token = (*args)->data;
@@ -74,6 +76,7 @@ char	**get_command1(t_list *args, t_var *var)
 	while (args)
 	{
 		token = args->data;
+		// printf("token->value = [%s]\n", token->value);
 		check_red(&args, token, var);
 		if (token->key == PIPE)
 			break ;

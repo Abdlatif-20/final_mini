@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:38:29 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/22 04:00:16 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 02:22:55 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,16 @@ void	unlink_heredoc(char **file_names, int size)
 	}
 }
 
-int	delemeter_quotes(char *str, int *i, char c)
+int	delemeter_quotes(char *str, int *i, char c, int *flag)
 {
 	int	j;
 
 	j = 1;
 	while (str[(*i) + j] && str[(*i) + j] != c)
+	{
+		if (str[(*i) + j] == '$')
+			*flag = 1;
 		j++;
+	}
 	return (++j);
 }

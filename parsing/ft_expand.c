@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:34:30 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/22 03:58:43 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 03:24:32 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_variable1(t_env **env_tmp, t_env *env, t_var *var)
 	var->env = env;
 }
 
-int	ft_expand(t_list **list, t_env *env)
+int	ft_expand(t_list **list, t_env *env, t_var *v)
 {
 	t_var		var;
 	int			flag;
@@ -71,12 +71,14 @@ int	ft_expand(t_list **list, t_env *env)
 	while (var.tmp)
 	{
 		var.token = var.tmp->data;
-		if (var.tmp && var.token->key == VAR && var.token->is_herdoc == 0)
+		if ((var.tmp && var.token->key == VAR && !var.token->is_herdoc)
+			|| (v->flag_expand && var.token->key == RED_FILE))
 		{
 			if (handel_var(&var.token, &var, var.env, &flag) == 2)
 				continue ;
 		}
-		else if (var.tmp && var.token->key == DQUATES && !var.token->is_herdoc)
+		else if ((var.tmp && var.token->key == DQUATES && !var.token->is_herdoc)
+			|| (v->flag_expand && var.token->key == RED_FILE))
 			handl_expand_dquotes(&var);
 		var.tmp = var.tmp->next;
 	}

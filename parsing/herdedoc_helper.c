@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdedoc_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:58:57 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/22 03:57:20 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 21:38:22 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	heredoc_help(char **input, t_list **args, t_env *env, char *name)
 {
 	t_var	var;
 
+	(void)env;
 	var.tmp = NULL;
 	var.flag = 0;
 	var.token = ((t_token *)(*args)->data);
@@ -45,7 +46,7 @@ int	heredoc_help(char **input, t_list **args, t_env *env, char *name)
 			fill_token(&var.tmp, DQUATES, *input, 0);
 			var.flag = 1;
 		}
-		ft_expand(&var.tmp, env);
+		ft_expand(&var.tmp, env, &var);
 		if (!var.flag)
 			ft_free(*input);
 			*input = get_value_heredoc(var.tmp, *input);
@@ -64,21 +65,22 @@ void	add_to_buffer(char **buffer, char *input)
 	*buffer = ft_strjoin(*buffer, "\n");
 }
 
-int	ft_break_while(t_var *var, int *fd, char *name)
+int	ft_break_while(t_var *var, int *fd, char *name, t_var *v)
 {
 	(void)name;
-	if (!var->input)
+	if (!var->input || (v->flag_herdoc && var->input[0] == '\0'))
 	{
 		if (var->buffer)
 			write(*fd, var->buffer, ft_strlen(var->buffer));
 		ft_free(var->buffer);
 		free(var->input);
+		v->flag_herdoc = 0;
 		return (1);
 	}
 	return (0);
 }
 
-void	heredoc_helper(t_list **args, char *name, int *fd, t_env *env)
+void	heredoc_helper(t_list **args, char *name, int *fd, t_var *v)
 {
 	t_var	var;
 
@@ -88,9 +90,9 @@ void	heredoc_helper(t_list **args, char *name, int *fd, t_env *env)
 		rl_event_hook = get_0;
 		signal(SIGINT, handel);
 		var.input = readline("> HEREDOC$ ");
-		if (ft_break_while(&var, fd, name))
+		if (ft_break_while(&var, fd, name, v))
 			break ;
-		else if (heredoc_help(&var.input, args, env, name) == 2)
+		else if (heredoc_help(&var.input, args, v->env, name) == 2)
 		{
 			if (var.buffer)
 			{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:38:55 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/17 19:22:32 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 21:38:00 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	handel(int SIG)
 	g_shell.signel_hedoc = 1;
 }
 
-void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
+void	ft_heredoc(t_list *args, int *fd, char **file, t_var *v)
 {
 	char	*name;
 
@@ -60,7 +60,9 @@ void	ft_heredoc(t_list *args, int *fd, char **file, t_env *env)
 			return ;
 		if (((t_token *)args->data)->key == W_SPACE)
 				args = args->next;
-		heredoc_helper(&args, name, fd, env);
+		if (((t_token *)args->data)->value[0] == '\0')
+			v->flag_herdoc = 1;
+		heredoc_helper(&args, name, fd, v);
 		free(name);
 	}
 }
