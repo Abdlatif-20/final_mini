@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:05 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/24 03:54:18 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:29:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	init_main(t_list **args, t_list **cmd, t_info *info, t_var *var)
 
 int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)
 {
+	(void)info;
+	(void)cmd;
 	add_history(var->input);
 	if (check_quotes(var->input))
 	{

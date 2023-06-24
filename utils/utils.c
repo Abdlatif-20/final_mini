@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:32:47 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/24 03:22:04 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:22:40 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ char	**get_command1(t_list *args, t_var *var)
 	while (args)
 	{
 		token = args->data;
-		// printf("token->value = [%s]\n", token->value);
 		check_red(&args, token, var);
 		if (token->key == PIPE)
 			break ;

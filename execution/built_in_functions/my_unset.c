@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 17:24:38 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/23 02:48:55 by ahaloui          ###   ########.fr       */
+/*   Updated: 2023/06/24 22:46:51 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	help_unset(t_info *info, char *variable)
 	remove_export_element(&info->head_ex, variable);
 }
 
-void print_unset_error(char *variable)
+void	print_unset_error(char *variable)
 {
 	ft_putstr_fd("minishell: unset: `", 2);
 	ft_putstr_fd(variable, 2);

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:29:42 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/24 04:01:07 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:26:54 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,7 @@ void	check_red_out(char *input, t_list **token, int *i, int *flag)
 		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
 			len = delemeter_quotes(input, i, input[(*i) + len], flag);
 		else
-		{
-			if (input[(*i) + len] == '$')
-				*flag = 1;
-			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
-				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
-				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
-				&& input[(*i) + len] != '|')
-				len++;
-		}
+			len = red_out(input, i, flag);
 		if (len > 0)
 			fill_token(token, RED_FILE, ft_substr(input, (*i), len), 0);
 		(*i) += len;
@@ -63,15 +55,7 @@ void	check_red_in(char *input, t_list **token, int *i, int *flag)
 		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
 			len = delemeter_quotes(input, i, input[(*i) + len], flag);
 		else
-		{
-			if (input[(*i) + len] == '$')
-				*flag = 1;
-			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
-				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
-				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
-				&& input[(*i) + len] != '|')
-				len++;
-		}
+			len = red_in(input, i, flag);
 		if (len > 0)
 			fill_token(token, FILE_INP, ft_substr(input, (*i), len), 0);
 		(*i) += len;
@@ -96,15 +80,7 @@ void	check_red_app(char *input, t_list **token, int *i, int *flag)
 		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
 			len = delemeter_quotes(input, i, input[(*i) + len], flag);
 		else
-		{
-			if (input[(*i) + len] == '$')
-				*flag = 1;
-			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
-				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
-				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
-				&& input[(*i) + len] != '|')
-				len++;
-		}
+			len = red_app(input, i, flag);
 		if (len > 0)
 			fill_token(token, RED_APP_FILE, ft_substr(input, (*i), len), 0);
 		(*i) += len;
@@ -130,11 +106,7 @@ void	check_red_heredoc(char *input, t_list **token, int *i)
 		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
 			len = delemeter_quotes(input, i, input[(*i) + len], &flag);
 		else
-			while (input[(*i) + len] && input[(*i) + len] != '\''
-				&& input[(*i) + len] != '\"' && input[(*i) + len] != '<'
-				&& input[(*i) + len] != '>' && input[(*i) + len] != '|'
-				&& !ft_whitespace(input[(*i) + len]))
-					len++;
+			len = red_heredoc(input, i);
 		if (len > 0)
 			fill_token(token, EOFILE, ft_substr(input, (*i), len), 1);
 		(*i) += len;

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:51:53 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/24 02:41:58 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 00:13:33 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,12 @@ int	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 			print_error_fork();
 		signal(SIGINT, SIG_IGN);
 		if (pid == 0)
+		{
 			if (commands->fd_in != 404 && commands->fd_out != 404)
 				execute_child_process(commands, info, var);
+			else
+				exit(EXIT_SUCCESS);
+		}
 		if (pid != 0)
 		{
 			waitpid(pid, &g_shell.exit_status, 0);

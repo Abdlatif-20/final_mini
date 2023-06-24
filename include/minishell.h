@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:53 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/24 03:49:59 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:26:37 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,11 @@ void		check_word(char *input, t_list **token, t_var *var, int len);
 void		check_pipe(char *input, t_list **token, int *i, int *flag);
 void		check_variable(char *input, t_list **token, int *i);
 int			delemeter_quotes(char *str, int *i, char c, int *flag);
+int			red_out(char *input, int *i, int *flag);
+int			red_in(char *input, int *i, int *flag);
+int			red_app(char *input, int *i, int *flag);
+int			red_heredoc(char *input, int *i);
+
 /*-----------------------------------------------------*/
 
 /*------------------- syntex_error --------------------------*/

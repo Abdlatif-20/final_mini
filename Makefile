@@ -6,7 +6,7 @@
 #    By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 16:34:06 by aben-nei          #+#    #+#              #
-#    Updated: 2023/06/24 04:01:56 by aben-nei         ###   ########.fr        #
+#    Updated: 2023/06/24 22:54:02 by aben-nei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ LIB = libft/ft_isalpha.c libft/ft_isdigit.c libft/ft_isalnum.c libft/ft_strlen.c
 	libft/ft_lstlast.c libft/ft_lstadd_back.c libft/ft_lstclear.c libft/ft_strlcpy.c libft/ft_bzero.c libft/ft_memset.c
 # SRC parsing
 SRCS = main/minishell.c main/main_helper.c parsing/ft_trim_quotes.c utils/utils_free.c parsing/join_args.c utils/help_command_table.c parsing/ft_expand.c parsing/token.c utils/utils.c parsing/ft_token.c parsing/syntex_error.c\
-	parsing/check_quotes.c parsing/rederection.c parsing/heredoc.c parsing/command_table.c utils/utils4.c parsing/herdedoc_helper.c parsing/expand_helper.c utils/ft_fill.c parsing/expand_dquotes.c parsing/expand_help.c $(SRC_EXEC) $(LIB)
+		parsing/check_quotes.c parsing/rederection.c parsing/heredoc.c parsing/command_table.c utils/utils4.c parsing/herdedoc_helper.c \
+		parsing/expand_helper.c utils/ft_fill.c parsing/expand_dquotes.c parsing/expand_help.c parsing/token_helper.c $(SRC_EXEC) $(LIB)
 
 OBJS = $(SRCS:.c=.o)
 
