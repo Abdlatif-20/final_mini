@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rederection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/22 04:02:38 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 03:33:05 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	check_red_error(int **fd)
 	return (0);
 }
 
-int	rederection_out(t_list *args, int *fd_out)
+int	rederection_out(t_list *args, int *fd_out, t_var *var)
 {
 	t_token	*token;
 
@@ -101,16 +101,20 @@ int	rederection_out(t_list *args, int *fd_out)
 		skip_white_spaces(&args, &token);
 		if (token && token->key == RED_FILE)
 		{
-			if (token->value[0])
+			if (token->value[0] == '\0' && var->is_empty_str)
+				return (*fd_out = 404, printf(ERR_AMBG, token->value), 1);
+			else if (token->value[0])
 				*fd_out = open(token->value, O_CREAT | O_RDWR | O_TRUNC, 0777);
 			if (check_red_error(&fd_out))
 				return (101);
+			else
+				return (*fd_out = 404, printf("minishell: no such file or directory:\n"), 1);
 			args = args->next;
 			if (args)
 				token = args->data;
 		}
-		else
-			return (*fd_out = 404, printf(ERR_AMBG, token->value), 1);
+		// else
+		// 	return (*fd_out = 404, printf(ERR_AMBG, token->value), 1);
 	}
 	return (0);
 }

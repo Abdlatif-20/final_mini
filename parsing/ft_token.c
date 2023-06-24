@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:29:42 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/22 04:13:05 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 04:01:07 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	check_red_out(char *input, t_list **token, int *i)
+void	check_red_out(char *input, t_list **token, int *i, int *flag)
 {
 	int	len;
 
@@ -28,20 +28,24 @@ void	check_red_out(char *input, t_list **token, int *i)
 		(*i) += len;
 		len = 0;
 		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
-			len = delemeter_quotes(input, i, input[(*i) + len]);
+			len = delemeter_quotes(input, i, input[(*i) + len], flag);
 		else
+		{
+			if (input[(*i) + len] == '$')
+				*flag = 1;
 			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
 				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
 				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
 				&& input[(*i) + len] != '|')
 				len++;
+		}
 		if (len > 0)
 			fill_token(token, RED_FILE, ft_substr(input, (*i), len), 0);
 		(*i) += len;
 	}
 }
 
-void	check_red_in(char *input, t_list **token, int *i)
+void	check_red_in(char *input, t_list **token, int *i, int *flag)
 {
 	int	len;
 
@@ -57,20 +61,24 @@ void	check_red_in(char *input, t_list **token, int *i)
 		(*i) += len;
 		len = 0;
 		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
-			len = delemeter_quotes(input, i, input[(*i) + len]);
+			len = delemeter_quotes(input, i, input[(*i) + len], flag);
 		else
+		{
+			if (input[(*i) + len] == '$')
+				*flag = 1;
 			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
 				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
 				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
 				&& input[(*i) + len] != '|')
 				len++;
+		}
 		if (len > 0)
 			fill_token(token, FILE_INP, ft_substr(input, (*i), len), 0);
 		(*i) += len;
 	}	
 }
 
-void	check_red_app(char *input, t_list **token, int *i)
+void	check_red_app(char *input, t_list **token, int *i, int *flag)
 {
 	int	len;
 
@@ -86,13 +94,17 @@ void	check_red_app(char *input, t_list **token, int *i)
 		(*i) += len;
 		len = 0;
 		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
-			len = delemeter_quotes(input, i, input[(*i) + len]);
+			len = delemeter_quotes(input, i, input[(*i) + len], flag);
 		else
+		{
+			if (input[(*i) + len] == '$')
+				*flag = 1;
 			while (input[(*i) + len] && !ft_whitespace(input[(*i) + len])
 				&& input[(*i) + len] != '\"' && input[(*i) + len] != '\''
 				&& input[(*i) + len] != '<' && input[(*i) + len] != '>'
 				&& input[(*i) + len] != '|')
 				len++;
+		}
 		if (len > 0)
 			fill_token(token, RED_APP_FILE, ft_substr(input, (*i), len), 0);
 		(*i) += len;
@@ -102,6 +114,7 @@ void	check_red_app(char *input, t_list **token, int *i)
 void	check_red_heredoc(char *input, t_list **token, int *i)
 {
 	int	len;
+	int	flag;
 
 	if (input[(*i)] && input[(*i)] == '<' && input[(*i) + 1] == '<')
 	{
@@ -115,7 +128,7 @@ void	check_red_heredoc(char *input, t_list **token, int *i)
 		(*i) += len;
 		len = 0;
 		if (input[(*i) + len] == '\"' || input[(*i) + len] == '\'')
-			len = delemeter_quotes(input, i, input[(*i) + len]);
+			len = delemeter_quotes(input, i, input[(*i) + len], &flag);
 		else
 			while (input[(*i) + len] && input[(*i) + len] != '\''
 				&& input[(*i) + len] != '\"' && input[(*i) + len] != '<'
@@ -128,7 +141,7 @@ void	check_red_heredoc(char *input, t_list **token, int *i)
 	}
 }
 
-void	get_token(char *input, t_list **token)
+void	get_token(char *input, t_list **token, int *flag_expand)
 {
 	t_var	var;
 
@@ -141,9 +154,9 @@ void	get_token(char *input, t_list **token)
 		get_flags(input, token, &var);
 		check_pipe(input, token, &var.i, &var.flag);
 		check_quote(input, token, &var, 0);
-		check_red_out(input, token, &var.i);
-		check_red_in(input, token, &var.i);
-		check_red_app(input, token, &var.i);
+		check_red_out(input, token, &var.i, flag_expand);
+		check_red_in(input, token, &var.i, flag_expand);
+		check_red_app(input, token, &var.i, flag_expand);
 		check_red_heredoc(input, token, &var.i);
 		check_variable(input, token, &var.i);
 	}

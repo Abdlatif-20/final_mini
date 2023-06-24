@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:53 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/22 03:58:22 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 03:49:59 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ typedef struct t_var
 {
 	char	**heredoc_names;
 	int		flag_bultin;
+	int		flag_expand;
+	int		flag_herdoc;
 	int		len;
 	int		i;
 	int		flag_red;
@@ -269,22 +271,22 @@ void		ft_lstclear(t_list **lst);
 /*-----------------------------------------------*/
 
 /*--------------------------------- heredoc ---------------------------*/
-void		ft_heredoc(t_list *args, int *fd, char **file, t_env *env);
-void		heredoc_helper(t_list **args, char *name, int *fd, t_env *env);
+void		ft_heredoc(t_list *args, int *fd, char **file, t_var *v);
+void		heredoc_helper(t_list **args, char *name, int *fd, t_var *v);
 int			heredoc_help(char **input, t_list **args, t_env *env, char *name);
 int			herdoc_count(t_list *args);
 int			get_0(void);
 void		handel(int SIG);
 /*--------------------------------------------------------------------*/
 /*---------------------- token --------------------*/
-void		get_token(char *input, t_list **token);
+void		get_token(char *input, t_list **token, int *flag_expand);
 void		fill_white_space(char *input, t_list **token, t_var *var);
 void		get_flags(char *input, t_list **token, t_var *var);
 void		check_quote(char *input, t_list **token, t_var *var, int len);
 void		check_word(char *input, t_list **token, t_var *var, int len);
 void		check_pipe(char *input, t_list **token, int *i, int *flag);
 void		check_variable(char *input, t_list **token, int *i);
-int			delemeter_quotes(char *str, int *i, char c);
+int			delemeter_quotes(char *str, int *i, char c, int *flag);
 /*-----------------------------------------------------*/
 
 /*------------------- syntex_error --------------------------*/
@@ -298,7 +300,7 @@ void		ft_join_args(t_list **args);
 
 /*------------------ expand -------------------------------*/
 
-int			ft_expand(t_list **list, t_env *env);
+int			ft_expand(t_list **list, t_env *env, t_var *v);
 int			handel_var(t_token **token, t_var *var, t_env *env, int *flag);
 int			ft_expender_help(t_token **token, t_env *env, t_var *var,
 				int *flag);
@@ -330,7 +332,7 @@ void		free_heredocs(char **array, int size);
 /*----------------------- command table ---------------------------------*/
 char		*skip_whitespace(char *input);
 int			ft_whitespace(char c);
-int			rederection_out(t_list *args, int *fd_out);
+int			rederection_out(t_list *args, int *fd_out, t_var *var);
 int			rederection_in(t_list *args, int *fd_in, char **file_name);
 int			rederection_app(t_list *args, int *fd_out);
 void		fill_token(t_list **args, int token, char *word, int is_heredoce);
