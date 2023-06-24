@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:05 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/22 04:13:26 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/24 01:59:29 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	main_helper2(t_list **args, t_list **cmd, t_info *info, t_var *var)
 		free(var->input);
 		return (3);
 	}
-	// print_list1(*args);
 	main_helper(args, cmd, info, var);
 	free (var->input);
 	return (0);
