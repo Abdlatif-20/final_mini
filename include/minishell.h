@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:53 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/25 02:12:25 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 03:45:23 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,6 +349,8 @@ int			allocate_commande(t_list *args);
 void		init_var(t_var *var);
 int			check_dquotes(char *str);
 char		**get_command1(t_list *args, t_var *var);
+void		help_command_table(t_var *var, t_list **args,
+				t_token **token, t_env *env);
 /*------------------------------------------------------------------------*/
 // utils
 // int		count_words_me(char *str, char c);
@@ -431,6 +433,5 @@ int			help_case_1(char *path_home, t_info *info);
 int			help_case_2(t_cmd *commands, t_info *info, char *path_home);
 int			my_cd(t_cmd *commands, t_info *info);
 char		*get_path_home(t_export **head_ex);
-void		print_list1(t_list *cmd);
 
 #endif

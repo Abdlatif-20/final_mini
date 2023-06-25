@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 22:48:59 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/25 00:13:20 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 03:44:42 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,18 @@ int	red_heredoc(char *input, int *i)
 		&& !ft_whitespace(input[(*i) + len]))
 		len++;
 	return (len);
+}
+
+int	delemeter_quotes(char *str, int *i, char c, int *flag)
+{
+	int	j;
+
+	j = 1;
+	while (str[(*i) + j] && str[(*i) + j] != c)
+	{
+		if (str[(*i) + j] == '$')
+			*flag = 1;
+		j++;
+	}
+	return (++j);
 }

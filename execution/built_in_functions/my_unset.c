@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 00:19:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/25 00:19:29 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 02:47:12 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	my_unset(t_cmd *cmd, t_info *info)
 	int		flag;
 	char	*variable;
 
-	i = 0;
+	i = 1;
 	variable = NULL;
 	flag = 0;
-	while (cmd->cmds[++i])
+	while (cmd->cmds[i])
 	{
 		variable = get_env_variable(cmd->cmds[i]);
 		if (check_if_valid_args(cmd->cmds[i]) == 0 || variable[0] == '\0' )
@@ -50,5 +50,6 @@ void	my_unset(t_cmd *cmd, t_info *info)
 		else
 			help_unset(info, variable);
 		free(variable);
+		i++;
 	}
 }

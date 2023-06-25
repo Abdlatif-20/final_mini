@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:38:29 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/25 02:28:02 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 03:41:03 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,12 @@ void	unlink_heredoc(char **file_names, int size)
 	}
 }
 
-int	delemeter_quotes(char *str, int *i, char c, int *flag)
+void	help_command_table(t_var *var, t_list **args,
+		t_token **token, t_env *env)
 {
-	int	j;
-
-	j = 1;
-	while (str[(*i) + j] && str[(*i) + j] != c)
-	{
-		if (str[(*i) + j] == '$')
-			*flag = 1;
-		j++;
-	}
-	return (++j);
+	var->heredoc = 1;
+	var->env = env;
+	ft_heredoc((*args), &var->fd_in, &var->file_heredoc, var);
+	var->file_name_herdoc = var->file_heredoc;
+	increment_args(args, token);
 }
