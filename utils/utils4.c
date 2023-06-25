@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-nei <aben-nei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:31:32 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/16 01:14:39 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 02:20:13 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	init_var(t_var *var)
 	var->fd_in = 0;
 	var->fd_out = 1;
 	var->file_name = NULL;
+	var->file_heredoc = NULL;
+	var->file_name_herdoc = NULL;
 }
 
 int	herdoc_count(t_list *args)

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 22:43:47 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/24 02:41:33 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 02:11:04 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ char	**create_env(t_info *info)
 
 void	if_herdoc(t_cmd *commands)
 {
-	commands->fd_in = open(commands->file_name, O_RDONLY);
+	commands->fd_in = open(commands->file_name_heredoc, O_RDONLY);
 	if (commands->fd_in == -1)
 	{
-		perror("open");
+		perror("open1");
 		g_shell.exit_status = 1;
 		exit(g_shell.exit_status);
 	}

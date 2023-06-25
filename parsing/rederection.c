@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 01:21:27 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/25 00:14:02 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 01:44:50 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	skip_white_spaces(t_list **args, t_token **token)
 	}
 }
 
-int	rederection_app(t_list *args, int *fd_out)
+int	rederection_app(t_list *args, int *fd_out, t_var *var)
 {
 	t_token	*token;
 
@@ -36,6 +36,8 @@ int	rederection_app(t_list *args, int *fd_out)
 		skip_white_spaces(&args, &token);
 		if (token && token->key == RED_APP_FILE)
 		{
+			if (token->value[0] == '\0' && var->is_empty_str)
+				return (*fd_out = 404, printf(ERR_AMBG, token->value), 1);
 			*fd_out = open(token->value, O_CREAT | O_RDWR | O_APPEND, 0777);
 			args = args->next;
 			if (args)

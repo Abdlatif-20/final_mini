@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 01:51:53 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/25 00:13:33 by aben-nei         ###   ########.fr       */
+/*   Created: 2023/06/25 00:18:42 by aben-nei          #+#    #+#             */
+/*   Updated: 2023/06/25 01:58:00 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	if_herdoc1(t_cmd *commands)
 {
-	commands->fd_in = open(commands->file_name, O_RDONLY);
+	commands->fd_in = open(commands->file_name_heredoc, O_RDONLY);
 	if (commands->fd_in == -1)
 	{
 		perror("open");
@@ -98,6 +98,21 @@ void	execute_child_process(t_cmd *commands, t_info *info, t_var *var)
 	}
 }
 
+void	help_execute_commande(t_cmd *commands, t_info *info,
+	t_list *shell, t_var *var)
+{
+	(void)shell;
+	if (commands->main_cmd[0] == '\0')
+	{
+		g_shell.exit_status = 0;
+		exit(g_shell.exit_status);
+	}
+	else if (commands->fd_in != 404 && commands->fd_out != 404)
+		execute_child_process(commands, info, var);
+	else
+		exit(EXIT_SUCCESS);
+}
+
 int	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 {
 	pid_t	pid;
@@ -115,13 +130,8 @@ int	execute_commande(t_cmd *commands, t_info *info, t_list *shell, t_var *var)
 			print_error_fork();
 		signal(SIGINT, SIG_IGN);
 		if (pid == 0)
-		{
-			if (commands->fd_in != 404 && commands->fd_out != 404)
-				execute_child_process(commands, info, var);
-			else
-				exit(EXIT_SUCCESS);
-		}
-		if (pid != 0)
+			help_execute_commande(commands, info, shell, var);
+		else if (pid != 0)
 		{
 			waitpid(pid, &g_shell.exit_status, 0);
 			display_status_code(g_shell.exit_status);

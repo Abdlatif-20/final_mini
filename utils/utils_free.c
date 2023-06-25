@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:38:29 by ahaloui           #+#    #+#             */
-/*   Updated: 2023/06/24 02:22:55 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 02:28:02 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	free_list_cmd(t_list **list)
 		tmp = (*list)->next;
 		free_array(((t_cmd *)(*list)->data)->cmds);
 		ft_free(((t_cmd *)(*list)->data)->file_name);
+		ft_free(((t_cmd *)(*list)->data)->file_name_heredoc);
 		((t_cmd *)(*list)->data)->cmds = NULL;
 		free((*list)->data);
 		free((*list));

@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:03:36 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/24 02:10:39 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 02:28:36 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	fill_cmd(t_list **cmd, t_var var, char **args, int heredoc)
 		args = NULL;
 		cmds->main_cmd = cmds->cmds[0];
 		cmds->file_name = var.file_name;
+		cmds->file_name_heredoc = var.file_name_herdoc;
 		cmds->heredoc = heredoc;
 	ft_lstadd_back(cmd, ft_lstnew(cmds));
 }

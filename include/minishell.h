@@ -6,7 +6,7 @@
 /*   By: aben-nei <aben-nei@student.ma>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:53 by aben-nei          #+#    #+#             */
-/*   Updated: 2023/06/24 23:26:37 by aben-nei         ###   ########.fr       */
+/*   Updated: 2023/06/25 02:12:25 by aben-nei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ typedef struct s_cmd
 	int			fd_in;
 	int			fd_out;
 	char		*file_name;
+	char		*file_name_heredoc;
 	int			heredoc;
-	int			flag_empty;
 }					t_cmd;
 
 typedef struct s_init
@@ -132,6 +132,7 @@ typedef struct t_var
 	int		fd_out;
 	int		heredoc;
 	char	*file_name;
+	char	*file_heredoc;
 	char	*file_name_herdoc;
 	char	*str;
 	char	**cmd;
@@ -339,7 +340,7 @@ char		*skip_whitespace(char *input);
 int			ft_whitespace(char c);
 int			rederection_out(t_list *args, int *fd_out, t_var *var);
 int			rederection_in(t_list *args, int *fd_in, char **file_name);
-int			rederection_app(t_list *args, int *fd_out);
+int			rederection_app(t_list *args, int *fd_out, t_var *var);
 void		fill_token(t_list **args, int token, char *word, int is_heredoce);
 void		fill_cmd(t_list **cmd, t_var var, char **args, int heredoc);
 void		command_table(t_list *args, t_list **cmd, t_env *env, t_var *var);
